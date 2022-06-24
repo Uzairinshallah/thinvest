@@ -1,0 +1,39 @@
+class AppStrings {
+  static String appName = 'ThinkVest';
+  static String chart = 'Chart';
+  static String type = 'Type';
+  static String addDeposit = 'Add Deposit';
+  static String amount = 'Amount';
+  static String usd = 'P/L EUR/USD';
+  static String time = 'Time';
+  static String minimum = 'Minimum';
+  static String buy = 'Buy';
+  static String afterRequestingNewDepositOneOfOurTeamMembersWillShortlyContactYouThroughEmailWithFurtherInstructions = 'After requesting a new deposit one of our team members will shortly contact you through email with further instructions.';
+  static String addNewDeposit = 'Add New Deposit';
+  static String startCapacity  = 'Start Capacity';
+  static String date = 'Date';
+  static String pending = 'pending';
+  static String bankTransfer = 'Band Transfer';
+  static String status = 'Status';
+  static String description = 'Description';
+  static String identificationType = 'Identification type';
+  static String identificationNumber = 'Identification number';
+  static String password = 'Password';
+  static String contactDetails = 'Contact Details';
+  static String view = 'View';
+  static String address = 'Address';
+  static String phone = 'Phone';
+  static String mobileNo = 'Mobile Phone';
+  static String identificationPrimaryInvestment = 'Identification & primary investment';
+  static String dateOfBirth = 'Date of birth';
+  static String editProfile = 'Edit Profile';
+  static String goBack = 'Go Back';
+  static String makeNewDeposit = 'Make New Deposit';
+  static String leverage = 'Leverage';
+  static String revenue = 'Revenue';
+  static String depositAmount = 'Deposit amount';
+  static String currentDeposit = 'Current Deposit: ';
+  static String boostYourRevenue = 'Boost your revenue!';
+  static String lookingToBoostYourRevenueDueToTheSystemOfLeverageYourRevenueGetsIncreasedRapidly = 'Looking to boost your revenue? Due to the system of leverage your revenue get\'s increased rapidly.';
+
+}
