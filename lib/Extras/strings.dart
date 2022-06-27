@@ -13,7 +13,7 @@ class AppStrings {
   static String startCapacity  = 'Start Capacity';
   static String date = 'Date';
   static String pending = 'pending';
-  static String bankTransfer = 'Band Transfer';
+  static String bankTransfer = 'Bank Transfer';
   static String status = 'Status';
   static String description = 'Description';
   static String identificationType = 'Identification type';

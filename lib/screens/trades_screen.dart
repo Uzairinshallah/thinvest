@@ -30,25 +30,25 @@ class _TrandesScreenState extends State<TrandesScreen> {
       drawer: GetDrawer(),
       key: _key,
       body: Padding(
-        padding: EdgeInsets.only(top: 50, left: 25, right: 25),
+        padding: EdgeInsets.only(top: 50),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
               child: Row(
                 children: [
                   InkWell(
                       onTap: () {
                         _key.currentState!.openDrawer();
                       },
-                      child: Image.asset('assets/icons/drawerIcon.png')),
+                      child: SizedBox(width: 50, height: 50, child: Image.asset('assets/icons/drawer.png'))),
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
                         Text(
-                          'Dashboard',
+                          'Trades',
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 30,
@@ -68,68 +68,32 @@ class _TrandesScreenState extends State<TrandesScreen> {
                 ],
               ),
             ),
-
-            Column(
-              children: [
-                SizedBox(
-                  height: 35,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Trading period:',
-                        style: TextStyle(color: CColors.textColor),
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            width: screenWidth * .3,
-                            height: screenHeight * .05,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black26, width: 1),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: DropdownButton<String>(
-                              value: dropdownMonth,
-                              isExpanded: true,
-                              icon: const Icon(Icons.arrow_drop_down),
-                              elevation: 16,
-                              style: TextStyle(color: CColors.textColor),
-                              underline: const SizedBox(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownMonth = newValue!;
-                                });
-                              },
-                              items: <String>[
-                                'January',
-                                'Febuary',
-                                'March',
-                                'April'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Text(value),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 2.0),
-                            child: Container(
-                              width: screenWidth * .2,
+            Expanded(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 35,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 15, right: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Trading period:',
+                          style: TextStyle(color: CColors.textColor),
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              width: screenWidth * .3,
                               height: screenHeight * .05,
                               decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.black26, width: 1),
+                                  border: Border.all(
+                                      color: Colors.black26, width: 1),
                                   borderRadius: BorderRadius.circular(10)),
                               child: DropdownButton<String>(
-                                value: dropdownYear,
+                                value: dropdownMonth,
                                 isExpanded: true,
                                 icon: const Icon(Icons.arrow_drop_down),
                                 elevation: 16,
@@ -137,11 +101,15 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                 underline: const SizedBox(),
                                 onChanged: (String? newValue) {
                                   setState(() {
-                                    dropdownYear = newValue!;
+                                    dropdownMonth = newValue!;
                                   });
                                 },
-                                items: <String>['2022', '2021', '2020', '2019']
-                                    .map<DropdownMenuItem<String>>((String value) {
+                                items: <String>[
+                                  'January',
+                                  'Febuary',
+                                  'March',
+                                  'April'
+                                ].map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Padding(
@@ -152,40 +120,80 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                 }).toList(),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8),
-                  child: Container(
-                    width: screenWidth,
-                    height: screenHeight * .095,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      gradient: LinearGradient(
-                        colors: [
-                          CColors.buttonOne,
-                          CColors.buttonTwo.withOpacity(.8),
-                          CColors.buttonThree,
-                        ],
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        getHeading(AppStrings.type, .17),
-                        getHeading(AppStrings.amount, .17),
-                        getHeading(AppStrings.usd, .18),
-                        getHeading(AppStrings.time, .17),
-                        getHeading('', .17),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 2.0),
+                              child: Container(
+                                width: screenWidth * .2,
+                                height: screenHeight * .05,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.black26, width: 1),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: DropdownButton<String>(
+                                  value: dropdownYear,
+                                  isExpanded: true,
+                                  icon: const Icon(Icons.arrow_drop_down),
+                                  elevation: 16,
+                                  style: TextStyle(color: CColors.textColor),
+                                  underline: const SizedBox(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownYear = newValue!;
+                                    });
+                                  },
+                                  items: <String>[
+                                    '2022',
+                                    '2021',
+                                    '2020',
+                                    '2019'
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Text(value),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
-                ),
-                Container(height: 300,  child: TradesTable()),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+                    child: Container(
+                      width: screenWidth,
+                      height: screenHeight * .095,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: LinearGradient(
+                          colors: [
+                            CColors.buttonOne,
+                            CColors.buttonTwo.withOpacity(.8),
+                            CColors.buttonThree,
+                          ],
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(child: getHeading(AppStrings.type)),
+                          Expanded(child: getHeading(AppStrings.amount)),
+                          Expanded(child: getHeading(AppStrings.usd)),
+                          Expanded(child: getHeading(AppStrings.time)),
+                          Expanded(child: getHeading('')),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(child: TradesTable()),
+                ],
+              ),
             ),
           ],
         ),
@@ -193,15 +201,12 @@ class _TrandesScreenState extends State<TrandesScreen> {
     );
   }
 
-  SizedBox getHeading(String txt, double size) {
-    return SizedBox(
-      width: screenWidth * size,
-      child: Text(txt,
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          textAlign: TextAlign.center),
-    );
+  Widget getHeading(String txt) {
+    return Text(txt,
+        style: TextStyle(
+          color: Colors.white,
+        ),
+        textAlign: TextAlign.center);
   }
 
   Widget getSubHeading(String txt, double size, Color col) {
@@ -213,103 +218,103 @@ class _TrandesScreenState extends State<TrandesScreen> {
     );
   }
 
-  // Drawer getDrawer() {
-  //   return Drawer(
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Container(
-  //             height: screenHeight * .27,
-  //             child: Padding(
-  //               padding: const EdgeInsets.only(top: 25.0),
-  //               child: Image.asset('assets/icons/thinvest.png'),
-  //             )),
-  //         Padding(
-  //           padding: const EdgeInsets.only(left: 45.0, right: 45),
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               drawerHeading('Dashboard', () {
-  //                 print('clicked');
-  //                 Navigator.pop(context);
-  //                 Navigator.push(context,
-  //                     MaterialPageRoute(builder: (context) => Dashboard()));
-  //               }),
-  //               getLine(),
-  //               drawerHeading('Trades', () {
-  //                 Navigator.pop(context);
-  //                 Navigator.push(context,
-  //                     MaterialPageRoute(builder: (context) => TrandesScreen()));
-  //               }),
-  //               getLine(),
-  //               drawerHeading('Deposits', () {
-  //                 Navigator.pop(context);
-  //                 Navigator.push(
-  //                     context,
-  //                     MaterialPageRoute(
-  //                         builder: (context) => DepositsScreen()));
-  //               }),
-  //               getLine(),
-  //               drawerHeading('Reports', () {
-  //                 Navigator.pop(context);
-  //                 Navigator.push(context,
-  //                     MaterialPageRoute(builder: (context) => ReportsScreen()));
-  //               }),
-  //               getLine(),
-  //               drawerHeading('Support', () {
-  //                 Navigator.pop(context);
-  //                 Navigator.push(context,
-  //                     MaterialPageRoute(builder: (context) => Support()));
-  //               }),
-  //             ],
-  //           ),
-  //         ),
-  //         Expanded(child: SizedBox()),
-  //         Padding(
-  //           padding: const EdgeInsets.all(15.0),
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.end,
-  //             children: [
-  //               Text(
-  //                 'Logout',
-  //                 style: TextStyle(
-  //                   fontSize: 14,
-  //                 ),
-  //               ),
-  //               SizedBox(
-  //                 width: 5,
-  //               ),
-  //               Image.asset('assets/icons/logout.png'),
-  //             ],
-  //           ),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  // Widget drawerHeading(String txt, onTap) {
-  //   return InkWell(
-  //     onTap: () {
-  //       onTap();
-  //     },
-  //     child: Text(
-  //       txt,
-  //       style: TextStyle(
-  //         color: CColors.textColor,
-  //         fontSize: 18,
-  //       ),
-  //     ),
-  //   );
-  // }
-  //
-  // Padding getLine() {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(top: 18.0, bottom: 20),
-  //     child: Container(
-  //       color: CColors.textColor,
-  //       height: 1,
-  //     ),
-  //   );
-  // }
+// Drawer getDrawer() {
+//   return Drawer(
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Container(
+//             height: screenHeight * .27,
+//             child: Padding(
+//               padding: const EdgeInsets.only(top: 25.0),
+//               child: Image.asset('assets/icons/thinvest.png'),
+//             )),
+//         Padding(
+//           padding: const EdgeInsets.only(left: 45.0, right: 45),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               drawerHeading('Dashboard', () {
+//                 print('clicked');
+//                 Navigator.pop(context);
+//                 Navigator.push(context,
+//                     MaterialPageRoute(builder: (context) => Dashboard()));
+//               }),
+//               getLine(),
+//               drawerHeading('Trades', () {
+//                 Navigator.pop(context);
+//                 Navigator.push(context,
+//                     MaterialPageRoute(builder: (context) => TrandesScreen()));
+//               }),
+//               getLine(),
+//               drawerHeading('Deposits', () {
+//                 Navigator.pop(context);
+//                 Navigator.push(
+//                     context,
+//                     MaterialPageRoute(
+//                         builder: (context) => DepositsScreen()));
+//               }),
+//               getLine(),
+//               drawerHeading('Reports', () {
+//                 Navigator.pop(context);
+//                 Navigator.push(context,
+//                     MaterialPageRoute(builder: (context) => ReportsScreen()));
+//               }),
+//               getLine(),
+//               drawerHeading('Support', () {
+//                 Navigator.pop(context);
+//                 Navigator.push(context,
+//                     MaterialPageRoute(builder: (context) => Support()));
+//               }),
+//             ],
+//           ),
+//         ),
+//         Expanded(child: SizedBox()),
+//         Padding(
+//           padding: const EdgeInsets.all(15.0),
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.end,
+//             children: [
+//               Text(
+//                 'Logout',
+//                 style: TextStyle(
+//                   fontSize: 14,
+//                 ),
+//               ),
+//               SizedBox(
+//                 width: 5,
+//               ),
+//               Image.asset('assets/icons/logout.png'),
+//             ],
+//           ),
+//         )
+//       ],
+//     ),
+//   );
+// }
+//
+// Widget drawerHeading(String txt, onTap) {
+//   return InkWell(
+//     onTap: () {
+//       onTap();
+//     },
+//     child: Text(
+//       txt,
+//       style: TextStyle(
+//         color: CColors.textColor,
+//         fontSize: 18,
+//       ),
+//     ),
+//   );
+// }
+//
+// Padding getLine() {
+//   return Padding(
+//     padding: const EdgeInsets.only(top: 18.0, bottom: 20),
+//     child: Container(
+//       color: CColors.textColor,
+//       height: 1,
+//     ),
+//   );
+// }
 }

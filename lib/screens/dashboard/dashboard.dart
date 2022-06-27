@@ -30,11 +30,13 @@ class _DashboardState extends State<Dashboard> {
       drawer: GetDrawer(),
       key: _key,
       body: Padding(
-        padding: EdgeInsets.only(top: 50, left: 25, right: 25),
+        padding: EdgeInsets.only(
+          top: 50,
+        ),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
               child: Row(
                 children: [
                   InkWell(
@@ -43,7 +45,7 @@ class _DashboardState extends State<Dashboard> {
                         print(_key);
                         _key.currentState!.openDrawer();
                       },
-                      child: Image.asset('assets/icons/drawerIcon.png')),
+                      child: SizedBox(width: 50, height: 50, child: Image.asset('assets/icons/drawer.png'))),
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Column(
@@ -76,10 +78,11 @@ class _DashboardState extends State<Dashboard> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 40.0),
+                      padding:
+                          const EdgeInsets.only(top: 40.0, left: 15, right: 15),
                       child: Container(
                         width: screenWidth,
-                        height: screenHeight * .20,
+                        // height: screenHeight * .20,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(colors: [
                             CColors.buttonOne,
@@ -130,7 +133,8 @@ class _DashboardState extends State<Dashboard> {
                             Align(
                                 alignment: Alignment.bottomLeft,
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 22.0, top: 8),
+                                  padding: EdgeInsets.only(
+                                      left: 22.0, top: 8, bottom: 15),
                                   child: InkWell(
                                     onTap: () {
                                       Navigator.push(
@@ -150,16 +154,17 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 25.0, bottom: 15),
+                      padding: const EdgeInsets.only(
+                          top: 25.0, bottom: 15, left: 15, right: 15),
                       child: Container(
                         width: screenWidth,
-                        height: screenHeight * .25,
+                        // height: screenHeight * .25,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
                                 Border.all(color: Colors.black26, width: 1)),
                         child: Padding(
-                          padding: const EdgeInsets.all(25.0),
+                          padding: const EdgeInsets.all(15.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -167,7 +172,7 @@ class _DashboardState extends State<Dashboard> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Start Cap',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
@@ -178,17 +183,17 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 4,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Client Since',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     '\$243.23',
@@ -196,7 +201,7 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 4,
                               ),
                               Row(
@@ -274,7 +279,8 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding:
+                          const EdgeInsets.only(top: 8.0, left: 15, right: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -322,7 +328,7 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 2.0),
+                                padding: const EdgeInsets.only(left: 4.0),
                                 child: Container(
                                   width: screenWidth * .2,
                                   decoration: BoxDecoration(
@@ -369,7 +375,7 @@ class _DashboardState extends State<Dashboard> {
                     const Align(
                       alignment: Alignment.bottomLeft,
                       child: Padding(
-                        padding: EdgeInsets.only(top: 15.0, bottom: 15),
+                        padding: EdgeInsets.all(15),
                         child: Text(
                           'Overview January 2022',
                           style: TextStyle(fontWeight: FontWeight.bold),
@@ -378,7 +384,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     Container(
                         width: screenWidth * .9,
-                        height: screenHeight * .3,
+                        // height: screenHeight * .3,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
@@ -386,7 +392,7 @@ class _DashboardState extends State<Dashboard> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
+                              padding: const EdgeInsets.only(top: 15.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -439,85 +445,87 @@ class _DashboardState extends State<Dashboard> {
                         ),
                         child: Row(
                           children: [
-                            getHeading(AppStrings.type, .17),
-                            getHeading(AppStrings.amount, .17),
-                            getHeading(AppStrings.usd, .18),
-                            getHeading(AppStrings.time, .17),
-                            getHeading('', .17),
+                            Expanded(child: getHeading(AppStrings.type)),
+                            Expanded(child: getHeading(AppStrings.amount)),
+                            Expanded(child: getHeading(AppStrings.usd)),
+                            Expanded(child: getHeading(AppStrings.time)),
+                            Expanded(child: getHeading('')),
                           ],
                         ),
                       ),
                     ),
                     Container(height: 230, child: TradesTable()),
-                    Container(
-                      width: screenWidth,
-                      height: screenHeight * .28,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1,
-                              color: CColors.textColor.withOpacity(.5)),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
-                          )),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppStrings.boostYourRevenue,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              AppStrings
-                                  .lookingToBoostYourRevenueDueToTheSystemOfLeverageYourRevenueGetsIncreasedRapidly,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: CColors.textColor,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 6.0, bottom: 15),
-                              child: Text(
-                                '${AppStrings.currentDeposit} 2000',
-                                style: TextStyle(color: CColors.textColor),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  width: screenWidth * .5,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        CColors.buttonOne,
-                                        CColors.buttonTwo,
-                                        CColors.buttonThree,
-                                      ],
-                                    ),
-                                  ),
-                                  child: Center(
-                                      child: Text(
-                                    AppStrings.makeNewDeposit,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  )),
+                       Padding(
+                      padding: const EdgeInsets.only(top: 15.0, bottom: 15),
+                      child: Container(
+                        width: screenWidth,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1,
+                                color: CColors.textColor.withOpacity(.5)),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppStrings.boostYourRevenue,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            )
-                          ],
+                              Text(
+                                AppStrings
+                                    .lookingToBoostYourRevenueDueToTheSystemOfLeverageYourRevenueGetsIncreasedRapidly,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: CColors.textColor,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 6.0, bottom: 15),
+                                child: Text(
+                                  '${AppStrings.currentDeposit} 2000',
+                                  style: TextStyle(color: CColors.textColor),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    width: screenWidth * .5,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          CColors.buttonOne,
+                                          CColors.buttonTwo,
+                                          CColors.buttonThree,
+                                        ],
+                                      ),
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      AppStrings.makeNewDeposit,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -533,11 +541,13 @@ class _DashboardState extends State<Dashboard> {
                           )),
                           Expanded(
                               child: Text(AppStrings.leverage,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14))),
                           Expanded(
                               child: Text(AppStrings.revenue,
+                                  textAlign: TextAlign.end,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14)))
@@ -546,39 +556,45 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     Container(
                       height: 230,
-                      child: ListView.builder(
-                          physics: ScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 4.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Padding(
-                                          padding: EdgeInsets.only(left: 8.0),
-                                          child: Text(
-                                            '\$12345',
-                                            style: TextStyle(
-                                                color: CColors.textColor),
-                                          ))),
-                                  Expanded(
-                                    child: Text(
-                                      '765412',
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ListView.builder(
+                            physics: ScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            itemCount: 5,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: Padding(
+                                            padding: EdgeInsets.only(left: 8.0),
+                                            child: Text(
+                                              '\$12345',
+                                              style: TextStyle(
+                                                  color: CColors.textColor),
+                                            ))),
+                                    Expanded(
+                                      child: Text(
+                                        '765412',
+                                        textAlign: TextAlign.center,
+                                        style:
+                                            TextStyle(color: CColors.textColor),
+                                      ),
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                      'o8765',
+                                      textAlign: TextAlign.end,
                                       style:
                                           TextStyle(color: CColors.textColor),
-                                    ),
-                                  ),
-                                  Expanded(
-                                      child: Text(
-                                    'o8765',
-                                    style: TextStyle(color: CColors.textColor),
-                                  )),
-                                ],
-                              ),
-                            );
-                          }),
+                                    )),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
                     ),
                   ],
                 ),
@@ -590,23 +606,11 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  SizedBox getHeading(String txt, double size) {
-    return SizedBox(
-      width: screenWidth * size,
-      child: Text(txt,
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          textAlign: TextAlign.center),
-    );
+  Widget getHeading(String txt) {
+    return Text(txt,
+        style: TextStyle(
+          color: Colors.white,
+        ),
+        textAlign: TextAlign.center);
   }
-
-// Widget getSubHeading(String txt, double size, Color col) {
-//   return SizedBox(
-//     width: screenWidth * size,
-//     child: Text(txt,
-//         style: TextStyle(color: col, fontSize: 12),
-//         textAlign: TextAlign.left),
-//   );
-// }
 }

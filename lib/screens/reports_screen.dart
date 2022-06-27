@@ -39,7 +39,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         print('aaaaaaaaaa');
                         _key.currentState!.openDrawer();
                       },
-                      child: Image.asset('assets/icons/drawerIcon.png')),
+                      child: SizedBox(width: 50, height: 50, child: Image.asset('assets/icons/drawer.png'))),
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Column(
@@ -68,54 +68,57 @@ class _ReportsScreenState extends State<ReportsScreen> {
               SizedBox(
                 height: 35,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Year:',
-                    style: TextStyle(color: CColors.textColor),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Container(
-                      width: screenWidth * .2,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black26, width: 1),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: DropdownButton<String>(
-                        value: dropdownYear,
-                        isExpanded: true,
-                        icon: const Icon(Icons.arrow_drop_down),
-                        elevation: 16,
-                        style: TextStyle(color: CColors.textColor),
-                        underline: const SizedBox(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownYear = newValue!;
-                          });
-                        },
-                        items: <String>['2022', '2021', '2020', '2000']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(value),
-                            ),
-                          );
-                        }).toList(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Year:',
+                      style: TextStyle(color: CColors.textColor),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Container(
+                        width: screenWidth * .2,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black26, width: 1),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: DropdownButton<String>(
+                          value: dropdownYear,
+                          isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          elevation: 16,
+                          style: TextStyle(color: CColors.textColor),
+                          underline: const SizedBox(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownYear = newValue!;
+                            });
+                          },
+                          items: <String>['2022', '2021', '2020', '2000']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Text(value),
+                              ),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Container(
                 height: 600,
                 child: ListView.builder(
                     physics: ScrollPhysics(),
                     padding: EdgeInsets.zero,
-                    itemCount: 5,
+                    itemCount: 4,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 4.0),
@@ -123,7 +126,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           children: [
                             Container(
                               width: screenWidth * .85,
-                              height: screenHeight * .18,
+                              // height: screenHeight * .18,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                     color: CColors.textColor, width: 1),

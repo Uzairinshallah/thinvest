@@ -68,7 +68,7 @@ class LoginPage extends StatelessWidget {
                   height: screenHeight * .2,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 0.0),
-                    child: Image.asset('assets/icons/thinvest.png'),
+                    child: Image.asset('assets/icons/thinvest.png', width: screenWidth * .7,),
                   )),
               Text(
                 'Login into your account',

@@ -28,8 +28,8 @@ class SignupProceed extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(height: 120, child: Image.asset('assets/icons/bgt.png')),
-                    Image.asset('assets/icons/thinvest.png'),
+                    SizedBox(height: 100, child: Image.asset('assets/icons/bgt.png')),
+                    Image.asset('assets/icons/thinvest.png', width: screenWidth * .7,),
                   ],
                 ),
               ),

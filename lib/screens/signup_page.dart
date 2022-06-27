@@ -67,7 +67,7 @@ class _SignupPageState extends State<SignupPage> {
                           height: screenHeight * .20,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 25.0),
-                            child: Image.asset('assets/icons/thinvest.png'),
+                            child: Image.asset('assets/icons/thinvest.png', width: screenWidth * .7,),
                           )),
                       Text(
                         'Create Account',

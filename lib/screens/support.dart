@@ -34,7 +34,7 @@ class _SupportState extends State<Support> {
       drawer: GetDrawer(),
       key: _key,
       body: Padding(
-        padding: EdgeInsets.only(top: 50, left: 25, right: 25),
+        padding: EdgeInsets.only(top: 50, left: 15, right: 15),
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
@@ -46,7 +46,10 @@ class _SupportState extends State<Support> {
                       onTap: () {
                         _key.currentState!.openDrawer();
                       },
-                      child: Image.asset('assets/icons/drawerIcon.png')),
+                      child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Image.asset('assets/icons/drawer.png'))),
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Column(
@@ -95,7 +98,8 @@ class _SupportState extends State<Support> {
                       ),
                       Text(
                         'A general enquiry',
-                        style: TextStyle(fontSize: 12, color: CColors.textColor),
+                        style:
+                            TextStyle(fontSize: 12, color: CColors.textColor),
                       )
                     ],
                   ),
@@ -115,7 +119,8 @@ class _SupportState extends State<Support> {
                       ),
                       Text(
                         'I need Help',
-                        style: TextStyle(fontSize: 12, color: CColors.textColor),
+                        style:
+                            TextStyle(fontSize: 12, color: CColors.textColor),
                       )
                     ],
                   ),
@@ -208,7 +213,7 @@ class _SupportState extends State<Support> {
               SizedBox(
                 height: 10,
               ),
-              getTextField('Password', email, 8),
+              getTextField('Message', email, 8),
               // Expanded(child: SizedBox()),
               SizedBox(
                 height: 50,
@@ -363,7 +368,7 @@ class _SupportState extends State<Support> {
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+        contentPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
         hintText: hint,
         labelStyle: TextStyle(
           color: CColors.textColor,

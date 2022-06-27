@@ -23,8 +23,8 @@ class GetDrawer extends StatelessWidget {
           Container(
               height: screenHeight * .27,
               child: Padding(
-                padding: const EdgeInsets.only(top: 25.0),
-                child: Image.asset('assets/icons/thinvest.png'),
+                padding: const EdgeInsets.only(top: 25.0, left: 45.0),
+                child: Image.asset('assets/icons/thinvest.png', width: screenWidth * .6,),
               )),
           Padding(
             padding: const EdgeInsets.only(left: 45.0, right: 45),
