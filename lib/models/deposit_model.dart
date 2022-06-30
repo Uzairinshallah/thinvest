@@ -40,7 +40,7 @@ class DepositModel {
 
   DepositModel.fromMap(Map<String, dynamic> map) {
     id = map["id"];
-    userId = map["userId"];
+    userId = map["user_id"];
     description = map["description"];
     type = map["type"];
     amount = map["amount"];

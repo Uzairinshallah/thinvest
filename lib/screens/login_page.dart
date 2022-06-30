@@ -2,17 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-
 import 'package:http/http.dart';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/functions.dart';
 import 'package:thinvest/Extras/hive_boxes.dart';
+import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/main.dart';
 import 'package:thinvest/models/user_model.dart';
 import 'package:thinvest/screens/dashboard/dashboard.dart';
 import 'package:thinvest/screens/signup_page.dart';
-
-
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -20,6 +19,9 @@ class LoginPage extends StatelessWidget {
   var screenHeight, screenWidth;
   var emailController = TextEditingController();
   var passController = TextEditingController();
+
+  final Uri _url = Uri.parse('https://flutter.dev');
+
 
   login(String email, String pass, BuildContext context) async {
     try {
@@ -31,18 +33,24 @@ class LoginPage extends StatelessWidget {
 
       if (response.statusCode == 200) {
         print('Account created Successfully');
+        Functions.showSnackBar(context, 'Login Successfully');
 
         var data = jsonDecode(response.body);
-        
+
         var model = UserModel.fromJson(data["data"]);
-        // var bo = Hive.box<UserModel>(box);
         HiveBoxes.userBox.put("profile", model);
 
-        print(HiveBoxes.userBox.values.first.firstName);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) =>  Dashboard()));
+        // HiveBoxes.userBox.get("profile") != null;
+        // HiveBoxes.userBox.delete("profile");
+        // print(HiveBoxes.userBox.values.first.firstName);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Dashboard()));
         return;
       } else {
+        Functions.showSnackBar(
+          context,
+          'Login Failed',
+        );
         print('Failed');
       }
     } catch (e) {
@@ -54,91 +62,106 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-      ),
-      child: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  height: screenHeight * .2,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 0.0),
-                    child: Image.asset('assets/icons/thinvest.png', width: screenWidth * .7,),
-                  )),
-              Text(
-                'Login into your account',
-                style: TextStyle(fontSize: 18, color: CColors.textColor),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 19, left: 10, right: 10),
-                child: getTextField('Email', emailController),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0, left: 10, right: 10),
-                child: getTextField('Password', passController),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 55.0, left: 10, right: 10),
-                child: loginBtn('SIGN IN', () {
-                  login(emailController.text.toString(),
-                      passController.text.toString(), context);
-                }),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: RichText(
-                  text: TextSpan(
-                      text: 'Already have an account?',
-                      style: TextStyle(color: CColors.textColor, fontSize: 14),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: ' Register here',
-                            style:
-                                TextStyle(color: CColors.buttonOne, fontSize: 14),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignupPage()),
-                                );
-                              })
-                      ]),
+    emailController.text = '';
+    passController.text = '';
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    height: screenHeight * .2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 0.0),
+                      child: Image.asset(
+                        'assets/icons/thinvest.png',
+                        width: screenWidth * .7,
+                      ),
+                    )),
+                Text(
+                  'Login into your account',
+                  style: TextStyle(fontSize: 18, color: CColors.textColor),
                 ),
-              ),
-              getNotice(),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                      text:
-                          'All our forex market clients receive their own credentials with which they are able to '
-                          'login. If you haven\'t received this information, or if you have lost '
-                          'your credentials please ',
-                      style: TextStyle(color: CColors.textColor, fontSize: 14),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: 'Contact us',
-                            style:
-                                TextStyle(color: CColors.buttonOne, fontSize: 14),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignupPage()),
-                                );
-                              })
-                      ]),
+                Padding(
+                  padding: const EdgeInsets.only(top: 19, left: 10, right: 10),
+                  child: getTextField(AppStrings.email, emailController, false),
                 ),
-              ),
-            ],
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 15.0, left: 10, right: 10),
+                  child:
+                      getTextField(AppStrings.password, passController, true),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 55.0, left: 10, right: 10),
+                  child: loginBtn(AppStrings.signIn, () {
+                    if (emailController.text.isEmpty ||
+                        passController.text.isEmpty) {
+                      Functions.showSnackBar(context,
+                          AppStrings.pleaseEnterEmailAndPasswordCorrectly);
+                    }
+                    login(emailController.text.toString(),
+                        passController.text.toString(), context);
+                  }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: RichText(
+                    text: TextSpan(
+                        text: AppStrings.alreadyHaveAnAccount,
+                        style:
+                            TextStyle(color: CColors.textColor, fontSize: 14),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: AppStrings.registerHere,
+                              style: TextStyle(
+                                  color: CColors.buttonOne, fontSize: 14),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  launchUrl(Uri.parse('https://thinvest.com/register'));
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => SignupPage()),
+                                  // );
+                                })
+                        ]),
+                  ),
+                ),
+                getNotice(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                        text: AppStrings.allOurForexMarket,
+                        style:
+                            TextStyle(color: CColors.textColor, fontSize: 14),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: AppStrings.contactUs,
+                              style: TextStyle(
+                                  color: CColors.buttonOne, fontSize: 14),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SignupPage()),
+                                  );
+                                })
+                        ]),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -149,6 +172,7 @@ class LoginPage extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
+          primary: Colors.transparent,
           padding: EdgeInsets.zero,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
@@ -177,11 +201,10 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget getTextField(
-    String hint,
-    TextEditingController controller,
-  ) {
+      String hint, TextEditingController controller, bool obscure) {
     return TextFormField(
       controller: controller,
+      obscureText: obscure,
       style: TextStyle(
         color: CColors.textColor,
         fontSize: 14,
@@ -208,6 +231,7 @@ class LoginPage extends StatelessWidget {
       },
     );
   }
+
 
   Widget getNotice() {
     return Padding(
@@ -236,4 +260,5 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+
 }

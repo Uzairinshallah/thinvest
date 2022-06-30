@@ -36,7 +36,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
                 children: [
                   InkWell(
                       onTap: () {
-                        print('aaaaaaaaaa');
                         _key.currentState!.openDrawer();
                       },
                       child: SizedBox(width: 50, height: 50, child: Image.asset('assets/icons/drawer.png'))),
@@ -280,7 +279,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                               Text(
                                                 'DOWNLOAD',
                                                 style: TextStyle(
-                                                    fontSize: 11,
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.bold,
                                                     color: CColors.buttonOne),
                                               ),
                                               Image.asset(

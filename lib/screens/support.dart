@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/strings.dart';
-import 'package:thinvest/screens/dashboard/dashboard.dart';
-import 'package:thinvest/screens/deposit.dart';
 import 'package:thinvest/screens/drawer/get_drawer.dart';
-import 'package:thinvest/screens/reports_screen.dart';
-import 'package:thinvest/screens/trades_screen.dart';
 
 class Support extends StatefulWidget {
   Support({Key? key}) : super(key: key);
@@ -79,7 +75,7 @@ class _SupportState extends State<Support> {
                 height: 30,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -253,105 +249,6 @@ class _SupportState extends State<Support> {
     );
   }
 
-  // Drawer getDrawer(BuildContext context) {
-  //   return Drawer(
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Container(
-  //             height: screenHeight * .27,
-  //             child: Padding(
-  //               padding: const EdgeInsets.only(top: 25.0),
-  //               child: Image.asset('assets/icons/thinvest.png'),
-  //             )),
-  //         Padding(
-  //           padding: const EdgeInsets.only(left: 45.0, right: 45),
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               drawerHeading('Dashboard', () {
-  //                 print('clicked');
-  //                 Navigator.pop(context);
-  //                 Navigator.push(context,
-  //                     MaterialPageRoute(builder: (context) => Dashboard()));
-  //               }),
-  //               getLine(),
-  //               drawerHeading('Trades', () {
-  //                 Navigator.pop(context);
-  //                 Navigator.push(context,
-  //                     MaterialPageRoute(builder: (context) => TrandesScreen()));
-  //               }),
-  //               getLine(),
-  //               drawerHeading('Deposits', () {
-  //                 Navigator.pop(context);
-  //                 Navigator.push(
-  //                     context,
-  //                     MaterialPageRoute(
-  //                         builder: (context) => DepositsScreen()));
-  //               }),
-  //               getLine(),
-  //               drawerHeading('Reports', () {
-  //                 Navigator.pop(context);
-  //                 Navigator.push(context,
-  //                     MaterialPageRoute(builder: (context) => ReportsScreen()));
-  //               }),
-  //               getLine(),
-  //               drawerHeading('Support', () {
-  //                 Navigator.pop(context);
-  //                 Navigator.push(context,
-  //                     MaterialPageRoute(builder: (context) => Support()));
-  //               }),
-  //             ],
-  //           ),
-  //         ),
-  //         Expanded(child: SizedBox()),
-  //         Padding(
-  //           padding: const EdgeInsets.all(15.0),
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.end,
-  //             children: [
-  //               Text(
-  //                 'Logout',
-  //                 style: TextStyle(
-  //                   fontSize: 14,
-  //                 ),
-  //               ),
-  //               SizedBox(
-  //                 width: 5,
-  //               ),
-  //               Image.asset('assets/icons/logout.png'),
-  //             ],
-  //           ),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
-  // Padding getLine() {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(top: 18.0, bottom: 20),
-  //     child: Container(
-  //       color: CColors.textColor,
-  //       height: 1,
-  //     ),
-  //   );
-  // }
-  //
-  // Widget drawerHeading(String txt, onTap) {
-  //   return InkWell(
-  //     onTap: () {
-  //       onTap();
-  //     },
-  //     child: Text(
-  //       txt,
-  //       style: TextStyle(
-  //         color: CColors.textColor,
-  //         fontSize: 18,
-  //       ),
-  //     ),
-  //   );
-  // }
 
   TextFormField getTextField(
       String hint, TextEditingController controller, int lines) {

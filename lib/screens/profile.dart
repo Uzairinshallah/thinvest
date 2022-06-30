@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/strings.dart';
+import 'package:thinvest/models/user_model.dart';
+import 'package:thinvest/screens/dashboard/dashboard.dart';
+import 'package:http/http.dart' as http;
+
 
 class Profile extends StatelessWidget {
   Profile({Key? key}) : super(key: key);
@@ -16,7 +23,7 @@ class Profile extends StatelessWidget {
         children: [
           Container(
             width: screenWidth,
-            height: screenHeight * .3,
+            // height: screenHeight * .3,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               gradient: LinearGradient(
@@ -40,11 +47,14 @@ class Profile extends StatelessWidget {
                           Padding(
                               padding: EdgeInsets.only(left: 4.0, right: 4),
                               child:
-                                  Image.asset('assets/icons/arrow_back.png')),
+                                  InkWell(onTap: (){
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+                                  }, child: Image.asset('assets/icons/arrow_back.png', width: 20,))),
                           Text(
                             AppStrings.goBack.toUpperCase(),
                             style: TextStyle(
                               color: Colors.white,
+                              fontWeight: FontWeight.values[4],
                             ),
                           )
                         ],
@@ -53,11 +63,13 @@ class Profile extends StatelessWidget {
                         children: [
                           Padding(
                               padding: EdgeInsets.only(left: 4.0, right: 4),
-                              child: Image.asset('assets/icons/edit.png')),
-                          const Text(
+                              child: Image.asset('assets/icons/edit.png', width: 20)),
+                           Text(
                             'EDIT PROFILE',
                             style: TextStyle(
                               color: Colors.white,
+                              fontWeight: FontWeight.values[4],
+
                             ),
                           )
                         ],
@@ -71,17 +83,17 @@ class Profile extends StatelessWidget {
                       radius: 40, //Text
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(
+                   Padding(
+                    padding: const EdgeInsets.only(
                       top: 15.0,
                     ),
                     child: Text(
-                      'Demo',
+                      HiveBoxes.userBox.values.first.firstName!,
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                   Text(
-                    'Demo@gail.com',
+                    HiveBoxes.userBox.values.first.email!,
                     style: TextStyle(color: Colors.white),
                   ),
                 ],
@@ -96,7 +108,7 @@ class Profile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     leftText(AppStrings.dateOfBirth),
-                    rightText('10-12-2022'),
+                    rightText(HiveBoxes.userBox.values.first.dateOfBirth!),
                   ],
                 ),
                 getLineText(AppStrings.contactDetails),
@@ -104,7 +116,7 @@ class Profile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     leftText(AppStrings.address),
-                    rightText('125 , United Kingdom'),
+                    rightText(HiveBoxes.userBox.values.first.address!),
                   ],
                 ),
                 Padding(
@@ -113,7 +125,7 @@ class Profile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       leftText(AppStrings.phone),
-                      rightText('+44 2070 9735 78'),
+                      rightText(HiveBoxes.userBox.values.first.phone!),
                     ],
                   ),
                 ),
@@ -121,7 +133,7 @@ class Profile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     leftText(AppStrings.mobileNo),
-                    rightText('+44 2070 9735 78'),
+                    rightText(HiveBoxes.userBox.values.first.phoneMobile!),
                   ],
                 ),
                 getLineText(AppStrings.identificationPrimaryInvestment),
@@ -129,7 +141,7 @@ class Profile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     leftText(AppStrings.identificationType),
-                    rightText('Passport'),
+                    rightText(HiveBoxes.userBox.values.first.identificationType!),
                   ],
                 ),
                 Padding(
@@ -138,7 +150,7 @@ class Profile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       leftText(AppStrings.identificationNumber),
-                      rightText('uk21435'),
+                      rightText(HiveBoxes.userBox.values.first.identificationNumber!),
                     ],
                   ),
                 ),
@@ -189,7 +201,10 @@ class Profile extends StatelessWidget {
   Text leftText(String txt) {
     return Text(
       txt,
-      style: TextStyle(fontSize: 16),
+      style: TextStyle(fontSize: 16, fontWeight: FontWeight.values[4]),
     );
   }
+
+
+
 }

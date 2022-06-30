@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/sdp.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/models/deposit_model.dart';
@@ -29,11 +30,13 @@ class DepositTable extends StatelessWidget {
                 return  Text(snapshot.error.toString());
               }
               if (snapshot.hasData) {
+                var list = snapshot.data!;
                 return ListView.builder(
-                    physics: ScrollPhysics(),
+                    physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.zero,
-                    itemCount: snapshot.data.length,
+                    itemCount: list.length,
                     itemBuilder: (BuildContext context, int index) {
+                      var model = list[index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 4.0),
                         child: Row(
@@ -45,24 +48,24 @@ class DepositTable extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         getSubHeading(
-                                            snapshot.data[index].id.toString(), CColors.buttonOne, fontSize),
-                                        getSubHeading(snapshot.data[index].type.toString(),
+                                            model.id.toString(), CColors.buttonOne, fontSize),
+                                        getSubHeading(model.type.toString(),
                                             CColors.textColor, fontSize)
                                       ]),
                                 )),
                             Expanded(
                                 child: getSubHeading(
-                                    snapshot.data[index].description.toString(), CColors.textColor, fontSize)),
+                                    model.description.toString(), CColors.textColor, fontSize)),
                             Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 6.0),
                                   child: getSubHeading(
-                                      snapshot.data[index].deposit_date, CColors.textColor, fontSize),
+                                      model.deposit_date, CColors.textColor, fontSize),
                                 )),
                             Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
-                                  child: Align(alignment: Alignment.center, child: getSubHeading(snapshot.data[index].status.toString(), Colors.redAccent, fontSize)),
+                                  child: Align(alignment: Alignment.center, child: getSubHeading(model.status.toString(), Colors.redAccent, fontSize)),
                                 )),
                           ],
                         ),
@@ -71,61 +74,29 @@ class DepositTable extends StatelessWidget {
               }
               return const Text("Error while calling getData");
             }),
-
-
-          // ListView.builder(
-          //   physics: ScrollPhysics(),
-          //   padding: EdgeInsets.zero,
-          //   itemCount: 5,
-          //   itemBuilder: (BuildContext context, int index) {
-          //     return Padding(
-          //       padding: const EdgeInsets.only(bottom: 4.0),
-          //       child: Row(
-          //         children: [
-          //           Expanded(
-          //               child: Padding(
-          //                 padding: const EdgeInsets.only(left: 8.0),
-          //                 child: Column(
-          //                     crossAxisAlignment: CrossAxisAlignment.start,
-          //                     children: [
-          //                       getSubHeading(
-          //                           '\$ 40000', CColors.buttonOne),
-          //                       getSubHeading(AppStrings.bankTransfer,
-          //                           CColors.textColor)
-          //                     ]),
-          //               )),
-          //           Expanded(
-          //               child: getSubHeading(
-          //                   AppStrings.startCapacity, Colors.black)),
-          //           Expanded(
-          //               child: Padding(
-          //                 padding: const EdgeInsets.only(left: 6.0),
-          //                 child: getSubHeading(
-          //                     '12-33-2022', CColors.textColor),
-          //               )),
-          //           Expanded(
-          //               child: Padding(
-          //                 padding: const EdgeInsets.only(left: 8.0),
-          //                 child: getSubHeading('Pending', Colors.redAccent),
-          //               )),
-          //         ],
-          //       ),
-          //     );
-          //   }),
       );
 
   }
 
   Future<List<DepositModel>> getData(context) async {
+    var token = HiveBoxes.userBox.values.first.apiToken!;
     var url = "https://thinvest.com/api/deposit";
-    var response = await http.get(Uri.parse(url));
+    // var response = await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
     print(response);
     if (response.statusCode == 200) {
       var results = jsonDecode(response.body);
       List<DepositModel> arrData = [];
       for(var result in results){
         var model = DepositModel.fromMap(result);
-        arrData.add(model);
+        if(HiveBoxes.userBox.values.first.id == model.userId){
+          arrData.add(model);
+
+        }
       }
 
       print(arrData.length);
@@ -146,57 +117,4 @@ class DepositTable extends StatelessWidget {
     );
   }
 
-//
-// FutureBuilder(
-// future: getData('a'),
-// builder: (BuildContext context, AsyncSnapshot snapshot) {
-// if (snapshot.connectionState != ConnectionState.done) {
-// return const CircularProgressIndicator();
-// }
-// if (snapshot.hasError) {
-// return  Text(snapshot.error.toString());
-// }
-// if (snapshot.hasData) {
-// return ListView.builder(
-// physics: ScrollPhysics(),
-// padding: EdgeInsets.zero,
-// itemCount: 5,
-// itemBuilder: (BuildContext context, int index) {
-// return Padding(
-// padding: const EdgeInsets.only(bottom: 4.0),
-// child: Row(
-// children: [
-// Expanded(
-// child: Padding(
-// padding: const EdgeInsets.only(left: 8.0),
-// child: Column(
-// crossAxisAlignment: CrossAxisAlignment.start,
-// children: [
-// getSubHeading(
-// '\$ 40000', CColors.buttonOne),
-// getSubHeading(AppStrings.bankTransfer,
-// CColors.textColor)
-// ]),
-// )),
-// Expanded(
-// child: getSubHeading(
-// AppStrings.startCapacity, Colors.black)),
-// Expanded(
-// child: Padding(
-// padding: const EdgeInsets.only(left: 6.0),
-// child: getSubHeading(
-// '12-33-2022', CColors.textColor),
-// )),
-// Expanded(
-// child: Padding(
-// padding: const EdgeInsets.only(left: 8.0),
-// child: getSubHeading('Pending', Colors.redAccent),
-// )),
-// ],
-// ),
-// );
-// })
-// }
-// return const Text("Error while calling getData");
-// });
 

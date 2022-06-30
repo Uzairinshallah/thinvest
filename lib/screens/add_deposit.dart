@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/strings.dart';
+import 'package:thinvest/screens/deposit.dart';
 import 'package:thinvest/screens/trades_screen.dart';
 
 class AddDeposit extends StatefulWidget {
@@ -26,12 +27,16 @@ class _AddDepositState extends State<AddDeposit> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const TrandesScreen()));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TrandesScreen()));
               },
               child: Text(
                 AppStrings.addNewDeposit,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
             Text(
@@ -66,15 +71,16 @@ class _AddDepositState extends State<AddDeposit> {
                 ))
               ],
             ),
-
             SizedBox(
               height: screenHeight * .029,
             ),
-
             Text(
               AppStrings
                   .afterRequestingNewDepositOneOfOurTeamMembersWillShortlyContactYouThroughEmailWithFurtherInstructions,
-                style: TextStyle(color: CColors.textColor, fontSize: 10, ),
+              style: TextStyle(
+                color: CColors.textColor,
+                fontSize: 10,
+              ),
               textAlign: TextAlign.center,
             ),
             Expanded(child: SizedBox()),
@@ -85,8 +91,18 @@ class _AddDepositState extends State<AddDeposit> {
                   children: [
                     Padding(
                         padding: EdgeInsets.only(left: 4.0, right: 4),
-                        child:
-                        Image.asset('assets/icons/arrow_back.png', color: CColors.buttonOne,)),
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DepositsScreen()));
+                            },
+                            child: Image.asset(
+                              'assets/icons/arrow_back.png',
+                              width: 20,
+                              color: CColors.buttonOne,
+                            ))),
                     Text(
                       AppStrings.goBack.toUpperCase(),
                       style: TextStyle(
@@ -114,12 +130,12 @@ class _AddDepositState extends State<AddDeposit> {
                       ),
                       child: Center(
                           child: Text(
-                            AppStrings.addDeposit,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          )),
+                        AppStrings.addDeposit,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      )),
                     ),
                   ),
                 ),
@@ -143,8 +159,8 @@ class _AddDepositState extends State<AddDeposit> {
       ),
       decoration: InputDecoration(
         // isDense: true,
-        suffixIcon:
-            SizedBox(height: 50, child: Image.asset('assets/icons/arrows.png')),
+        // suffixIcon:
+        //     SizedBox(height: 50, child: Image.asset('assets/icons/arrows.png')),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide.none,

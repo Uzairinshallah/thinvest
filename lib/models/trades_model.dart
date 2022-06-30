@@ -60,7 +60,7 @@ class TradesModel {
 
   TradesModel.fromMap(Map<String, dynamic> map) {
     id = map["id"];
-    userId = map["userId"];
+    userId = map["user_id"];
     type = map["type"];
     amount = map["amount"];
     closing_price = map["closing_price"];

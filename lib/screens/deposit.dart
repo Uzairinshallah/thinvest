@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/screens/add_deposit.dart';
-import 'package:thinvest/screens/dashboard/dashboard.dart';
 import 'package:thinvest/screens/drawer/get_drawer.dart';
-import 'package:thinvest/screens/reports_screen.dart';
-import 'package:thinvest/screens/support.dart';
-import 'package:thinvest/screens/trades_screen.dart';
 import 'package:thinvest/widgets/deposit_table.dart';
 
 class DepositsScreen extends StatelessWidget {
@@ -94,7 +90,7 @@ class DepositsScreen extends StatelessWidget {
                 width: screenWidth,
                 height: screenHeight * .085,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
+                  // borderRadius: BorderRadius.circular(15),
                   gradient: LinearGradient(
                     colors: [
                       CColors.buttonOne,

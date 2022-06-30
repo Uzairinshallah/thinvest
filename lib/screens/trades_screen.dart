@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/strings.dart';
-import 'package:thinvest/screens/dashboard/dashboard.dart';
-import 'package:thinvest/screens/deposit.dart';
 import 'package:thinvest/screens/drawer/get_drawer.dart';
-import 'package:thinvest/screens/reports_screen.dart';
-import 'package:thinvest/screens/support.dart';
 import 'package:thinvest/widgets/trades_table.dart';
 
 class TrandesScreen extends StatefulWidget {
@@ -106,9 +102,17 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                 },
                                 items: <String>[
                                   'January',
-                                  'Febuary',
+                                  'February',
                                   'March',
-                                  'April'
+                                  'April',
+                                  'May',
+                                  'June',
+                                  'July',
+                                  'August',
+                                  'September',
+                                  'October',
+                                  'November',
+                                  'December',
                                 ].map<DropdownMenuItem<String>>((String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
@@ -128,7 +132,8 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         color: Colors.black26, width: 1),
-                                    borderRadius: BorderRadius.circular(10)),
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
                                 child: DropdownButton<String>(
                                   value: dropdownYear,
                                   isExpanded: true,
@@ -171,7 +176,7 @@ class _TrandesScreenState extends State<TrandesScreen> {
                       width: screenWidth,
                       height: screenHeight * .095,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
+                        // borderRadius: BorderRadius.circular(15),
                         gradient: LinearGradient(
                           colors: [
                             CColors.buttonOne,
@@ -218,103 +223,4 @@ class _TrandesScreenState extends State<TrandesScreen> {
     );
   }
 
-// Drawer getDrawer() {
-//   return Drawer(
-//     child: Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Container(
-//             height: screenHeight * .27,
-//             child: Padding(
-//               padding: const EdgeInsets.only(top: 25.0),
-//               child: Image.asset('assets/icons/thinvest.png'),
-//             )),
-//         Padding(
-//           padding: const EdgeInsets.only(left: 45.0, right: 45),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               drawerHeading('Dashboard', () {
-//                 print('clicked');
-//                 Navigator.pop(context);
-//                 Navigator.push(context,
-//                     MaterialPageRoute(builder: (context) => Dashboard()));
-//               }),
-//               getLine(),
-//               drawerHeading('Trades', () {
-//                 Navigator.pop(context);
-//                 Navigator.push(context,
-//                     MaterialPageRoute(builder: (context) => TrandesScreen()));
-//               }),
-//               getLine(),
-//               drawerHeading('Deposits', () {
-//                 Navigator.pop(context);
-//                 Navigator.push(
-//                     context,
-//                     MaterialPageRoute(
-//                         builder: (context) => DepositsScreen()));
-//               }),
-//               getLine(),
-//               drawerHeading('Reports', () {
-//                 Navigator.pop(context);
-//                 Navigator.push(context,
-//                     MaterialPageRoute(builder: (context) => ReportsScreen()));
-//               }),
-//               getLine(),
-//               drawerHeading('Support', () {
-//                 Navigator.pop(context);
-//                 Navigator.push(context,
-//                     MaterialPageRoute(builder: (context) => Support()));
-//               }),
-//             ],
-//           ),
-//         ),
-//         Expanded(child: SizedBox()),
-//         Padding(
-//           padding: const EdgeInsets.all(15.0),
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.end,
-//             children: [
-//               Text(
-//                 'Logout',
-//                 style: TextStyle(
-//                   fontSize: 14,
-//                 ),
-//               ),
-//               SizedBox(
-//                 width: 5,
-//               ),
-//               Image.asset('assets/icons/logout.png'),
-//             ],
-//           ),
-//         )
-//       ],
-//     ),
-//   );
-// }
-//
-// Widget drawerHeading(String txt, onTap) {
-//   return InkWell(
-//     onTap: () {
-//       onTap();
-//     },
-//     child: Text(
-//       txt,
-//       style: TextStyle(
-//         color: CColors.textColor,
-//         fontSize: 18,
-//       ),
-//     ),
-//   );
-// }
-//
-// Padding getLine() {
-//   return Padding(
-//     padding: const EdgeInsets.only(top: 18.0, bottom: 20),
-//     child: Container(
-//       color: CColors.textColor,
-//       height: 1,
-//     ),
-//   );
-// }
 }

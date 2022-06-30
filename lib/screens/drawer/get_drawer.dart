@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/constants.dart';
+import 'package:thinvest/Extras/functions.dart';
+import 'package:thinvest/Extras/hive_boxes.dart';
+import 'package:thinvest/main.dart';
 import 'package:thinvest/screens/dashboard/dashboard.dart';
 import 'package:thinvest/screens/deposit.dart';
+import 'package:thinvest/screens/login_page.dart';
 import 'package:thinvest/screens/reports_screen.dart';
 import 'package:thinvest/screens/support.dart';
 import 'package:thinvest/screens/trades_screen.dart';
@@ -24,7 +30,10 @@ class GetDrawer extends StatelessWidget {
               height: screenHeight * .27,
               child: Padding(
                 padding: const EdgeInsets.only(top: 25.0, left: 45.0),
-                child: Image.asset('assets/icons/thinvest.png', width: screenWidth * .6,),
+                child: Image.asset(
+                  'assets/icons/thinvest.png',
+                  width: screenWidth * .6,
+                ),
               )),
           Padding(
             padding: const EdgeInsets.only(left: 45.0, right: 45),
@@ -32,7 +41,6 @@ class GetDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 drawerHeading('Dashboard', () {
-                  print('clicked');
                   Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Dashboard()));
@@ -70,20 +78,33 @@ class GetDrawer extends StatelessWidget {
           Expanded(child: SizedBox()),
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  'Logout',
-                  style: TextStyle(
-                    fontSize: 14,
+            child: InkWell(
+              onTap: () {
+                // HiveBoxes.userBox.delete("profile");
+                HiveBoxes.userBox.delete("profile");
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            LoginPage()),
+                        (Route<dynamic> route) => false);
+                Functions.showSnackBar(context, 'Log Out Successfully');
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Text(
+                    'Logout',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Image.asset('assets/icons/logout.png'),
-              ],
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Image.asset('assets/icons/logout.png'),
+                ],
+              ),
             ),
           )
         ],
@@ -106,11 +127,14 @@ class GetDrawer extends StatelessWidget {
       onTap: () {
         onTap();
       },
-      child: Text(
-        txt,
-        style: TextStyle(
-          color: CColors.textColor,
-          fontSize: 18,
+      child: SizedBox(
+        width: screenWidth,
+        child: Text(
+          txt,
+          style: TextStyle(
+            color: CColors.textColor,
+            fontSize: 18,
+          ),
         ),
       ),
     );

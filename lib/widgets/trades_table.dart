@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/sdp.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:thinvest/models/trades_model.dart';
+import 'package:thinvest/widgets/viewAlert.dart';
 
 class TradesTable extends StatefulWidget {
   TradesTable({Key? key}) : super(key: key);
@@ -26,19 +28,23 @@ class _TradesTableState extends State<TradesTable> {
     screenHeight = MediaQuery.of(context).size.height;
     return FutureBuilder(
         future: getData('a'),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<TradesModel>> snapshot) {
+
           if (snapshot.connectionState != ConnectionState.done) {
-            return Center(child: const CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           }
+
           if (snapshot.hasData) {
+            var list = snapshot.data!;
             return ListView.builder(
-                physics: ScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
-                itemCount: snapshot.data.length,
+                itemCount: list.length,
                 itemBuilder: (BuildContext context, int index) {
+                  var model = list[index];
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 4.0),
                     child: Row(
@@ -47,35 +53,47 @@ class _TradesTableState extends State<TradesTable> {
                             child: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: getSubHeading(
-                              snapshot.data[index].type.toString(),
+                              model.type.toString(),
                               fontSize,
                               CColors.green),
                         )),
                         Expanded(
                             child: getSubHeading(
-                                snapshot.data[index].amount.toString(),
+                                model.amount.toString(),
                                 .17,
                                 Colors.black)),
                         Expanded(
                             child: Column(
                           children: [
                             getSubHeading(
-                                snapshot.data[index].price.toString(),
+                                model.price.toString(),
                                 fontSize,
                                 CColors.green),
                             getSubHeading(
-                                snapshot.data[index].closing_price.toString(),
+                                model.closing_price.toString(),
                                 fontSize,
                                 Colors.black),
                           ],
                         )),
                         Expanded(
-                            child: getSubHeading(
-                                snapshot.data[index].trade_date.toString(),
-                                fontSize,
-                                Colors.black)),
+                            child: Column(
+                              children: [
+                                getSubHeading(
+                                    model.trade_date.toString(),
+                                    fontSize,
+                                    Colors.black),
+                                getSubHeading(
+                                    model.trade_time.toString(),
+                                    fontSize,
+                                    Colors.black),
+                              ],
+                            )),
                         Expanded(
                             child: InkWell(
+                              onTap: (){
+                                showDialog(context: context, builder: (context) => ViewAlert(tradesModel :model));
+
+                              },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -114,16 +132,31 @@ class _TradesTableState extends State<TradesTable> {
 
   Future<List<TradesModel>> getData(context) async {
     var url = "https://thinvest.com/api/trade";
-    var response = await http.get(Uri.parse(url));
+    var token = HiveBoxes.userBox.values.first.apiToken!;
+    // var response = await http.get(Uri.parse(url));
+
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
     print(response);
     if (response.statusCode == 200) {
+
       var results = jsonDecode(response.body);
       List<TradesModel> arrData = [];
+      int? a = 0;
       for (var result in results) {
         var model = TradesModel.fromMap(result);
-        arrData.add(model);
+        print(HiveBoxes.userBox.values.first.id.toString() + 'aaaaaa');
+
+        if(HiveBoxes.userBox.values.first.id == model.userId){
+          a =  model.id;
+          arrData.add(model);
+        }
       }
 
+      print(HiveBoxes.userBox.values.first.id);
       print(arrData.length);
 
       return arrData;

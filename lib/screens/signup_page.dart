@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/getX/signup_state.dart';
 import 'package:thinvest/screens/signup_proceed.dart';
 
@@ -67,10 +68,13 @@ class _SignupPageState extends State<SignupPage> {
                           height: screenHeight * .20,
                           child: Padding(
                             padding: const EdgeInsets.only(top: 25.0),
-                            child: Image.asset('assets/icons/thinvest.png', width: screenWidth * .7,),
+                            child: Image.asset(
+                              'assets/icons/thinvest.png',
+                              width: screenWidth * .7,
+                            ),
                           )),
                       Text(
-                        'Create Account',
+                        AppStrings.createAccount,
                         style:
                             TextStyle(color: CColors.textColor, fontSize: 24),
                       ),
@@ -78,12 +82,12 @@ class _SignupPageState extends State<SignupPage> {
                         padding: const EdgeInsets.only(top: 8.0),
                         child: RichText(
                           text: TextSpan(
-                              text: 'Don\'t have an account? ',
+                              text: AppStrings.alreadyHaveAnAccount,
                               style: TextStyle(
                                   color: CColors.textColor, fontSize: 13),
                               children: <TextSpan>[
                                 TextSpan(
-                                    text: 'Login Here',
+                                    text: AppStrings.loginHere,
                                     style: TextStyle(
                                         color: CColors.buttonOne, fontSize: 13),
                                     recognizer: TapGestureRecognizer()
@@ -98,11 +102,6 @@ class _SignupPageState extends State<SignupPage> {
                               ]),
                         ),
                       ),
-
-                      // perosnalBlock(context),
-                      // contactDetails(context),
-                      // investmentBlock(),
-
                       Obx(() {
                         if (controller.state.value == 0) {
                           return perosnalBlock(context);
@@ -132,7 +131,7 @@ class _SignupPageState extends State<SignupPage> {
                                   color: CColors.buttonOne,
                                 ),
                                 Text(
-                                  'Previous',
+                                  AppStrings.previous,
                                   style: TextStyle(
                                       color: CColors.buttonOne, fontSize: 16),
                                 ),
@@ -152,7 +151,7 @@ class _SignupPageState extends State<SignupPage> {
                               children: [
                                 InkWell(
                                   child: Text(
-                                    'Next',
+                                    AppStrings.next,
                                     style: TextStyle(
                                         color: CColors.buttonOne, fontSize: 16),
                                   ),
@@ -163,7 +162,7 @@ class _SignupPageState extends State<SignupPage> {
                                 )
                               ],
                             )
-                          : CreateAccountBtn('Create Account', () {
+                          : CreateAccountBtn(AppStrings.createAccount, () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -259,7 +258,7 @@ class _SignupPageState extends State<SignupPage> {
       children: [
         Padding(
             padding: EdgeInsets.only(top: 35, left: 10, right: 10, bottom: 0),
-            child: getNotice3('Identification & primary investment')),
+            child: getNotice3(AppStrings.identificationPrimaryInvestment)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -295,31 +294,31 @@ class _SignupPageState extends State<SignupPage> {
             ),
             SizedBox(
                 width: screenWidth * .42,
-                child: getTextField('Identification No', email)),
+                child: getTextField(
+                    AppStrings.identificationNumber, identificationNoController)),
           ],
         ),
         Padding(
           padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-          child: getTextField('Password', email),
+          child: getTextField(AppStrings.password, passportController),
         ),
-        getTextField('Confirm Password', email),
+        getTextField(AppStrings.confirmPassword, cPasswordController),
         Padding(
           padding: const EdgeInsets.only(top: 15.0, bottom: 2, left: 8),
           child: Align(
               alignment: Alignment.bottomLeft,
               child: Text(
-                'This is the amount you want to start with. This answer is not final and is always subject to change.',
+                AppStrings.thisIsTheAmountYouWantToStartWithThisAnswerIsNotFinalAndIsAlwaysSubjectToChange,
                 style: TextStyle(color: CColors.textColor, fontSize: 10),
                 textAlign: TextAlign.center,
               )),
         ),
-        getAmountField('\$ 3000', email),
+        getTextField('\$ 3000', startingAmountController),
         Padding(
           padding:
               const EdgeInsets.only(top: 15, left: 30, right: 30, bottom: 20),
-          child: getNotice('Terms and agreements'),
+          child: getNotice(AppStrings.termsAndAgreements),
         ),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -339,9 +338,11 @@ class _SignupPageState extends State<SignupPage> {
                 },
               ),
             ),
-            SizedBox(width: 10,),
-            const Text(
-              'Term & Agreement',
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              AppStrings.termsAgreements,
               style: TextStyle(fontSize: 12),
             )
           ],
@@ -365,10 +366,12 @@ class _SignupPageState extends State<SignupPage> {
                 },
               ),
             ),
-            SizedBox(width: 10,),
-            const Expanded(
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
                 child: Text(
-              'I accept the privacy policy and declare that I am over 18 years old.',
+              AppStrings.acceptPolicy,
               style: TextStyle(fontSize: 12),
             ))
           ],
@@ -411,14 +414,14 @@ class _SignupPageState extends State<SignupPage> {
         Padding(
           padding:
               const EdgeInsets.only(top: 65, left: 30, right: 30, bottom: 21),
-          child: getNotice('Contact Details'),
+          child: getNotice(AppStrings.contactDetails),
         ),
-        getTextField('Phone', email),
+        getTextField(AppStrings.phone, phoneController),
         Padding(
           padding: const EdgeInsets.only(top: 15.0, bottom: 15),
-          child: getTextField('Mobile Number', email),
+          child: getTextField(AppStrings.mobileNo, email),
         ),
-        getTextField('Address', email),
+        getTextField(AppStrings.address, addressController),
         Padding(
           padding: const EdgeInsets.only(top: 15.0, bottom: 15),
           child: Row(
@@ -426,11 +429,11 @@ class _SignupPageState extends State<SignupPage> {
             children: [
               SizedBox(
                 width: screenWidth * .43,
-                child: getTextField('Postal Code', email),
+                child: getTextField(AppStrings.postalCode, postalCodeController),
               ),
               Container(
                 width: screenWidth * .43,
-                child: getTextField('City', email),
+                child: getTextField(AppStrings.city, cityController),
               ),
             ],
           ),
@@ -440,7 +443,7 @@ class _SignupPageState extends State<SignupPage> {
           child: Align(
               alignment: Alignment.bottomLeft,
               child: Text(
-                'Country',
+                AppStrings.country,
                 style: TextStyle(color: CColors.textColor, fontSize: 12),
               )),
         ),
@@ -483,21 +486,24 @@ class _SignupPageState extends State<SignupPage> {
         Padding(
           padding:
               const EdgeInsets.only(top: 65, left: 30, right: 30, bottom: 21),
-          child: getNotice('Personal Information'),
+          child: getNotice(AppStrings.personalInformation),
         ),
-        getTextField('First Name', email),
+        getTextField(AppStrings.firstName, fNameController),
         Padding(
           padding: const EdgeInsets.only(top: 14.0, bottom: 14),
-          child: getTextField('Middle Name', email),
+          child: getTextField(AppStrings.middleName, mNameController),
         ),
-        getTextField('Last Name', email),
+        getTextField(AppStrings.lastName, lNameController),
         Padding(
           padding: const EdgeInsets.only(top: 15.0, bottom: 2, left: 4),
           child: Align(
               alignment: Alignment.bottomLeft,
-              child: Text(
-                'Date of Birth',
-                style: TextStyle(color: CColors.textColor, fontSize: 14),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 7.0),
+                child: Text(
+                  AppStrings.dateOfBirth,
+                  style: TextStyle(color: CColors.textColor, fontSize: 12),
+                ),
               )),
         ),
         Padding(
@@ -511,18 +517,23 @@ class _SignupPageState extends State<SignupPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                      reg_date != null
-                          ? DateFormat('dd-MM-yyyy').format(reg_date).toString()
-                          : DateFormat('dd-MM-yyyy')
-                              .format(DateTime.now())
-                              .toString(),
-                      style: TextStyle(
-                        color: CColors.textColor,
-                        fontSize: 14,
-                      )),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                        reg_date != null
+                            ? DateFormat('dd-MM-yyyy')
+                                .format(reg_date)
+                                .toString()
+                            : DateFormat('dd-MM-yyyy')
+                                .format(DateTime.now())
+                                .toString(),
+                        style: TextStyle(
+                          color: CColors.textColor,
+                          fontSize: 11,
+                        )),
+                  ),
                 ),
                 InkWell(
                   child: Padding(
@@ -549,7 +560,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
           ),
         ),
-        getTextField('Email', email),
+        getTextField(AppStrings.email, emailController),
       ],
     );
   }
@@ -608,7 +619,7 @@ class _SignupPageState extends State<SignupPage> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter some text';
+          return AppStrings.pleaseEnterSomeText;
         }
         return null;
       },
@@ -641,7 +652,7 @@ class _SignupPageState extends State<SignupPage> {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter some text';
+          return AppStrings.pleaseEnterSomeText;
         }
         return null;
       },
