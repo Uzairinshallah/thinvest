@@ -4,26 +4,66 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/hive_boxes.dart';
+import 'package:thinvest/Extras/sdp.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/models/stats_model.dart';
+import 'package:thinvest/models/trades_model.dart';
 import 'package:thinvest/screens/dashboard/subs_chart.dart';
 import 'package:thinvest/screens/deposit.dart';
 import 'package:thinvest/screens/profile.dart';
 import 'package:thinvest/screens/drawer/get_drawer.dart';
-import 'package:thinvest/widgets/trades_table.dart';
+import 'package:thinvest/widgets/viewAlert.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key? key}) : super(key: key);
 
-  @override
-  State<Dashboard> createState() => _DashboardState();
-}
+    @override
+    State<Dashboard> createState() => _DashboardState();
+  }
 
-class _DashboardState extends State<Dashboard> {
-  var screenWidth, screenHeight;
-  String dropdownMonth = 'January';
-  String dropdownYear = '2022';
+  class _DashboardState extends State<Dashboard> {
+    var screenWidth, screenHeight;
+    var now = new DateTime.now();
+    var con = ScrollController();
+    String selectedMonth = 'January';
+    String selectedYear = '2022';
+    List<String> dropDownYears = [
+      '2012',
+    '2013',
+    '2014',
+    '2015',
+    '2016',
+    '2017',
+    '2018',
+    '2019',
+    '2020',
+    '2021',
+    '2022'
+  ];
+  List<String> dropDownMonths = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
   var date = DateTime.parse(HiveBoxes.userBox.values.first.createdAt!);
+  List<TradesModel> tradesModel = [];
+  List<StatsModel> statsModel = [];
+
+  @override
+  void initState() {
+    getDataTrades();
+    getDataStats();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +71,8 @@ class _DashboardState extends State<Dashboard> {
     screenHeight = MediaQuery.of(context).size.height;
     final GlobalKey<ScaffoldState> _key = GlobalKey();
     var memberSince = "${date.day}-${date.month}-${date.year}";
-
+    SDP.init(context);
+    double fontSize = SDP.sdp(10);
 
     return Scaffold(
       drawer: GetDrawer(),
@@ -84,6 +125,7 @@ class _DashboardState extends State<Dashboard> {
             ),
             Expanded(
               child: SingleChildScrollView(
+                controller: con,
                 physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
@@ -143,7 +185,7 @@ class _DashboardState extends State<Dashboard> {
                             Align(
                                 alignment: Alignment.bottomLeft,
                                 child: Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 22.0, top: 8, bottom: 15),
                                   child: InkWell(
                                     onTap: () {
@@ -174,257 +216,8 @@ class _DashboardState extends State<Dashboard> {
                             border:
                                 Border.all(color: Colors.black26, width: 1)),
                         child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: FutureBuilder(
-                              future: getData('a'),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<StatsModel> snapshot) {
-                                if (snapshot.connectionState !=
-                                    ConnectionState.done) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                }
-                                if (snapshot.hasError) {
-                                  return Text(snapshot.error.toString());
-                                }
-
-                                if (snapshot.hasData) {
-                                  var list = snapshot.data!;
-                                  print(list);
-
-                                  return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Start Cap',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            list.startCap!,
-                                            style: TextStyle(
-                                                color: CColors.textColor),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Client Since',
-                                            style:
-                                                TextStyle(fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            memberSince,
-                                            style: TextStyle(color: CColors.textColor),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Profit/Loss(net)',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            list.profitLossPercentage
-                                                .toString(),
-                                            style: TextStyle(
-                                                color: CColors.textColor),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Profit Share',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            list.profitShare!,
-                                            style: TextStyle(
-                                                color: CColors.textColor),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Total Deposit',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            list.totalDeposit!,
-                                            style: TextStyle(
-                                                color: CColors.textColor),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Text(
-                                            'Equity',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            list.equity!,
-                                            style: TextStyle(
-                                                color: CColors.textColor),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  );
-                                }
-                                return const Text(
-                                    "Error while calling getData");
-                              }),
-
-                          // Column(
-                          //   crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: [
-                          //     Row(
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceBetween,
-                          //       children: [
-                          //         const Text(
-                          //           'Start Cap',
-                          //           style:
-                          //               TextStyle(fontWeight: FontWeight.bold),
-                          //         ),
-                          //         Text(
-                          //           '\$243.23',
-                          //           style: TextStyle(color: CColors.textColor),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //     const SizedBox(
-                          //       height: 4,
-                          //     ),
-                          //     Row(
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceBetween,
-                          //       children: [
-                          //         const Text(
-                          //           'Client Since',
-                          //           style:
-                          //               TextStyle(fontWeight: FontWeight.bold),
-                          //         ),
-                          //         Text(
-                          //           '\$243.23',
-                          //           style: TextStyle(color: CColors.textColor),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //     const SizedBox(
-                          //       height: 4,
-                          //     ),
-                          //     Row(
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceBetween,
-                          //       children: [
-                          //         const Text(
-                          //           'Profit/Loss(net)',
-                          //           style:
-                          //               TextStyle(fontWeight: FontWeight.bold),
-                          //         ),
-                          //         Text(
-                          //           '\$243.23',
-                          //           style: TextStyle(color: CColors.textColor),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //     SizedBox(
-                          //       height: 4,
-                          //     ),
-                          //     Row(
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceBetween,
-                          //       children: [
-                          //         const Text(
-                          //           'Profit Share',
-                          //           style:
-                          //               TextStyle(fontWeight: FontWeight.bold),
-                          //         ),
-                          //         Text(
-                          //           '\$243.23',
-                          //           style: TextStyle(color: CColors.textColor),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //     SizedBox(
-                          //       height: 4,
-                          //     ),
-                          //     Row(
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceBetween,
-                          //       children: [
-                          //         const Text(
-                          //           'Total Deposit',
-                          //           style:
-                          //               TextStyle(fontWeight: FontWeight.bold),
-                          //         ),
-                          //         Text(
-                          //           '\$243.23',
-                          //           style: TextStyle(color: CColors.textColor),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //     SizedBox(
-                          //       height: 4,
-                          //     ),
-                          //     Row(
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceBetween,
-                          //       children: [
-                          //         const Text(
-                          //           'Equity',
-                          //           style:
-                          //               TextStyle(fontWeight: FontWeight.bold),
-                          //         ),
-                          //         Text(
-                          //           '\$243.23',
-                          //           style: TextStyle(color: CColors.textColor),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ],
-                          // ),
-                        ),
+                            padding: const EdgeInsets.all(15.0),
+                            child: getStatistics(memberSince)),
                       ),
                     ),
                     Padding(
@@ -447,7 +240,7 @@ class _DashboardState extends State<Dashboard> {
                                         color: Colors.black26, width: 1),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: DropdownButton<String>(
-                                  value: dropdownMonth,
+                                  value: selectedMonth,
                                   isExpanded: true,
                                   icon: const Icon(Icons.arrow_drop_down),
                                   elevation: 16,
@@ -456,24 +249,13 @@ class _DashboardState extends State<Dashboard> {
                                   underline: const SizedBox(),
                                   onChanged: (String? newValue) {
                                     setState(() {
-                                      dropdownMonth = newValue!;
+                                      selectedMonth = newValue!;
+                                      getDataTrades();
                                     });
                                   },
-                                  items: <String>[
-                                    'January',
-                                    'February',
-                                    'March',
-                                    'April',
-                                    'May',
-                                    'June',
-                                    'July',
-                                    'August',
-                                    'September',
-                                    'October',
-                                    'November',
-                                    'December',
-                                  ].map<DropdownMenuItem<String>>(
-                                      (String value) {
+                                  items: dropDownMonths
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Padding(
@@ -495,25 +277,23 @@ class _DashboardState extends State<Dashboard> {
                                           color: Colors.black26, width: 1),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: DropdownButton<String>(
-                                    value: dropdownYear,
+                                    value: selectedYear,
                                     isExpanded: true,
                                     icon: const Icon(Icons.arrow_drop_down),
                                     elevation: 16,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.black, fontSize: 13),
                                     underline: const SizedBox(),
                                     onChanged: (String? newValue) {
                                       setState(() {
-                                        dropdownYear = newValue!;
+                                        selectedYear = newValue!;
+                                        getDataTrades();
+
                                       });
                                     },
-                                    items: <String>[
-                                      '2022',
-                                      '2021',
-                                      '2020',
-                                      '2019'
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
+                                    items: dropDownYears
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: Padding(
@@ -619,7 +399,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                     ),
-                    Container(height: 230, child: TradesTable()),
+                    Container(height: 230, child: getTradesBuilder(fontSize)),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
@@ -771,6 +551,192 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
+  Widget getTradesBuilder(double fontSize) {
+    print('tradesModel.length');
+    print(tradesModel.length);
+    return  ListView.builder(
+        physics: BouncingScrollPhysics(),
+        padding: EdgeInsets.zero,
+        itemCount: tradesModel.length,
+        itemBuilder: (BuildContext context, int index) {
+          var model = tradesModel[index];
+          DateTime dt = DateTime.parse(model.trade_date!);
+          String checkYear = dt.year.toString();
+          int checkMonth = dt.month;
+          print(checkMonth);
+          print(checkYear);
+          // if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
+            return  Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: getSubHeading(
+                            model.type.toString(), fontSize, CColors.green),
+                      )),
+                  Expanded(
+                      child: getSubHeading(
+                          model.amount.toString(), .17, Colors.black)),
+                  Expanded(
+                      child: Column(
+                        children: [
+                          getSubHeading(
+                              model.price.toString(), fontSize, CColors.green),
+                          getSubHeading(
+                              model.closing_price.toString(), fontSize, Colors.black),
+                        ],
+                      )),
+                  Expanded(
+                      child: Column(
+                        children: [
+                          getSubHeading(
+                              model.trade_date.toString(), fontSize, Colors.black),
+                          getSubHeading(
+                              model.trade_time.toString(), fontSize, Colors.black),
+                        ],
+                      )),
+                  Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => ViewAlert(tradesModel: model));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 30,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: CColors.buttonOne),
+                            child: Center(
+                              child: Text(
+                                AppStrings.view,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 10),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )),
+                ],
+              ),
+            );
+          // }
+          // else
+          //   {
+          //     return SizedBox();
+          //   }
+        });
+  }
+
+  Widget getStatistics(String memberSince) {
+    if (statsModel.isEmpty) {
+      return Center(child: CircularProgressIndicator( valueColor:AlwaysStoppedAnimation<Color>(CColors.buttonOne),));
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Start Cap',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.startCap!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Client Since',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              memberSince,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Profit/Loss(net)',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.profitLoss!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Profit Share',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.profitShare!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Total Deposit',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.totalDeposit!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Equity',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.equity!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget getHeading(String txt) {
     return Text(txt,
         style: TextStyle(
@@ -779,13 +745,12 @@ class _DashboardState extends State<Dashboard> {
         textAlign: TextAlign.center);
   }
 
-  Future<StatsModel> getData(context) async {
+  Future<void> getDataStats() async {
     var userId = HiveBoxes.userBox.values.first.id!;
     var token = HiveBoxes.userBox.values.first.apiToken!;
     print('${token}idddd');
 
     var url = "https://thinvest.com/api/statistics/$userId";
-    // var response = await http.get(Uri.parse(url));
     final response = await http.get(
       Uri.parse(url),
       headers: {
@@ -796,15 +761,62 @@ class _DashboardState extends State<Dashboard> {
     );
     print(response.body);
     if (response.statusCode == 200) {
-      print('uzair1');
-
-      print(response.body);
+      statsModel = [];
       var results = jsonDecode(response.body);
       var model = StatsModel.fromMap(results);
-      return model;
+      statsModel.add(model);
+      setState(() {});
+
+      // return model;
     } else {
       print('Something Wrong');
       throw Exception("Failed to Fetch Data");
     }
+  }
+
+  Future<void> getDataTrades() async {
+    print('callllllllllllll');
+    var url = "https://thinvest.com/api/trade";
+    var token = HiveBoxes.userBox.values.first.apiToken!;
+    // var response = await http.get(Uri.parse(url));
+
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    print(response);
+    if (response.statusCode == 200) {
+      var results = jsonDecode(response.body);
+      tradesModel = [];
+      // int? a = 0;
+      for (var result in results) {
+        var model = TradesModel.fromMap(result);
+        if (HiveBoxes.userBox.values.first.id == model.userId) {
+          // a = model.id;
+          DateTime dt = DateTime.parse(model.trade_date!);
+          String checkYear = dt.year.toString();
+          int checkMonth = dt.month;
+          if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
+            tradesModel.add(model);
+          }
+        }
+        setState(() {});
+      }
+
+      // return tradesModel;
+    } else {
+      print('Something Wrong');
+      throw Exception("Failed to Fetch Data");
+    }
+  }
+
+  Widget getSubHeading(String txt, double size, Color col) {
+    return SizedBox(
+      width: screenWidth * size,
+      child: Text(txt,
+          style: TextStyle(color: col, fontSize: 12),
+          textAlign: TextAlign.center),
+    );
   }
 }

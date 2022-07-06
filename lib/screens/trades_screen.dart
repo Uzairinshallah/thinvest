@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/strings.dart';
+import 'package:http/http.dart' as http;
+import 'package:thinvest/models/trades_model.dart';
 import 'package:thinvest/screens/drawer/get_drawer.dart';
 import 'package:thinvest/widgets/trades_table.dart';
 
@@ -13,8 +18,43 @@ class TrandesScreen extends StatefulWidget {
 
 class _TrandesScreenState extends State<TrandesScreen> {
   var screenWidth, screenHeight;
-  String dropdownMonth = 'January';
-  String dropdownYear = '2022';
+  String selectedMonth = 'January';
+  String selectedYear = '2022';
+  List<TradesModel> tradesList = [];
+  List<String> dropDownYears = [
+    '2012',
+    '2013',
+    '2014',
+    '2015',
+    '2016',
+    '2017',
+    '2018',
+    '2019',
+    '2020',
+    '2021',
+    '2022'
+  ];
+  List<String> dropDownMonths = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  @override
+  void initState() {
+    print("jhjhggh");
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +77,10 @@ class _TrandesScreenState extends State<TrandesScreen> {
                       onTap: () {
                         _key.currentState!.openDrawer();
                       },
-                      child: SizedBox(width: 50, height: 50, child: Image.asset('assets/icons/drawer.png'))),
+                      child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Image.asset('assets/icons/drawer.png'))),
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Column(
@@ -71,7 +114,8 @@ class _TrandesScreenState extends State<TrandesScreen> {
                     height: 35,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 15, right: 15),
+                    padding: const EdgeInsets.only(
+                        top: 8.0, bottom: 8, left: 15, right: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -89,7 +133,7 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                       color: Colors.black26, width: 1),
                                   borderRadius: BorderRadius.circular(10)),
                               child: DropdownButton<String>(
-                                value: dropdownMonth,
+                                value: selectedMonth,
                                 isExpanded: true,
                                 icon: const Icon(Icons.arrow_drop_down),
                                 elevation: 16,
@@ -97,23 +141,12 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                 underline: const SizedBox(),
                                 onChanged: (String? newValue) {
                                   setState(() {
-                                    dropdownMonth = newValue!;
+                                    selectedMonth = newValue!;
                                   });
                                 },
-                                items: <String>[
-                                  'January',
-                                  'February',
-                                  'March',
-                                  'April',
-                                  'May',
-                                  'June',
-                                  'July',
-                                  'August',
-                                  'September',
-                                  'October',
-                                  'November',
-                                  'December',
-                                ].map<DropdownMenuItem<String>>((String value) {
+                                items: dropDownMonths
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Padding(
@@ -132,10 +165,9 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         color: Colors.black26, width: 1),
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
+                                    borderRadius: BorderRadius.circular(10)),
                                 child: DropdownButton<String>(
-                                  value: dropdownYear,
+                                  value: selectedYear,
                                   isExpanded: true,
                                   icon: const Icon(Icons.arrow_drop_down),
                                   elevation: 16,
@@ -143,16 +175,12 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                   underline: const SizedBox(),
                                   onChanged: (String? newValue) {
                                     setState(() {
-                                      dropdownYear = newValue!;
+                                      selectedYear = newValue!;
                                     });
                                   },
-                                  items: <String>[
-                                    '2022',
-                                    '2021',
-                                    '2020',
-                                    '2019'
-                                  ].map<DropdownMenuItem<String>>(
-                                      (String value) {
+                                  items: dropDownYears
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Padding(
@@ -196,7 +224,10 @@ class _TrandesScreenState extends State<TrandesScreen> {
                       ),
                     ),
                   ),
-                  Expanded(child: TradesTable()),
+                  Expanded(
+                      child: (tradesList.isEmpty)
+                          ? Center(child:  CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(CColors.buttonOne),))
+                          : TradesTable(tradesModel: tradesList.where((element) => checkMonth(element)).toList())),
                 ],
               ),
             ),
@@ -223,4 +254,43 @@ class _TrandesScreenState extends State<TrandesScreen> {
     );
   }
 
+  bool checkMonth(TradesModel model) {
+    DateTime dt = DateTime.parse(model.trade_date!);
+    String checkYear = dt.year.toString();
+    int checkMonth = dt.month;
+    print(checkMonth);
+    print(checkYear);
+    return checkYear == selectedYear &&
+        checkMonth == dropDownMonths.indexOf(selectedMonth) + 1;
+  }
+
+  Future<void> getData() async {
+    var url = "https://thinvest.com/api/trade";
+    var token = HiveBoxes.userBox.values.first.apiToken!;
+    // var response = await http.get(Uri.parse(url));
+
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    print(response);
+    if (response.statusCode == 200) {
+      var results = jsonDecode(response.body);
+      tradesList = [];
+      for (var result in results) {
+        var model = TradesModel.fromMap(result);
+        if (HiveBoxes.userBox.values.first.id == model.userId) {
+          tradesList.add(model);
+        }
+        setState(() {});
+      }
+      print(HiveBoxes.userBox.values.first.id);
+
+      // return tradesModel;
+    } else {
+      print('Something Wrong');
+      throw Exception("Failed to Fetch Data");
+    }
+  }
 }

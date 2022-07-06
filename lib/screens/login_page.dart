@@ -21,7 +21,6 @@ class LoginPage extends StatelessWidget {
   var emailController = TextEditingController();
   var passController = TextEditingController();
 
-  final Uri _url = Uri.parse('https://flutter.dev');
 
 
   login(String email, String pass, BuildContext context) async {
@@ -47,7 +46,15 @@ class LoginPage extends StatelessWidget {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Dashboard()));
         return;
-      } else {
+      }
+      else if(response.statusCode == 500){
+        Functions.showSnackBar(
+          context,
+          'API is not working correctly (Error ${response.statusCode.toString()})',
+        );
+        print('Failed');
+      }
+      else {
         Functions.showSnackBar(
           context,
           'Login Failed',
@@ -108,8 +115,9 @@ class LoginPage extends StatelessWidget {
                       Functions.showSnackBar(context,
                           AppStrings.pleaseEnterEmailAndPasswordCorrectly);
                     }
-                    // Navigator.push(
-                        // context, MaterialPageRoute(builder: (context) => ReportsScreen()));
+
+
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen(  )));
 
                     login(emailController.text.toString(),
                         passController.text.toString(), context);

@@ -24,7 +24,7 @@ class DepositTable extends StatelessWidget {
             future: getData('a'),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
-                return Center(child: const CircularProgressIndicator());
+                return Center(child:  CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(CColors.buttonOne),));
               }
               if (snapshot.hasError) {
                 return  Text(snapshot.error.toString());
