@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/models/trades_model.dart';
-import '../extras/functions.dart';
+// import '../extras/functions.dart';
 
 class ViewAlert extends StatefulWidget {
   TradesModel ? tradesModel;

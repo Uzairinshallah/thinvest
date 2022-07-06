@@ -30,7 +30,7 @@ class _SupportState extends State<Support> {
       drawer: GetDrawer(),
       key: _key,
       body: Padding(
-        padding: EdgeInsets.only(top: 50, left: 15, right: 15),
+        padding: EdgeInsets.only(top: 50, left: 15, right: 15, bottom: 15),
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(

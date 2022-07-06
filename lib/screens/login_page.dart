@@ -10,6 +10,7 @@ import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/main.dart';
 import 'package:thinvest/models/user_model.dart';
 import 'package:thinvest/screens/dashboard/dashboard.dart';
+import 'package:thinvest/screens/reports_screen.dart';
 import 'package:thinvest/screens/signup_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -107,6 +108,9 @@ class LoginPage extends StatelessWidget {
                       Functions.showSnackBar(context,
                           AppStrings.pleaseEnterEmailAndPasswordCorrectly);
                     }
+                    // Navigator.push(
+                        // context, MaterialPageRoute(builder: (context) => ReportsScreen()));
+
                     login(emailController.text.toString(),
                         passController.text.toString(), context);
                   }),
