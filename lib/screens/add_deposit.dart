@@ -22,126 +22,132 @@ class _AddDepositState extends State<AddDeposit> {
     screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: 90, left: 25, right: 25),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const TrandesScreen()));
-              },
-              child: Text(
-                AppStrings.addNewDeposit,
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        padding: MediaQuery.of(context).padding,
+        child: Padding(
+          padding: EdgeInsets.only(top: 10, left: 25, right: 25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const TrandesScreen()));
+                },
+                child: Text(
+                  AppStrings.addNewDeposit,
+                  style:
+                      const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            Text(
-              '${AppStrings.minimum} : 10.00 EUR',
-              style: TextStyle(color: CColors.textColor),
-            ),
-            SizedBox(
-              height: screenHeight * .065,
-            ),
-            getAmountField('\$ 10.00', email),
-            SizedBox(
-              height: screenHeight * .029,
-            ),
-            Row(
-              children: [
-                Checkbox(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+              Text(
+                '${AppStrings.minimum} : 10.00 EUR',
+                style: TextStyle(color: CColors.textColor),
+              ),
+              SizedBox(
+                height: screenHeight * .065,
+              ),
+              getAmountField('\$ 10.00', email),
+              SizedBox(
+                height: screenHeight * .029,
+              ),
+              Row(
+                children: [
+                  Checkbox(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    activeColor: CColors.buttonOne,
+                    value: boxValue,
+                    onChanged: (value) {
+                      setState(() {
+                        boxValue = value!;
+                      });
+                    },
                   ),
-                  activeColor: CColors.buttonOne,
-                  value: boxValue,
-                  onChanged: (value) {
-                    setState(() {
-                      boxValue = value!;
-                    });
-                  },
-                ),
-                Expanded(
-                    child: Text(
-                  AppStrings.bankTransfer,
-                  style: TextStyle(fontSize: 12, color: CColors.textColor),
-                ))
-              ],
-            ),
-            SizedBox(
-              height: screenHeight * .029,
-            ),
-            Text(
-              AppStrings
-                  .afterRequestingNewDepositOneOfOurTeamMembersWillShortlyContactYouThroughEmailWithFurtherInstructions,
-              style: TextStyle(
-                color: CColors.textColor,
-                fontSize: 10,
+                  Expanded(
+                      child: Text(
+                    AppStrings.bankTransfer,
+                    style: TextStyle(fontSize: 12, color: CColors.textColor),
+                  ))
+                ],
               ),
-              textAlign: TextAlign.center,
-            ),
-            Expanded(child: SizedBox()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.only(left: 4.0, right: 4),
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DepositsScreen()));
-                            },
-                            child: Image.asset(
-                              'assets/icons/arrow_back.png',
-                              width: 20,
-                              color: CColors.buttonOne,
-                            ))),
-                    Text(
-                      AppStrings.goBack.toUpperCase(),
-                      style: TextStyle(
-                        color: CColors.buttonOne,
-                      ),
-                    )
-                  ],
+              SizedBox(
+                height: screenHeight * .029,
+              ),
+              Text(
+                AppStrings
+                    .afterRequestingNewDepositOneOfOurTeamMembersWillShortlyContactYouThroughEmailWithFurtherInstructions,
+                style: TextStyle(
+                  color: CColors.textColor,
+                  fontSize: 10,
                 ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      width: screenWidth * .4,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        gradient: LinearGradient(
-                          colors: [
-                            CColors.buttonOne,
-                            CColors.buttonTwo,
-                            CColors.buttonThree,
-                          ],
+                textAlign: TextAlign.center,
+              ),
+              Expanded(child: SizedBox()),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                            padding: EdgeInsets.only(left: 4.0, right: 4),
+                            child: InkWell(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DepositsScreen()));
+                                },
+                                child: Image.asset(
+                                  'assets/icons/arrow_back.png',
+                                  width: 20,
+                                  color: CColors.buttonOne,
+                                ))),
+                        Text(
+                          AppStrings.goBack.toUpperCase(),
+                          style: TextStyle(
+                            color: CColors.buttonOne,
+                          ),
+                        )
+                      ],
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: () {},
+                        child: Container(
+                          width: screenWidth * .4,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            gradient: LinearGradient(
+                              colors: [
+                                CColors.buttonOne,
+                                CColors.buttonTwo,
+                                CColors.buttonThree,
+                              ],
+                            ),
+                          ),
+                          child: Center(
+                              child: Text(
+                            AppStrings.addDeposit,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          )),
                         ),
                       ),
-                      child: Center(
-                          child: Text(
-                        AppStrings.addDeposit,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
-                      )),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

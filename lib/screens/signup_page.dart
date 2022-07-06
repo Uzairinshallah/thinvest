@@ -55,167 +55,170 @@ class _SignupPageState extends State<SignupPage> {
     return Obx(
       () => Scaffold(
         body: Padding(
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                          height: screenHeight * .20,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 25.0),
-                            child: Image.asset(
-                              'assets/icons/thinvest.png',
-                              width: screenWidth * .7,
-                            ),
-                          )),
-                      Text(
-                        AppStrings.createAccount,
-                        style:
-                            TextStyle(color: CColors.textColor, fontSize: 24),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: RichText(
-                          text: TextSpan(
-                              text: AppStrings.alreadyHaveAnAccount,
-                              style: TextStyle(
-                                  color: CColors.textColor, fontSize: 13),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: AppStrings.loginHere,
-                                    style: TextStyle(
-                                        color: CColors.buttonOne, fontSize: 13),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SignupPage()),
-                                        );
-                                      }),
-                              ]),
+          padding: MediaQuery.of(context).padding,
+          child: Padding(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                            height: screenHeight * .20,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 25.0),
+                              child: Image.asset(
+                                'assets/icons/thinvest.png',
+                                width: screenWidth * .7,
+                              ),
+                            )),
+                        Text(
+                          AppStrings.createAccount,
+                          style:
+                              TextStyle(color: CColors.textColor, fontSize: 24),
                         ),
-                      ),
-                      Obx(() {
-                        if (controller.state.value == 0) {
-                          return perosnalBlock(context);
-                        } else if (controller.state.value == 1) {
-                          return contactDetails(context);
-                        } else {
-                          return investmentBlock();
-                        }
-                      }),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: RichText(
+                            text: TextSpan(
+                                text: AppStrings.alreadyHaveAnAccount,
+                                style: TextStyle(
+                                    color: CColors.textColor, fontSize: 13),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: AppStrings.loginHere,
+                                      style: TextStyle(
+                                          color: CColors.buttonOne, fontSize: 13),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SignupPage()),
+                                          );
+                                        }),
+                                ]),
+                          ),
+                        ),
+                        Obx(() {
+                          if (controller.state.value == 0) {
+                            return perosnalBlock(context);
+                          } else if (controller.state.value == 1) {
+                            return contactDetails(context);
+                          } else {
+                            return investmentBlock();
+                          }
+                        }),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                      onTap: () {
-                        controller.state.value--;
-                      },
-                      child: (controller.state.value == 1 ||
-                              controller.state.value == 2)
-                          ? Row(
-                              children: [
-                                Icon(
-                                  Icons.arrow_back,
-                                  color: CColors.buttonOne,
-                                ),
-                                Text(
-                                  AppStrings.previous,
-                                  style: TextStyle(
-                                      color: CColors.buttonOne, fontSize: 16),
-                                ),
-                              ],
-                            )
-                          : SizedBox()),
-                  InkWell(
-                      onTap: () {
-                        (controller.state.value == 0 ||
-                                controller.state.value == 1)
-                            ? controller.state.value++
-                            : null;
-                      },
-                      child: (controller.state.value == 0 ||
-                              controller.state.value == 1)
-                          ? Row(
-                              children: [
-                                InkWell(
-                                  child: Text(
-                                    AppStrings.next,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          controller.state.value--;
+                        },
+                        child: (controller.state.value == 1 ||
+                                controller.state.value == 2)
+                            ? Row(
+                                children: [
+                                  Icon(
+                                    Icons.arrow_back,
+                                    color: CColors.buttonOne,
+                                  ),
+                                  Text(
+                                    AppStrings.previous,
                                     style: TextStyle(
                                         color: CColors.buttonOne, fontSize: 16),
                                   ),
-                                ),
-                                Icon(
-                                  Icons.arrow_forward,
-                                  color: CColors.buttonOne,
-                                )
-                              ],
-                            )
-                          : CreateAccountBtn(AppStrings.createAccount, () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignupProceed()),
-                              );
-                            })),
-                ],
-              ),
-              Obx(() => Padding(
-                    padding: const EdgeInsets.only(
-                        top: 15.0, left: 10, right: 10, bottom: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: Container(
-                              color: (controller.state.value == 0 ||
-                                      controller.state.value == 1 ||
-                                      controller.state.value == 2)
-                                  ? CColors.buttonOne
-                                  : Colors.black.withOpacity(.3),
-                              height: 3,
+                                ],
+                              )
+                            : SizedBox()),
+                    InkWell(
+                        onTap: () {
+                          (controller.state.value == 0 ||
+                                  controller.state.value == 1)
+                              ? controller.state.value++
+                              : null;
+                        },
+                        child: (controller.state.value == 0 ||
+                                controller.state.value == 1)
+                            ? Row(
+                                children: [
+                                  InkWell(
+                                    child: Text(
+                                      AppStrings.next,
+                                      style: TextStyle(
+                                          color: CColors.buttonOne, fontSize: 16),
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    color: CColors.buttonOne,
+                                  )
+                                ],
+                              )
+                            : CreateAccountBtn(AppStrings.createAccount, () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SignupProceed()),
+                                );
+                              })),
+                  ],
+                ),
+                Obx(() => Padding(
+                      padding: const EdgeInsets.only(
+                          top: 15.0, left: 10, right: 10, bottom: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0, right: 8),
+                              child: Container(
+                                color: (controller.state.value == 0 ||
+                                        controller.state.value == 1 ||
+                                        controller.state.value == 2)
+                                    ? CColors.buttonOne
+                                    : Colors.black.withOpacity(.3),
+                                height: 3,
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: Container(
-                              color: (controller.state.value == 1 ||
-                                      controller.state.value == 2)
-                                  ? CColors.buttonOne
-                                  : Colors.black.withOpacity(.3),
-                              height: 3,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0, right: 8),
+                              child: Container(
+                                color: (controller.state.value == 1 ||
+                                        controller.state.value == 2)
+                                    ? CColors.buttonOne
+                                    : Colors.black.withOpacity(.3),
+                                height: 3,
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: Container(
-                              color: (controller.state.value == 2)
-                                  ? CColors.buttonOne
-                                  : Colors.black.withOpacity(.3),
-                              height: 3,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0, right: 8),
+                              child: Container(
+                                color: (controller.state.value == 2)
+                                    ? CColors.buttonOne
+                                    : Colors.black.withOpacity(.3),
+                                height: 3,
+                              ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ))
-            ],
+                          )
+                        ],
+                      ),
+                    ))
+              ],
+            ),
           ),
         ),
       ),

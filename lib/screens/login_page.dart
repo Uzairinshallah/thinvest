@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
       else {
         Functions.showSnackBar(
           context,
-          'Login Failed',
+          'Incorrect password or User doesn\'t exist'
         );
         print('Failed');
       }
@@ -74,105 +74,108 @@ class LoginPage extends StatelessWidget {
     passController.text = '';
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-        ),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    height: screenHeight * .2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 0.0),
-                      child: Image.asset(
-                        'assets/icons/thinvest.png',
-                        width: screenWidth * .7,
-                      ),
-                    )),
-                Text(
-                  'Login into your account',
-                  style: TextStyle(fontSize: 18, color: CColors.textColor),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 19, left: 10, right: 10),
-                  child: getTextField(AppStrings.email, emailController, false),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 15.0, left: 10, right: 10),
-                  child:
-                      getTextField(AppStrings.password, passController, true),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 55.0, left: 10, right: 10),
-                  child: loginBtn(AppStrings.signIn, () {
-                    if (emailController.text.isEmpty ||
-                        passController.text.isEmpty) {
-                      Functions.showSnackBar(context,
-                          AppStrings.pleaseEnterEmailAndPasswordCorrectly);
-                    }
-
-
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen(  )));
-
-                    login(emailController.text.toString(),
-                        passController.text.toString(), context);
-                  }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: RichText(
-                    text: TextSpan(
-                        text: AppStrings.alreadyHaveAnAccount,
-                        style:
-                            TextStyle(color: CColors.textColor, fontSize: 14),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: AppStrings.registerHere,
-                              style: TextStyle(
-                                  color: CColors.buttonOne, fontSize: 14),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  launchUrl(Uri.parse('https://thinvest.com/register'));
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) => SignupPage()),
-                                  // );
-                                })
-                        ]),
+        padding: MediaQuery.of(context).padding,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+          ),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      height: screenHeight * .2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 0.0),
+                        child: Image.asset(
+                          'assets/icons/thinvest.png',
+                          width: screenWidth * .7,
+                        ),
+                      )),
+                  Text(
+                    'Login into your account',
+                    style: TextStyle(fontSize: 18, color: CColors.textColor),
                   ),
-                ),
-                getNotice(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                        text: AppStrings.allOurForexMarket,
-                        style:
-                            TextStyle(color: CColors.textColor, fontSize: 14),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: AppStrings.contactUs,
-                              style: TextStyle(
-                                  color: CColors.buttonOne, fontSize: 14),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SignupPage()),
-                                  );
-                                })
-                        ]),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 19, left: 10, right: 10),
+                    child: getTextField(AppStrings.email, emailController, false),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 15.0, left: 10, right: 10),
+                    child:
+                        getTextField(AppStrings.password, passController, true),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 55.0, left: 10, right: 10),
+                    child: loginBtn(AppStrings.signIn, () {
+                      if (emailController.text.isEmpty ||
+                          passController.text.isEmpty) {
+                        Functions.showSnackBar(context,
+                            AppStrings.pleaseEnterEmailAndPasswordCorrectly);
+                      }
+
+
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen(  )));
+
+                      login(emailController.text.toString(),
+                          passController.text.toString(), context);
+                    }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: RichText(
+                      text: TextSpan(
+                          text: AppStrings.alreadyHaveAnAccount,
+                          style:
+                              TextStyle(color: CColors.textColor, fontSize: 14),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: AppStrings.registerHere,
+                                style: TextStyle(
+                                    color: CColors.buttonOne, fontSize: 14),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    launchUrl(Uri.parse('https://thinvest.com/register'));
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) => SignupPage()),
+                                    // );
+                                  })
+                          ]),
+                    ),
+                  ),
+                  getNotice(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          text: AppStrings.allOurForexMarket,
+                          style:
+                              TextStyle(color: CColors.textColor, fontSize: 14),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: AppStrings.contactUs,
+                                style: TextStyle(
+                                    color: CColors.buttonOne, fontSize: 14),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignupPage()),
+                                    );
+                                  })
+                          ]),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

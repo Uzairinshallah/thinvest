@@ -40,310 +40,313 @@ class _ReportsScreenState extends State<ReportsScreen> {
       drawer: GetDrawer(),
       key: _key,
       body: Padding(
-        padding: const EdgeInsets.only(top: 50, left: 25, right: 25),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                InkWell(
-                    onTap: () {
-                      _key.currentState!.openDrawer();
-                    },
-                    child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: Image.asset('assets/icons/drawer.png'))),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'Reports',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        'Fast and easy a complete overview',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
+        padding: MediaQuery.of(context).padding,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10, left: 25, right: 25),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  InkWell(
+                      onTap: () {
+                        _key.currentState!.openDrawer();
+                      },
+                      child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Image.asset('assets/icons/drawer.png'))),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'Reports',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
                         ),
-                        maxLines: 2,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 35,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Year:',
-                            style: TextStyle(color: CColors.textColor),
+                        Text(
+                          'Fast and easy a complete overview',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20.0),
-                            child: Container(
-                              width: screenWidth * .2,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.black26, width: 1),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: DropdownButton<String>(
-                                value: selectedYear,
-                                isExpanded: true,
-                                icon: const Icon(Icons.arrow_drop_down),
-                                elevation: 16,
-                                style: TextStyle(color: CColors.textColor),
-                                underline: const SizedBox(),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedYear = newValue!;
-                                  });
-                                },
-                                items: dropDownYears.map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(value),
-                                    ),
-                                  );
-                                }).toList(),
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 35,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'Year:',
+                              style: TextStyle(color: CColors.textColor),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: Container(
+                                width: screenWidth * .2,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    border:
+                                        Border.all(color: Colors.black26, width: 1),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: DropdownButton<String>(
+                                  value: selectedYear,
+                                  isExpanded: true,
+                                  icon: const Icon(Icons.arrow_drop_down),
+                                  elevation: 16,
+                                  style: TextStyle(color: CColors.textColor),
+                                  underline: const SizedBox(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedYear = newValue!;
+                                    });
+                                  },
+                                  items: dropDownYears.map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(value),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 600,
-                      child: ListView.builder(
-                          physics: ScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          itemCount: 4,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 4.0),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: screenWidth * .85,
-                                    // height: screenHeight * .18,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: CColors.textColor, width: 1),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Expanded(
-                                                  flex: 1,
-                                                  child: Text(
-                                                    'June 2022',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: Row(
-                                                    children: [
-                                                      Expanded(
-                                                          child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          const Text(
-                                                            'LONG',
-                                                            style: TextStyle(
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          Text(
-                                                            '1 Trade',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: CColors
-                                                                  .textColor,
+                      SizedBox(
+                        height: 600,
+                        child: ListView.builder(
+                            physics: ScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            itemCount: 4,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: screenWidth * .85,
+                                      // height: screenHeight * .18,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: CColors.textColor, width: 1),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Expanded(
+                                                    flex: 1,
+                                                    child: Text(
+                                                      'June 2022',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    )),
+                                                Expanded(
+                                                    flex: 2,
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                            child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            const Text(
+                                                              'LONG',
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      )),
-                                                      Expanded(
-                                                          child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          const Text(
-                                                            'SHORT',
-                                                            style: TextStyle(
+                                                            Text(
+                                                              '1 Trade',
+                                                              style: TextStyle(
                                                                 fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          Text(
-                                                            '1 Trade',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: CColors
-                                                                  .textColor,
+                                                                color: CColors
+                                                                    .textColor,
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      )),
-                                                      Expanded(
-                                                          child: Column(
-                                                        children: [
-                                                          const Text(
-                                                            'RETURN',
-                                                            style: TextStyle(
+                                                          ],
+                                                        )),
+                                                        Expanded(
+                                                            child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            const Text(
+                                                              'SHORT',
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            Text(
+                                                              '1 Trade',
+                                                              style: TextStyle(
                                                                 fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          Text(
-                                                            '15 %',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              color: CColors
-                                                                  .textColor,
+                                                                color: CColors
+                                                                    .textColor,
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      )),
-                                                    ],
-                                                  )),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 15.0,
-                                                bottom: 15,
-                                                left: 8,
-                                                right: 8),
-                                            child: Container(
-                                              color: CColors.textColor,
-                                              height: .5,
+                                                          ],
+                                                        )),
+                                                        Expanded(
+                                                            child: Column(
+                                                          children: [
+                                                            const Text(
+                                                              'RETURN',
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            Text(
+                                                              '15 %',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                color: CColors
+                                                                    .textColor,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )),
+                                                      ],
+                                                    )),
+                                              ],
                                             ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    const Text(
-                                                      'MONTHLY RETURN',
-                                                      style:
-                                                          TextStyle(fontSize: 8),
-                                                    ),
-                                                    Text(
-                                                      '+47.232 EUR',
-                                                      style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: CColors.green),
-                                                    ),
-                                                    Text(
-                                                      '+47.232 USD',
-                                                      style: TextStyle(
-                                                          fontSize: 10,
-                                                          color:
-                                                              CColors.textColor),
-                                                    )
-                                                  ],
-                                                ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 15.0,
+                                                  bottom: 15,
+                                                  left: 8,
+                                                  right: 8),
+                                              child: Container(
+                                                color: CColors.textColor,
+                                                height: .5,
                                               ),
-                                              Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    const Text(
-                                                      'MONTHLY RETURN',
-                                                      style:
-                                                          TextStyle(fontSize: 8),
-                                                    ),
-                                                    Text(
-                                                      '+47.232 EUR',
-                                                      style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: CColors.green),
-                                                    ),
-                                                    Text(
-                                                      '+47.232 USD',
-                                                      style: TextStyle(
-                                                          fontSize: 10,
-                                                          color:
-                                                              CColors.textColor),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    InvoicePDF(context,
-                                                        reportsModel:
-                                                            reportsModel);
-                                                  },
-                                                  child: Row(
+                                            ),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Column(
                                                     children: [
+                                                      const Text(
+                                                        'MONTHLY RETURN',
+                                                        style:
+                                                            TextStyle(fontSize: 8),
+                                                      ),
                                                       Text(
-                                                        'DOWNLOAD',
+                                                        '+47.232 EUR',
                                                         style: TextStyle(
                                                             fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: CColors
-                                                                .buttonOne),
+                                                            color: CColors.green),
                                                       ),
-                                                      Image.asset(
-                                                          'assets/icons/downn.png',
-                                                          height: 20,
-                                                          width: 20),
+                                                      Text(
+                                                        '+47.232 USD',
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            color:
+                                                                CColors.textColor),
+                                                      )
                                                     ],
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          )
-                                        ],
+                                                Expanded(
+                                                  child: Column(
+                                                    children: [
+                                                      const Text(
+                                                        'MONTHLY RETURN',
+                                                        style:
+                                                            TextStyle(fontSize: 8),
+                                                      ),
+                                                      Text(
+                                                        '+47.232 EUR',
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            color: CColors.green),
+                                                      ),
+                                                      Text(
+                                                        '+47.232 USD',
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            color:
+                                                                CColors.textColor),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      InvoicePDF(context,
+                                                          reportsModel:
+                                                              reportsModel);
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          'DOWNLOAD',
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              color: CColors
+                                                                  .buttonOne),
+                                                        ),
+                                                        Image.asset(
+                                                            'assets/icons/downn.png',
+                                                            height: 20,
+                                                            width: 20),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }),
-                    ),
-                  ],
+                                    )
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

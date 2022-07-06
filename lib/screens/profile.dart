@@ -19,152 +19,155 @@ class Profile extends StatelessWidget {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: screenWidth,
-            // height: screenHeight * .3,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              gradient: LinearGradient(
-                colors: [
-                  CColors.buttonOne,
-                  CColors.buttonTwo.withOpacity(.8),
-                  CColors.buttonThree,
-                ],
+      body: Padding(
+        padding: MediaQuery.of(context).padding,
+        child: Column(
+          children: [
+            Container(
+              width: screenWidth,
+              // height: screenHeight * .3,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                gradient: LinearGradient(
+                  colors: [
+                    CColors.buttonOne,
+                    CColors.buttonTwo.withOpacity(.8),
+                    CColors.buttonThree,
+                  ],
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 40.0, left: 25, right: 30, bottom: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.only(left: 4.0, right: 4),
+                                child:
+                                    InkWell(onTap: (){
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+                                    }, child: Image.asset('assets/icons/arrow_back.png', width: 20,))),
+                            Text(
+                              AppStrings.goBack.toUpperCase(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.values[4],
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.only(left: 4.0, right: 4),
+                                child: Image.asset('assets/icons/edit.png', width: 20)),
+                             Text(
+                              'EDIT PROFILE',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.values[4],
+
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 12.0),
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/icons/avtar.png'),
+                        radius: 40, //Text
+                      ),
+                    ),
+                     Padding(
+                      padding: const EdgeInsets.only(
+                        top: 15.0,
+                      ),
+                      child: Text(
+                        HiveBoxes.userBox.values.first.firstName!,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Text(
+                      HiveBoxes.userBox.values.first.email!,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 40.0, left: 25, right: 30, bottom: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.only(left: 4.0, right: 4),
-                              child:
-                                  InkWell(onTap: (){
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
-                                  }, child: Image.asset('assets/icons/arrow_back.png', width: 20,))),
-                          Text(
-                            AppStrings.goBack.toUpperCase(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.values[4],
-                            ),
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.only(left: 4.0, right: 4),
-                              child: Image.asset('assets/icons/edit.png', width: 20)),
-                           Text(
-                            'EDIT PROFILE',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.values[4],
-
-                            ),
-                          )
-                        ],
-                      ),
+                      leftText(AppStrings.dateOfBirth),
+                      rightText(HiveBoxes.userBox.values.first.dateOfBirth!),
                     ],
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 12.0),
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/icons/avtar.png'),
-                      radius: 40, //Text
+                  getLineText(AppStrings.contactDetails),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      leftText(AppStrings.address),
+                      rightText(HiveBoxes.userBox.values.first.address!),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        leftText(AppStrings.phone),
+                        rightText(HiveBoxes.userBox.values.first.phone!),
+                      ],
                     ),
                   ),
-                   Padding(
-                    padding: const EdgeInsets.only(
-                      top: 15.0,
-                    ),
-                    child: Text(
-                      HiveBoxes.userBox.values.first.firstName!,
-                      style: TextStyle(color: Colors.white),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      leftText(AppStrings.mobileNo),
+                      rightText(HiveBoxes.userBox.values.first.phoneMobile!),
+                    ],
+                  ),
+                  getLineText(AppStrings.identificationPrimaryInvestment),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      leftText(AppStrings.identificationType),
+                      rightText(HiveBoxes.userBox.values.first.identificationType!),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        leftText(AppStrings.identificationNumber),
+                        rightText(HiveBoxes.userBox.values.first.identificationNumber!),
+                      ],
                     ),
                   ),
-                  Text(
-                    HiveBoxes.userBox.values.first.email!,
-                    style: TextStyle(color: Colors.white),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      leftText(AppStrings.password),
+                      rightText('*********'),
+                    ],
                   ),
                 ],
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    leftText(AppStrings.dateOfBirth),
-                    rightText(HiveBoxes.userBox.values.first.dateOfBirth!),
-                  ],
-                ),
-                getLineText(AppStrings.contactDetails),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    leftText(AppStrings.address),
-                    rightText(HiveBoxes.userBox.values.first.address!),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      leftText(AppStrings.phone),
-                      rightText(HiveBoxes.userBox.values.first.phone!),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    leftText(AppStrings.mobileNo),
-                    rightText(HiveBoxes.userBox.values.first.phoneMobile!),
-                  ],
-                ),
-                getLineText(AppStrings.identificationPrimaryInvestment),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    leftText(AppStrings.identificationType),
-                    rightText(HiveBoxes.userBox.values.first.identificationType!),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      leftText(AppStrings.identificationNumber),
-                      rightText(HiveBoxes.userBox.values.first.identificationNumber!),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    leftText(AppStrings.password),
-                    rightText('*********'),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

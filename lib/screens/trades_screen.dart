@@ -66,108 +66,76 @@ class _TrandesScreenState extends State<TrandesScreen> {
       drawer: GetDrawer(),
       key: _key,
       body: Padding(
-        padding: EdgeInsets.only(top: 50),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
-              child: Row(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        _key.currentState!.openDrawer();
-                      },
-                      child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: Image.asset('assets/icons/drawer.png'))),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          'Trades',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'A complete list of all the latest trades',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
+        padding: MediaQuery.of(context).padding,
+        child: Padding(
+          padding: EdgeInsets.only(top: 10),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
+                child: Row(
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          _key.currentState!.openDrawer();
+                        },
+                        child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: Image.asset('assets/icons/drawer.png'))),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Trades',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
                           ),
-                          maxLines: 2,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 35,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 8.0, bottom: 8, left: 15, right: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Trading period:',
-                          style: TextStyle(color: CColors.textColor),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: screenWidth * .3,
-                              height: screenHeight * .05,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.black26, width: 1),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: DropdownButton<String>(
-                                value: selectedMonth,
-                                isExpanded: true,
-                                icon: const Icon(Icons.arrow_drop_down),
-                                elevation: 16,
-                                style: TextStyle(color: CColors.textColor),
-                                underline: const SizedBox(),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedMonth = newValue!;
-                                  });
-                                },
-                                items: dropDownMonths
-                                    .map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(value),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
+                          Text(
+                            'A complete list of all the latest trades',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 2.0),
-                              child: Container(
-                                width: screenWidth * .2,
+                            maxLines: 2,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 35,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8.0, bottom: 8, left: 15, right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Trading period:',
+                            style: TextStyle(color: CColors.textColor),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: screenWidth * .3,
                                 height: screenHeight * .05,
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         color: Colors.black26, width: 1),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: DropdownButton<String>(
-                                  value: selectedYear,
+                                  value: selectedMonth,
                                   isExpanded: true,
                                   icon: const Icon(Icons.arrow_drop_down),
                                   elevation: 16,
@@ -175,63 +143,98 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                   underline: const SizedBox(),
                                   onChanged: (String? newValue) {
                                     setState(() {
-                                      selectedYear = newValue!;
+                                      selectedMonth = newValue!;
                                     });
                                   },
-                                  items: dropDownYears
+                                  items: dropDownMonths
                                       .map<DropdownMenuItem<String>>(
                                           (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
+                                        padding: const EdgeInsets.only(left: 8.0),
                                         child: Text(value),
                                       ),
                                     );
                                   }).toList(),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 8),
-                    child: Container(
-                      width: screenWidth,
-                      height: screenHeight * .095,
-                      decoration: BoxDecoration(
-                        // borderRadius: BorderRadius.circular(15),
-                        gradient: LinearGradient(
-                          colors: [
-                            CColors.buttonOne,
-                            CColors.buttonTwo.withOpacity(.8),
-                            CColors.buttonThree,
-                          ],
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(child: getHeading(AppStrings.type)),
-                          Expanded(child: getHeading(AppStrings.amount)),
-                          Expanded(child: getHeading(AppStrings.usd)),
-                          Expanded(child: getHeading(AppStrings.time)),
-                          Expanded(child: getHeading('')),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 2.0),
+                                child: Container(
+                                  width: screenWidth * .2,
+                                  height: screenHeight * .05,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.black26, width: 1),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: DropdownButton<String>(
+                                    value: selectedYear,
+                                    isExpanded: true,
+                                    icon: const Icon(Icons.arrow_drop_down),
+                                    elevation: 16,
+                                    style: TextStyle(color: CColors.textColor),
+                                    underline: const SizedBox(),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedYear = newValue!;
+                                      });
+                                    },
+                                    items: dropDownYears
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Text(value),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                  Expanded(
-                      child: (tradesList.isEmpty)
-                          ? Center(child:  CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(CColors.buttonOne),))
-                          : TradesTable(tradesModel: tradesList.where((element) => checkMonth(element)).toList())),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+                      child: Container(
+                        width: screenWidth,
+                        height: screenHeight * .095,
+                        decoration: BoxDecoration(
+                          // borderRadius: BorderRadius.circular(15),
+                          gradient: LinearGradient(
+                            colors: [
+                              CColors.buttonOne,
+                              CColors.buttonTwo.withOpacity(.8),
+                              CColors.buttonThree,
+                            ],
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(child: getHeading(AppStrings.type)),
+                            Expanded(child: getHeading(AppStrings.amount)),
+                            Expanded(child: getHeading(AppStrings.usd)),
+                            Expanded(child: getHeading(AppStrings.time)),
+                            Expanded(child: getHeading('')),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                        child: (tradesList.isEmpty)
+                            ? Center(child:  CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(CColors.buttonOne),))
+                            : TradesTable(tradesModel: tradesList.where((element) => checkMonth(element)).toList())),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
