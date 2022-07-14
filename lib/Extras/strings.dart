@@ -8,6 +8,7 @@ class AppStrings {
   static String time = 'Time';
   static String minimum = 'Minimum';
   static String buy = 'Buy';
+  static String askQuestion = 'Ask Question';
   static String
       afterRequestingNewDepositOneOfOurTeamMembersWillShortlyContactYouThroughEmailWithFurtherInstructions =
       'After requesting a new deposit one of our team members will shortly contact you through email with further instructions.';

@@ -1,4 +1,5 @@
 class StatsModel {
+  String? thisMonthProfitLoss;
   String? profitLoss;
   String? profitLossUsd;
   int? profitLossPercentage;
@@ -9,6 +10,7 @@ class StatsModel {
   String? startCap;
 
   StatsModel({
+    required this.thisMonthProfitLoss,
     required this.equity,
     required this.profitLoss,
     required this.profitLossPercentage,
@@ -22,6 +24,7 @@ class StatsModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'this_month_profit_loss': thisMonthProfitLoss,
       'profitloss': profitLoss,
       'profitloss_usd': profitLossUsd,
       'profitloss_percentage': profitLossPercentage,
@@ -34,6 +37,7 @@ class StatsModel {
   }
 
   StatsModel.fromMap(Map<String, dynamic> map) {
+    thisMonthProfitLoss = map["this_month_profit_loss"];
     profitLoss = map["profitloss"];
     profitLossUsd = map["profitloss_usd"];
     profitLossPercentage = map["profitloss_percentage"];

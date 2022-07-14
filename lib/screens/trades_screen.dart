@@ -68,7 +68,7 @@ class _TrandesScreenState extends State<TrandesScreen> {
       body: Padding(
         padding: MediaQuery.of(context).padding,
         child: Padding(
-          padding: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
               Padding(
@@ -84,7 +84,7 @@ class _TrandesScreenState extends State<TrandesScreen> {
                             height: 50,
                             child: Image.asset('assets/icons/drawer.png'))),
                     Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
@@ -112,7 +112,7 @@ class _TrandesScreenState extends State<TrandesScreen> {
               Expanded(
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 35,
                     ),
                     Padding(
@@ -242,7 +242,7 @@ class _TrandesScreenState extends State<TrandesScreen> {
 
   Widget getHeading(String txt) {
     return Text(txt,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
         ),
         textAlign: TextAlign.center);
@@ -268,7 +268,7 @@ class _TrandesScreenState extends State<TrandesScreen> {
   }
 
   Future<void> getData() async {
-    var url = "https://thinvest.com/api/trade";
+    var url = "https://thinvest.com/api/trade/";
     var token = HiveBoxes.userBox.values.first.apiToken!;
     // var response = await http.get(Uri.parse(url));
 

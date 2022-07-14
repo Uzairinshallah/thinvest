@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/functions.dart';
+import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/screens/drawer/get_drawer.dart';
 
@@ -15,16 +19,25 @@ class _SupportState extends State<Support> {
 
   bool boxValue = false;
   bool boxValue2 = false;
-  var email = TextEditingController();
+  var topicController = TextEditingController();
+  var messageController = TextEditingController();
+  List<String> dropDownCategory = ['General', 'Technical', 'Withdrawal', 'Other'];
+  List<String> dropDownPriority = ['Normal', 'Important', 'High'];
+  var selectedCategory = 'General';
+  var selectedPriority = 'Normal';
+  late final GlobalKey<ScaffoldState> _key;
 
-  var dropdownValue = 'Select';
-  var dropdownValue2 = 'Select';
+  @override
+  void initState() {
+    _key = GlobalKey();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    final GlobalKey<ScaffoldState> _key = GlobalKey();
+    // final GlobalKey<ScaffoldState> _key = GlobalKey();
 
     return Scaffold(
       drawer: GetDrawer(),
@@ -32,7 +45,7 @@ class _SupportState extends State<Support> {
       body: Padding(
         padding: MediaQuery.of(context).padding,
         child: Padding(
-          padding: EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 15),
+          padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,7 +60,7 @@ class _SupportState extends State<Support> {
                           height: 50,
                           child: Image.asset('assets/icons/drawer.png'))),
                   Padding(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
@@ -71,12 +84,12 @@ class _SupportState extends State<Support> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -128,7 +141,7 @@ class _SupportState extends State<Support> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Align(
@@ -138,13 +151,16 @@ class _SupportState extends State<Support> {
                           style: TextStyle(color: CColors.textColor),
                         ),
                       ),
+                      const SizedBox(
+                        height: 3,
+                      ),
                       Container(
                         width: screenWidth,
                         decoration: BoxDecoration(
                             border: Border.all(color: CColors.buttonOne, width: 1),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<String>(
-                          value: dropdownValue,
+                          value: selectedCategory,
                           isExpanded: true,
                           icon: const Icon(Icons.arrow_drop_down),
                           elevation: 16,
@@ -152,10 +168,10 @@ class _SupportState extends State<Support> {
                           underline: const SizedBox(),
                           onChanged: (String? newValue) {
                             setState(() {
-                              dropdownValue = newValue!;
+                              selectedCategory = newValue!;
                             });
                           },
-                          items: <String>['Select', 'Lahore', 'Karachi', 'Islamabad']
+                          items: dropDownCategory
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -177,13 +193,16 @@ class _SupportState extends State<Support> {
                           style: TextStyle(color: CColors.textColor),
                         ),
                       ),
+                      const SizedBox(
+                        height: 3,
+                      ),
                       Container(
                         width: screenWidth,
                         decoration: BoxDecoration(
                             border: Border.all(color: CColors.buttonOne, width: 1),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<String>(
-                          value: dropdownValue2,
+                          value: selectedPriority,
                           isExpanded: true,
                           icon: const Icon(Icons.arrow_drop_down),
                           elevation: 16,
@@ -191,10 +210,10 @@ class _SupportState extends State<Support> {
                           underline: const SizedBox(),
                           onChanged: (String? newValue) {
                             setState(() {
-                              dropdownValue2 = newValue!;
+                              selectedPriority = newValue!;
                             });
                           },
-                          items: <String>['Select', 'Lahore', 'Karachi', 'Islamabad']
+                          items: dropDownPriority
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -206,11 +225,11 @@ class _SupportState extends State<Support> {
                           }).toList(),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      getTextField('Password', email, 1),
-                      SizedBox(
+                      getTextField('Topic', topicController, 1),
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -218,18 +237,28 @@ class _SupportState extends State<Support> {
                         textAlign: TextAlign.left,
                         style: TextStyle(color: CColors.textColor),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      getTextField('Message', email, 8),
+                      getTextField('Message', messageController, 8),
                       // Expanded(child: SizedBox()),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            if(topicController.text.isEmpty){
+                              Functions.showSnackBar(context, 'Please fill out the topic field');
+                              return;
+                            }
+                            else if(messageController.text.isEmpty){
+                              Functions.showSnackBar(context, 'Please fill out the password field');
+                              return;
+                            }
+                            postSupport();
+                          },
                           child: Container(
                             width: screenWidth,
                             height: 50,
@@ -245,7 +274,7 @@ class _SupportState extends State<Support> {
                             ),
                             child: Center(
                                 child: Text(
-                                  AppStrings.addDeposit,
+                                  AppStrings.askQuestion,
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,
@@ -266,13 +295,56 @@ class _SupportState extends State<Support> {
     );
   }
 
+  void ClearFields() {
+    topicController.clear();
+    messageController.clear();
+    boxValue = false;
+    boxValue2 = false;
+  }
+
+
+  Future<void> postSupport() async {
+    var userId = HiveBoxes.userBox.values.first.id!;
+    var token = HiveBoxes.userBox.values.first.apiToken!;
+    print('${token}idddd');
+
+    var url = "https://thinvest.com/api/support";
+    Map<String, dynamic> body = {'user_id': userId, "category": selectedCategory, "priority": selectedPriority, "subject": topicController.text, "message": messageController.text};
+    String jsonBody = json.encode(body);
+    final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+        body: jsonBody
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print('200000000000000');
+      print('Status code: ${response.statusCode}');
+      print('Body: ${response.body}');
+      Functions.showSnackBar(context, 'Your message has been successfully sent, Our support team will get back to you');
+      ClearFields();
+
+      setState(() {});
+
+      // return model;
+    } else {
+      Functions.showSnackBar(context, 'Your request can\'t be record at that moment ');
+      print(response.body.toString());
+      throw Exception(response.body.toString());
+    }
+  }
+
 
   TextFormField getTextField(
       String hint, TextEditingController controller, int lines) {
     return TextFormField(
       controller: controller,
-      maxLines: lines,
       minLines: lines,
+      maxLines: lines,
       style: TextStyle(
         color: CColors.textColor,
         fontSize: 12,
@@ -291,12 +363,12 @@ class _SupportState extends State<Support> {
         fillColor: Colors.black.withOpacity(.06),
         filled: true,
       ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter some text';
-        }
-        return null;
-      },
+      // validator: (value) {
+      //   if (value == null || value.isEmpty) {
+      //     return 'Please enter some text';
+      //   }
+      //   return null;
+      // },
     );
   }
 }

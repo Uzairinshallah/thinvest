@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/screens/deposit.dart';
+import 'package:thinvest/Extras/functions.dart';
 import 'package:thinvest/screens/trades_screen.dart';
+import 'package:http/http.dart' as http;
+
 
 class AddDeposit extends StatefulWidget {
   const AddDeposit({Key? key}) : super(key: key);
@@ -14,7 +20,7 @@ class AddDeposit extends StatefulWidget {
 class _AddDepositState extends State<AddDeposit> {
   var screenWidth, screenHeight;
   bool boxValue = false;
-  var email = TextEditingController();
+  var deposit = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +54,7 @@ class _AddDepositState extends State<AddDeposit> {
               SizedBox(
                 height: screenHeight * .065,
               ),
-              getAmountField('\$ 10.00', email),
+              getAmountField('\$ 10.00', deposit),
               SizedBox(
                 height: screenHeight * .029,
               ),
@@ -118,7 +124,18 @@ class _AddDepositState extends State<AddDeposit> {
                     Align(
                       alignment: Alignment.topRight,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          if(deposit.text == '' || deposit.text.isEmpty){
+                            Functions.showSnackBar(context, 'Deposit Should not be Null');
+                          }
+                          else if(int.parse(deposit.text) < 10){
+                            Functions.showSnackBar(context, 'Deposit Should be more than \$10 ');
+                          }
+                          else
+                            postDeposit();
+
+                          // else if(deposit.text < 10)
+                        },
                         child: Container(
                           width: screenWidth * .4,
                           height: 50,
@@ -151,6 +168,43 @@ class _AddDepositState extends State<AddDeposit> {
         ),
       ),
     );
+  }
+
+  Future<void> postDeposit() async {
+    var userId = HiveBoxes.userBox.values.first.id!;
+    var token = HiveBoxes.userBox.values.first.apiToken!;
+    print('${token}idddd');
+
+    var url = "https://thinvest.com/api/deposit?user_id=$userId&amount=$deposit";
+    // Map<String, dynamic> body = {'user_id': 2, 'amount': "22"};
+    // String jsonBody = json.encode(body);
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        "Authorization": "Bearer $token"
+      },
+      body: ''
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      Functions.showSnackBar(context, 'Deposit submitted successfully');
+
+      print('Status code: ${response.statusCode}');
+      print('Body: ${response.body}');
+
+      setState(() {});
+
+      // return model;
+    } else if (response.statusCode ==400){
+      Functions.showSnackBar(context, "Deposit limit reached");
+    }
+    else {
+      print('repose');
+      print(response.body.toString());
+      throw Exception(response.body.toString());
+    }
   }
 
   Widget getAmountField(
@@ -189,3 +243,61 @@ class _AddDepositState extends State<AddDeposit> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+// Future<void> postDeposit() async {
+//   var userId = HiveBoxes.userBox.values.first.id!;
+//   var token = HiveBoxes.userBox.values.first.apiToken!;
+//   print('${token}idddd');
+//
+//   var url = "https://thinvest.com/api/deposit";
+//   Map<String, dynamic> body = {'user_id': 21, 'amount': "22"};
+//   String jsonBody = json.encode(body);
+//   final response = await http.post(
+//       Uri.parse(url),
+//       headers: {
+//         "Content-Type": "application/json",
+//         'Accept': 'application/json',
+//         "Authorization": "Bearer $token"
+//       },
+//       body: jsonBody
+//   );
+//   print(response.statusCode);
+//   if (response.statusCode == 200) {
+//     print('200000000000000');
+//
+//     print('Status code: ${response.statusCode}');
+//     print('Body: ${response.body}');
+//
+//     setState(() {});
+//
+//     // return model;
+//   } else {
+//     print('repose');
+//     print(response.body.toString());
+//     throw Exception(response.body.toString());
+//   }
+// }
+

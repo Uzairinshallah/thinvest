@@ -8,6 +8,7 @@ import 'package:thinvest/Extras/sdp.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/models/stats_model.dart';
 import 'package:thinvest/models/trades_model.dart';
+import 'package:thinvest/screens/add_deposit.dart';
 import 'package:thinvest/screens/dashboard/subs_chart.dart';
 import 'package:thinvest/screens/deposit.dart';
 import 'package:thinvest/screens/profile.dart';
@@ -17,18 +18,18 @@ import 'package:thinvest/widgets/viewAlert.dart';
 class Dashboard extends StatefulWidget {
   Dashboard({Key? key}) : super(key: key);
 
-    @override
-    State<Dashboard> createState() => _DashboardState();
-  }
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
 
-  class _DashboardState extends State<Dashboard> {
-    var screenWidth, screenHeight;
-    var now = new DateTime.now();
-    var con = ScrollController();
-    String selectedMonth = 'January';
-    String selectedYear = '2022';
-    List<String> dropDownYears = [
-      '2012',
+class _DashboardState extends State<Dashboard> {
+  var screenWidth, screenHeight;
+  var now = new DateTime.now();
+  var con = ScrollController();
+  String selectedMonth = 'January';
+  String selectedYear = '2022';
+  List<String> dropDownYears = [
+    '2012',
     '2013',
     '2014',
     '2015',
@@ -57,6 +58,7 @@ class Dashboard extends StatefulWidget {
   var date = DateTime.parse(HiveBoxes.userBox.values.first.createdAt!);
   List<TradesModel> tradesModel = [];
   List<StatsModel> statsModel = [];
+  List<TradesModel> tradesList = [];
 
   @override
   void initState() {
@@ -86,7 +88,8 @@ class Dashboard extends StatefulWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
+                padding:
+                    const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
                 child: Row(
                   children: [
                     InkWell(
@@ -132,8 +135,8 @@ class Dashboard extends StatefulWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsets.only(top: 40.0, left: 15, right: 15),
+                        padding: const EdgeInsets.only(
+                            top: 40.0, left: 15, right: 15),
                         child: Container(
                           width: screenWidth,
                           // height: screenHeight * .20,
@@ -152,8 +155,8 @@ class Dashboard extends StatefulWidget {
                                 padding: const EdgeInsets.only(top: 15.0),
                                 child: ListTile(
                                   leading: CircleAvatar(
-                                      child:
-                                          Image.asset('assets/icons/avtar.png')),
+                                      child: Image.asset(
+                                          'assets/icons/avtar.png')),
                                   trailing: const Icon(
                                     Icons.chevron_right,
                                     color: Colors.white,
@@ -197,9 +200,21 @@ class Dashboard extends StatefulWidget {
                                                 builder: (context) =>
                                                     DepositsScreen()));
                                       },
-                                      child: const Text(
-                                        'This month profit: \$ 896.112',
-                                        style: TextStyle(color: Colors.white),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            'This month profit: \$ ',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          (statsModel.isEmpty)
+                                              ? SizedBox()
+                                              : Text(
+                                                  '${statsModel.first.thisMonthProfitLoss!}',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                        ],
                                       ),
                                     ),
                                   ))
@@ -223,8 +238,8 @@ class Dashboard extends StatefulWidget {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(top: 8.0, left: 15, right: 15),
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 15, right: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -246,7 +261,7 @@ class Dashboard extends StatefulWidget {
                                     isExpanded: true,
                                     icon: const Icon(Icons.arrow_drop_down),
                                     elevation: 16,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.black, fontSize: 13),
                                     underline: const SizedBox(),
                                     onChanged: (String? newValue) {
@@ -277,7 +292,8 @@ class Dashboard extends StatefulWidget {
                                     decoration: BoxDecoration(
                                         border: Border.all(
                                             color: Colors.black26, width: 1),
-                                        borderRadius: BorderRadius.circular(10)),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     child: DropdownButton<String>(
                                       value: selectedYear,
                                       isExpanded: true,
@@ -290,7 +306,6 @@ class Dashboard extends StatefulWidget {
                                         setState(() {
                                           selectedYear = newValue!;
                                           getDataTrades();
-
                                         });
                                       },
                                       items: dropDownYears
@@ -299,8 +314,8 @@ class Dashboard extends StatefulWidget {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 8.0),
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
                                             child: Text(value),
                                           ),
                                         );
@@ -325,7 +340,6 @@ class Dashboard extends StatefulWidget {
                       ),
                       Container(
                           width: screenWidth * .9,
-                          // height: screenHeight * .3,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               border: Border.all(
@@ -372,7 +386,20 @@ class Dashboard extends StatefulWidget {
                                   ],
                                 ),
                               ),
-                              SubsChart(),
+                              (tradesList.isEmpty)
+                                  ? Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation<Color>(
+                                            CColors.buttonOne),
+                                    ),
+                                      ))
+                                  : SubsChart(
+                                      tradesModel: tradesList
+                                          .where(
+                                              (element) => checkMonth(element))
+                                          .toList()),
                             ],
                           )),
                       Padding(
@@ -436,8 +463,8 @@ class Dashboard extends StatefulWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 6.0, bottom: 15),
+                                  padding: const EdgeInsets.only(
+                                      top: 6.0, bottom: 15),
                                   child: Text(
                                     '${AppStrings.currentDeposit} 2000',
                                     style: TextStyle(color: CColors.textColor),
@@ -446,7 +473,13 @@ class Dashboard extends StatefulWidget {
                                 Align(
                                   alignment: Alignment.bottomRight,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AddDeposit()));
+                                    },
                                     child: Container(
                                       width: screenWidth * .5,
                                       height: 40,
@@ -557,7 +590,7 @@ class Dashboard extends StatefulWidget {
   Widget getTradesBuilder(double fontSize) {
     print('tradesModel.length');
     print(tradesModel.length);
-    return  ListView.builder(
+    return ListView.builder(
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         itemCount: tradesModel.length,
@@ -569,65 +602,65 @@ class Dashboard extends StatefulWidget {
           print(checkMonth);
           print(checkYear);
           // if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
-            return  Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: getSubHeading(
-                            model.type.toString(), fontSize, CColors.green),
-                      )),
-                  Expanded(
-                      child: getSubHeading(
-                          model.amount.toString(), .17, Colors.black)),
-                  Expanded(
-                      child: Column(
-                        children: [
-                          getSubHeading(
-                              model.price.toString(), fontSize, CColors.green),
-                          getSubHeading(
-                              model.closing_price.toString(), fontSize, Colors.black),
-                        ],
-                      )),
-                  Expanded(
-                      child: Column(
-                        children: [
-                          getSubHeading(
-                              model.trade_date.toString(), fontSize, Colors.black),
-                          getSubHeading(
-                              model.trade_time.toString(), fontSize, Colors.black),
-                        ],
-                      )),
-                  Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => ViewAlert(tradesModel: model));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: CColors.buttonOne),
-                            child: Center(
-                              child: Text(
-                                AppStrings.view,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 10),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Row(
+              children: [
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: getSubHeading(
+                      model.type.toString(), fontSize, CColors.green),
+                )),
+                Expanded(
+                    child: getSubHeading(
+                        model.amount.toString(), .17, Colors.black)),
+                Expanded(
+                    child: Column(
+                  children: [
+                    getSubHeading(
+                        model.price.toString(), fontSize, CColors.green),
+                    getSubHeading(
+                        model.closing_price.toString(), fontSize, Colors.black),
+                  ],
+                )),
+                Expanded(
+                    child: Column(
+                  children: [
+                    getSubHeading(
+                        model.trade_date.toString(), fontSize, Colors.black),
+                    getSubHeading(
+                        model.trade_time.toString(), fontSize, Colors.black),
+                  ],
+                )),
+                Expanded(
+                    child: InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => ViewAlert(tradesModel: model));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: CColors.buttonOne),
+                      child: Center(
+                        child: Text(
+                          AppStrings.view,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 10),
+                          textAlign: TextAlign.center,
                         ),
-                      )),
-                ],
-              ),
-            );
+                      ),
+                    ),
+                  ),
+                )),
+              ],
+            ),
+          );
           // }
           // else
           //   {
@@ -636,109 +669,112 @@ class Dashboard extends StatefulWidget {
         });
   }
 
-    Widget getStatistics(String memberSince) {
-      if (statsModel.isEmpty) {
-        return Center(child: CircularProgressIndicator( valueColor:AlwaysStoppedAnimation<Color>(CColors.buttonOne),));
-      }
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Start Cap',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                statsModel.first.startCap!,
-                style: TextStyle(color: CColors.textColor),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Client Since',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                memberSince,
-                style: TextStyle(color: CColors.textColor),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Profit/Loss(net)',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                statsModel.first.profitLoss!,
-                style: TextStyle(color: CColors.textColor),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 4,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Profit Share',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                statsModel.first.profitShare!,
-                style: TextStyle(color: CColors.textColor),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Total Deposit',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                statsModel.first.totalDeposit!,
-                style: TextStyle(color: CColors.textColor),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Equity',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                statsModel.first.equity!,
-                style: TextStyle(color: CColors.textColor),
-              ),
-            ],
-          ),
-        ],
-      );
+  Widget getStatistics(String memberSince) {
+    if (statsModel.isEmpty) {
+      return Center(
+          child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(CColors.buttonOne),
+      ));
     }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Start Cap',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.startCap!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Client Since',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              memberSince,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Profit/Loss(net)',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.profitLoss!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Profit Share',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.profitShare!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Total Deposit',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.totalDeposit!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Equity',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              statsModel.first.equity!,
+              style: TextStyle(color: CColors.textColor),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
   Widget getHeading(String txt) {
     return Text(txt,
@@ -778,7 +814,6 @@ class Dashboard extends StatefulWidget {
   }
 
   Future<void> getDataTrades() async {
-    print('callllllllllllll');
     var url = "https://thinvest.com/api/trade";
     var token = HiveBoxes.userBox.values.first.apiToken!;
     // var response = await http.get(Uri.parse(url));
@@ -792,6 +827,7 @@ class Dashboard extends StatefulWidget {
     if (response.statusCode == 200) {
       var results = jsonDecode(response.body);
       tradesModel = [];
+      tradesList = [];
       // int? a = 0;
       for (var result in results) {
         var model = TradesModel.fromMap(result);
@@ -800,14 +836,13 @@ class Dashboard extends StatefulWidget {
           DateTime dt = DateTime.parse(model.trade_date!);
           String checkYear = dt.year.toString();
           int checkMonth = dt.month;
-          if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
-            tradesModel.add(model);
-          }
+          // if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
+          tradesModel.add(model);
+          tradesList.add(model);
+          // }
         }
         setState(() {});
       }
-
-      // return tradesModel;
     } else {
       print('Something Wrong');
       throw Exception("Failed to Fetch Data");
@@ -821,5 +856,15 @@ class Dashboard extends StatefulWidget {
           style: TextStyle(color: col, fontSize: 12),
           textAlign: TextAlign.center),
     );
+  }
+
+  bool checkMonth(TradesModel model) {
+    DateTime dt = DateTime.parse(model.trade_date!);
+    String checkYear = dt.year.toString();
+    int checkMonth = dt.month;
+    print(checkMonth);
+    print(checkYear);
+    return checkYear == selectedYear &&
+        checkMonth == dropDownMonths.indexOf(selectedMonth) + 1;
   }
 }

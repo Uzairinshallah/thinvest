@@ -4,16 +4,16 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
-
+import 'package:thinvest/models/trades_model.dart';
 
 class SubsChart extends StatefulWidget {
-  SubsChart({Key? key}) : super(key: key);
+  List<TradesModel> tradesModel;
+
+  SubsChart({Key? key, required this.tradesModel}) : super(key: key);
 
   @override
   State<SubsChart> createState() => _SubsChartState();
 }
-
-
 
 DateTime? startDate;
 
@@ -22,12 +22,16 @@ class _SubsChartState extends State<SubsChart> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    print('length');
+    print(widget.tradesModel.length);
 
-    showingBarGroups.add(makeData(
-        1,
-        100 ,
-    ));
+    if (widget.tradesModel.length != 0) {
+      for (int i = 0; i < widget.tradesModel.length; i++) {
+        print('aaaaaaaaaaaaaa');
+        double a = double.parse(widget.tradesModel[i].amount!);
+        showingBarGroups.add(makeData(1, a, widget.tradesModel[i].type!));
+      }
+    }
 
     super.initState();
   }
@@ -37,24 +41,21 @@ class _SubsChartState extends State<SubsChart> {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
 
-
     return Padding(
         padding: const EdgeInsets.all(20),
         child: subsChart(DateTime.now(), DateTime.now()));
   }
 
-
-
   late List<BarChartGroupData> showingBarGroups = [];
 
-  BarChartGroupData makeData(int x, double y1) {
+  BarChartGroupData makeData(int x, double y1, String type) {
     return BarChartGroupData(
       barsSpace: 0,
       x: x,
       barRods: [
         BarChartRodData(
           fromY: 0,
-          color: CColors.green.withOpacity(.5),
+          color: (type=='B')?CColors.green.withOpacity(.5) : Colors.red.withOpacity(.5),
           width: 10,
           borderRadius: BorderRadius.zero,
           toY: y1,
@@ -101,13 +102,14 @@ class _SubsChartState extends State<SubsChart> {
             color: Colors.black.withOpacity(0.3)),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-
-
-          ],
+          children: [],
         )
         // daysWidget(),
       ],
     );
+  }
+
+  storeDataInChart() {
+    if (widget.tradesModel.length != 0) {}
   }
 }
