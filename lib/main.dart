@@ -8,7 +8,7 @@ import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/constants.dart';
 import 'package:thinvest/models/user_model.dart';
 import 'package:thinvest/screens/login_page.dart';
-
+import 'package:thinvest/screens/splashScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,27 +21,20 @@ Future<void> main() async {
   Hive.registerAdapter<UserModel>(UserModelAdapter());
   await Hive.openBox<UserModel>(Constants.userBox);
 
-
-
-
-
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: CColors.buttonOne
-
-      ),
+      theme: ThemeData(primaryColor: CColors.buttonOne),
       home: Scaffold(
-        body: LoginPage(),
+        body: SplashScreen(),
       ),
     );
   }
