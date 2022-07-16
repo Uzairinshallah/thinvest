@@ -24,8 +24,10 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   var screenWidth, screenHeight;
-  var now = new DateTime.now();
+  var now = DateTime.now();
   var con = ScrollController();
+  var cMonth = DateTime.now().month;
+  // String selectedMonth = 'January';
   String selectedMonth = 'January';
   String selectedYear = '2022';
   List<String> dropDownYears = [
@@ -55,6 +57,7 @@ class _DashboardState extends State<Dashboard> {
     'November',
     'December',
   ];
+  bool m = false;
   var date = DateTime.parse(HiveBoxes.userBox.values.first.createdAt!);
   List<TradesModel> tradesModel = [];
   List<StatsModel> statsModel = [];
@@ -62,6 +65,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
+
     getDataTrades();
     getDataStats();
     super.initState();
@@ -71,6 +75,11 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
+    if(m == false){
+      selectedMonth = dropDownMonths.elementAt(cMonth-1);
+      m = true;
+    }
+
     final GlobalKey<ScaffoldState> _key = GlobalKey();
     var memberSince = "${date.day}-${date.month}-${date.year}";
     SDP.init(context);
@@ -590,12 +599,14 @@ class _DashboardState extends State<Dashboard> {
   Widget getTradesBuilder(double fontSize) {
     print('tradesModel.length');
     print(tradesModel.length);
+    List<TradesModel> m =  tradesModel.reversed.toList();
+
     return ListView.builder(
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
-        itemCount: tradesModel.length,
+        itemCount: m.length,
         itemBuilder: (BuildContext context, int index) {
-          var model = tradesModel[index];
+          var model = m[index];
           DateTime dt = DateTime.parse(model.trade_date!);
           String checkYear = dt.year.toString();
           int checkMonth = dt.month;
@@ -610,7 +621,7 @@ class _DashboardState extends State<Dashboard> {
                     child: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: getSubHeading(
-                      model.type.toString(), fontSize, CColors.green),
+                      model.type.toString(), fontSize, (model.type.toString() == 'B') ? CColors.green : Colors.red.withOpacity(.6)),
                 )),
                 Expanded(
                     child: getSubHeading(
@@ -619,7 +630,7 @@ class _DashboardState extends State<Dashboard> {
                     child: Column(
                   children: [
                     getSubHeading(
-                        model.price.toString(), fontSize, CColors.green),
+                        model.price.toString(), fontSize, (model.type.toString() == 'B') ? CColors.green : Colors.red.withOpacity(.6)),
                     getSubHeading(
                         model.closing_price.toString(), fontSize, Colors.black),
                   ],
@@ -841,12 +852,14 @@ class _DashboardState extends State<Dashboard> {
           tradesList.add(model);
           // }
         }
+
         setState(() {});
       }
     } else {
       print('Something Wrong');
       throw Exception("Failed to Fetch Data");
     }
+
   }
 
   Widget getSubHeading(String txt, double size, Color col) {

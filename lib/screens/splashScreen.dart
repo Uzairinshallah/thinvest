@@ -1,6 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:thinvest/Extras/hive_boxes.dart';
+import 'package:thinvest/screens/dashboard/dashboard.dart';
 import 'package:thinvest/screens/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class Splash extends State<SplashScreen> {
     Timer(
         const Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => LoginPage())));
+            MaterialPageRoute(builder: (BuildContext context) => (HiveBoxes.userBox.isEmpty) ? LoginPage() : Dashboard())));
 
     var assetsImage = const AssetImage('assets/icons/thinvest.png');
     var image = Image(image: assetsImage, height: 80);

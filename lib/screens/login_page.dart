@@ -43,8 +43,8 @@ class LoginPage extends StatelessWidget {
         // HiveBoxes.userBox.get("profile") != null;
         // HiveBoxes.userBox.delete("profile");
         // print(HiveBoxes.userBox.values.first.firstName);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Dashboard()));
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+            Dashboard()), (Route<dynamic> route) => false);
         return;
       }
       else if(response.statusCode == 500){

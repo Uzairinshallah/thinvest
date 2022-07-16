@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/functions.dart';
+import 'package:thinvest/Extras/functions.dart';
 import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/strings.dart';
+import 'package:thinvest/getX/app_state.dart';
 import 'package:thinvest/screens/drawer/get_drawer.dart';
 
 class Support extends StatefulWidget {
@@ -16,12 +20,19 @@ class Support extends StatefulWidget {
 
 class _SupportState extends State<Support> {
   var screenWidth, screenHeight;
+  double res = 0;
 
   bool boxValue = false;
   bool boxValue2 = false;
+  final controller = Get.put(AppController());
   var topicController = TextEditingController();
   var messageController = TextEditingController();
-  List<String> dropDownCategory = ['General', 'Technical', 'Withdrawal', 'Other'];
+  List<String> dropDownCategory = [
+    'General',
+    'Technical',
+    'Withdrawal',
+    'Other'
+  ];
   List<String> dropDownPriority = ['Normal', 'Important', 'High'];
   var selectedCategory = 'General';
   var selectedPriority = 'Normal';
@@ -45,7 +56,8 @@ class _SupportState extends State<Support> {
       body: Padding(
         padding: MediaQuery.of(context).padding,
         child: Padding(
-          padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 15),
+          padding:
+              const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -113,8 +125,8 @@ class _SupportState extends State<Support> {
                               ),
                               Text(
                                 'A general enquiry',
-                                style:
-                                TextStyle(fontSize: 12, color: CColors.textColor),
+                                style: TextStyle(
+                                    fontSize: 12, color: CColors.textColor),
                               )
                             ],
                           ),
@@ -134,8 +146,8 @@ class _SupportState extends State<Support> {
                               ),
                               Text(
                                 'I need Help',
-                                style:
-                                TextStyle(fontSize: 12, color: CColors.textColor),
+                                style: TextStyle(
+                                    fontSize: 12, color: CColors.textColor),
                               )
                             ],
                           ),
@@ -157,7 +169,8 @@ class _SupportState extends State<Support> {
                       Container(
                         width: screenWidth,
                         decoration: BoxDecoration(
-                            border: Border.all(color: CColors.buttonOne, width: 1),
+                            border:
+                                Border.all(color: CColors.buttonOne, width: 1),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<String>(
                           value: selectedCategory,
@@ -199,7 +212,8 @@ class _SupportState extends State<Support> {
                       Container(
                         width: screenWidth,
                         decoration: BoxDecoration(
-                            border: Border.all(color: CColors.buttonOne, width: 1),
+                            border:
+                                Border.all(color: CColors.buttonOne, width: 1),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<String>(
                           value: selectedPriority,
@@ -249,14 +263,16 @@ class _SupportState extends State<Support> {
                         alignment: Alignment.bottomCenter,
                         child: InkWell(
                           onTap: () {
-                            if(topicController.text.isEmpty){
-                              Functions.showSnackBar(context, 'Please fill out the topic field');
+                            if (topicController.text.isEmpty) {
+                              Functions.showSnackBar(
+                                  context, 'Please fill out the topic field');
+                              return;
+                            } else if (messageController.text.isEmpty) {
+                              Functions.showSnackBar(context,
+                                  'Please fill out the password field');
                               return;
                             }
-                            else if(messageController.text.isEmpty){
-                              Functions.showSnackBar(context, 'Please fill out the password field');
-                              return;
-                            }
+                            Functions.showLoaderDialog(context);
                             postSupport();
                           },
                           child: Container(
@@ -274,12 +290,12 @@ class _SupportState extends State<Support> {
                             ),
                             child: Center(
                                 child: Text(
-                                  AppStrings.askQuestion,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                )),
+                              AppStrings.askQuestion,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )),
                           ),
                         ),
                       ),
@@ -287,7 +303,6 @@ class _SupportState extends State<Support> {
                   ),
                 ),
               ),
-
             ],
           ),
         ),
@@ -302,42 +317,49 @@ class _SupportState extends State<Support> {
     boxValue2 = false;
   }
 
-
   Future<void> postSupport() async {
     var userId = HiveBoxes.userBox.values.first.id!;
     var token = HiveBoxes.userBox.values.first.apiToken!;
     print('${token}idddd');
 
     var url = "https://thinvest.com/api/support";
-    Map<String, dynamic> body = {'user_id': userId, "category": selectedCategory, "priority": selectedPriority, "subject": topicController.text, "message": messageController.text};
+    Map<String, dynamic> body = {
+      'user_id': userId,
+      "category": selectedCategory,
+      "priority": selectedPriority,
+      "subject": topicController.text,
+      "message": messageController.text
+    };
     String jsonBody = json.encode(body);
-    final response = await http.post(
-        Uri.parse(url),
+    final response = await http.post(Uri.parse(url),
         headers: {
           "Content-Type": "application/json",
           'Accept': 'application/json',
           "Authorization": "Bearer $token"
         },
-        body: jsonBody
-    );
+        body: jsonBody);
+
     print(response.statusCode);
     if (response.statusCode == 200) {
       print('200000000000000');
       print('Status code: ${response.statusCode}');
       print('Body: ${response.body}');
-      Functions.showSnackBar(context, 'Your message has been successfully sent, Our support team will get back to you');
+      Functions.showSnackBar(context,
+          'Your message has been successfully sent, Our support team will get back to you');
       ClearFields();
-
+      Navigator.pop(context);
       setState(() {});
 
       // return model;
     } else {
-      Functions.showSnackBar(context, 'Your request can\'t be record at that moment ');
+      Functions.showSnackBar(
+          context, 'Your request can\'t be record at that moment ');
+      Navigator.pop(context);
+
       print(response.body.toString());
       throw Exception(response.body.toString());
     }
   }
-
 
   TextFormField getTextField(
       String hint, TextEditingController controller, int lines) {

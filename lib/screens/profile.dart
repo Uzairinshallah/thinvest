@@ -7,6 +7,7 @@ import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/models/user_model.dart';
 import 'package:thinvest/screens/dashboard/dashboard.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 
 class Profile extends StatelessWidget {
@@ -44,37 +45,46 @@ class Profile extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Padding(
-                                padding: EdgeInsets.only(left: 4.0, right: 4),
-                                child:
-                                    InkWell(onTap: (){
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
-                                    }, child: Image.asset('assets/icons/arrow_back.png', width: 20,))),
-                            Text(
-                              AppStrings.goBack.toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.values[4],
-                              ),
-                            )
-                          ],
+                        InkWell(
+                          onTap: (){
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+                          },
+                          child: Row(
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.only(left: 4.0, right: 4),
+                                  child:
+                                      InkWell(onTap: (){
+                                      }, child: Image.asset('assets/icons/arrow_back.png', width: 20,))),
+                              Text(
+                                AppStrings.goBack.toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.values[4],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Padding(
-                                padding: EdgeInsets.only(left: 4.0, right: 4),
-                                child: Image.asset('assets/icons/edit.png', width: 20)),
-                             Text(
-                              'EDIT PROFILE',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.values[4],
+                        InkWell(
+                          onTap: (){
+                            launchUrl(Uri.parse('https://thinvest.com/login'));
+                          },
+                          child: Row(
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.only(left: 4.0, right: 4),
+                                  child: Image.asset('assets/icons/edit.png', width: 20)),
+                               Text(
+                                'EDIT PROFILE',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.values[4],
 
-                              ),
-                            )
-                          ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -138,7 +148,7 @@ class Profile extends StatelessWidget {
                       rightText(HiveBoxes.userBox.values.first.phoneMobile!),
                     ],
                   ),
-                  getLineText(AppStrings.identificationPrimaryInvestment),
+                  getLineText('Identification and password'),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

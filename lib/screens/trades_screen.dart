@@ -21,6 +21,8 @@ class _TrandesScreenState extends State<TrandesScreen> {
   String selectedMonth = 'January';
   String selectedYear = '2022';
   List<TradesModel> tradesList = [];
+  var cMonth = DateTime.now().month;
+  bool m = false;
   List<String> dropDownYears = [
     '2012',
     '2013',
@@ -60,6 +62,10 @@ class _TrandesScreenState extends State<TrandesScreen> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
+    if(m == false){
+      selectedMonth = dropDownMonths.elementAt(cMonth-1);
+      m = true;
+    }
     final GlobalKey<ScaffoldState> _key = GlobalKey();
 
     return Scaffold(

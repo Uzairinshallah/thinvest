@@ -48,7 +48,7 @@ class _ViewAlertState extends State<ViewAlert> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               leftText(AppStrings.type),
-              rightText(widget.tradesModel!.type!, color: CColors.green)
+              rightText(widget.tradesModel!.type!, color: (widget.tradesModel!.type! == "B") ? CColors.green : Colors.red.withOpacity(.6))
             ],
           ),
           Row(
@@ -106,7 +106,7 @@ class _ViewAlertState extends State<ViewAlert> {
               leftText(AppStrings.p_l_eur_usd),
               Column(
                 children: [
-                  rightText(widget.tradesModel!.price!, color: CColors.green),
+                  rightText(widget.tradesModel!.price!, color: (widget.tradesModel!.type! == "B") ? CColors.green : Colors.red.withOpacity(.6)),
                   rightText(widget.tradesModel!.closing_price!),
                 ],
               )
@@ -116,7 +116,7 @@ class _ViewAlertState extends State<ViewAlert> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               leftText(AppStrings.time),
-              rightText(AppStrings.buy)
+              rightText(widget.tradesModel!.trade_time!)
             ],
           ),
         ],

@@ -47,8 +47,8 @@ class DepositTable extends StatelessWidget {
                                   child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        getSubHeading(
-                                            model.id.toString(), CColors.buttonOne, fontSize),
+                                        // getSubHeading(
+                                        //     model.id.toString(), CColors.buttonOne, fontSize),
                                         getSubHeading(model.type.toString(),
                                             CColors.textColor, fontSize)
                                       ]),
@@ -65,7 +65,7 @@ class DepositTable extends StatelessWidget {
                             Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
-                                  child: Align(alignment: Alignment.center, child: getSubHeading(model.status.toString(), Colors.redAccent, fontSize)),
+                                  child: Align(alignment: Alignment.center, child: getSubHeading((model.status.toString() == '1') ? 'Recieved' : 'In Progress', (model.status.toString() == '1') ? CColors.green : Colors.redAccent, fontSize)),
                                 )),
                           ],
                         ),

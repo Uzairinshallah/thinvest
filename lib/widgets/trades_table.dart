@@ -52,7 +52,7 @@ class _TradesTableState extends State<TradesTable> {
                       child: getSubHeading(
                           model.type.toString(),
                           fontSize,
-                          CColors.green),
+                          (model.type == "B") ? CColors.green : Colors.red.withOpacity(.6)),
                     )),
                 Expanded(
                     child: getSubHeading(
@@ -65,7 +65,7 @@ class _TradesTableState extends State<TradesTable> {
                         getSubHeading(
                             model.price.toString(),
                             fontSize,
-                            CColors.green),
+                            (model.type == "B") ? CColors.green : Colors.red.withOpacity(.6)),
                         getSubHeading(
                             model.closing_price.toString(),
                             fontSize,

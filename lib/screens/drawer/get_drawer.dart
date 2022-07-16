@@ -42,19 +42,19 @@ class GetDrawer extends StatelessWidget {
               children: [
                 drawerHeading('Dashboard', () {
                   Navigator.pop(context);
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => Dashboard()));
                 }),
                 getLine(),
                 drawerHeading('Trades', () {
                   Navigator.pop(context);
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => TrandesScreen()));
                 }),
                 getLine(),
                 drawerHeading('Deposits', () {
                   Navigator.pop(context);
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => DepositsScreen()));
@@ -69,7 +69,7 @@ class GetDrawer extends StatelessWidget {
                 getLine(),
                 drawerHeading('Support', () {
                   Navigator.pop(context);
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => Support()));
                 }),
               ],
