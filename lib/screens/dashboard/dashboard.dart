@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
+import 'package:thinvest/Extras/functions.dart';
 import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/sdp.dart';
 import 'package:thinvest/Extras/strings.dart';
@@ -11,6 +12,7 @@ import 'package:thinvest/models/trades_model.dart';
 import 'package:thinvest/screens/add_deposit.dart';
 import 'package:thinvest/screens/dashboard/subs_chart.dart';
 import 'package:thinvest/screens/deposit.dart';
+import 'package:thinvest/screens/login_page.dart';
 import 'package:thinvest/screens/profile.dart';
 import 'package:thinvest/screens/drawer/get_drawer.dart';
 import 'package:thinvest/widgets/viewAlert.dart';
@@ -27,6 +29,7 @@ class _DashboardState extends State<Dashboard> {
   var now = DateTime.now();
   var con = ScrollController();
   var cMonth = DateTime.now().month;
+
   // String selectedMonth = 'January';
   String selectedMonth = 'January';
   String selectedYear = '2022';
@@ -65,7 +68,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-
     getDataTrades();
     getDataStats();
     super.initState();
@@ -75,8 +77,8 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    if(m == false){
-      selectedMonth = dropDownMonths.elementAt(cMonth-1);
+    if (m == false) {
+      selectedMonth = dropDownMonths.elementAt(cMonth - 1);
       m = true;
     }
 
@@ -101,16 +103,17 @@ class _DashboardState extends State<Dashboard> {
                     const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
                 child: Row(
                   children: [
-                    InkWell(
+                    GestureDetector(
                         onTap: () {
                           print('_key');
                           print(_key);
                           _key.currentState!.openDrawer();
                         },
-                        child: SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: Image.asset('assets/icons/drawer.png'))),
+                        child: Image.asset(
+                          'assets/icons/drawer.png',
+                          fit: BoxFit.cover,
+                          width: 50,
+                        )),
                     Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Column(
@@ -398,12 +401,13 @@ class _DashboardState extends State<Dashboard> {
                               (tradesList.isEmpty)
                                   ? Center(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: CircularProgressIndicator(
-                                        valueColor: AlwaysStoppedAnimation<Color>(
-                                            CColors.buttonOne),
-                                    ),
-                                      ))
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                CColors.buttonOne),
+                                      ),
+                                    ))
                                   : SubsChart(
                                       tradesModel: tradesList
                                           .where(
@@ -599,7 +603,7 @@ class _DashboardState extends State<Dashboard> {
   Widget getTradesBuilder(double fontSize) {
     print('tradesModel.length');
     print(tradesModel.length);
-    List<TradesModel> m =  tradesModel.reversed.toList();
+    List<TradesModel> m = tradesModel.reversed.toList();
 
     return ListView.builder(
         physics: BouncingScrollPhysics(),
@@ -621,7 +625,11 @@ class _DashboardState extends State<Dashboard> {
                     child: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: getSubHeading(
-                      model.type.toString(), fontSize, (model.type.toString() == 'B') ? CColors.green : Colors.red.withOpacity(.6)),
+                      model.type.toString(),
+                      fontSize,
+                      (model.type.toString() == 'B')
+                          ? CColors.green
+                          : Colors.red.withOpacity(.6)),
                 )),
                 Expanded(
                     child: getSubHeading(
@@ -630,7 +638,11 @@ class _DashboardState extends State<Dashboard> {
                     child: Column(
                   children: [
                     getSubHeading(
-                        model.price.toString(), fontSize, (model.type.toString() == 'B') ? CColors.green : Colors.red.withOpacity(.6)),
+                        model.price.toString(),
+                        fontSize,
+                        (model.type.toString() == 'B')
+                            ? CColors.green
+                            : Colors.red.withOpacity(.6)),
                     getSubHeading(
                         model.closing_price.toString(), fontSize, Colors.black),
                   ],
@@ -819,6 +831,14 @@ class _DashboardState extends State<Dashboard> {
 
       // return model;
     } else {
+      print('session expired');
+      Functions.showSnackBar(context, 'Your session is expired... Loging out');
+      HiveBoxes.userBox.delete("profile");
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+          (Route<dynamic> route) => false);
+      Functions.showSnackBar(context, 'Log Out Successfully');
       print('Something Wrong');
       throw Exception("Failed to Fetch Data");
     }
@@ -859,7 +879,6 @@ class _DashboardState extends State<Dashboard> {
       print('Something Wrong');
       throw Exception("Failed to Fetch Data");
     }
-
   }
 
   Widget getSubHeading(String txt, double size, Color col) {
