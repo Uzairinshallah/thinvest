@@ -6,6 +6,7 @@ import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/sdp.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/models/deposit_model.dart';
+import 'package:thinvest/widgets/view_alert_deposit.dart';
 
 
 class DepositTable extends StatelessWidget {
@@ -14,7 +15,7 @@ class DepositTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SDP.init(context);
-    double fontSize = SDP.sdp(10);
+    double fontSize = SDP.sdp(9);
     print(fontSize);
     return
       Expanded(
@@ -42,6 +43,7 @@ class DepositTable extends StatelessWidget {
                         child: Row(
                           children: [
                             Expanded(
+                                flex: 3,
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Column(
@@ -49,23 +51,49 @@ class DepositTable extends StatelessWidget {
                                       children: [
                                         // getSubHeading(
                                         //     model.id.toString(), CColors.buttonOne, fontSize),
-                                        getSubHeading(model.type.toString(),
+                                        getSubHeading(model.amount.toString(),
                                             CColors.textColor, fontSize)
                                       ]),
                                 )),
+
                             Expanded(
-                                child: getSubHeading(
-                                    model.description.toString(), CColors.textColor, fontSize)),
-                            Expanded(
+                                flex: 3,
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 6.0),
                                   child: getSubHeading(
                                       model.deposit_date, CColors.textColor, fontSize),
                                 )),
                             Expanded(
+                                flex: 3,
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
-                                  child: Align(alignment: Alignment.center, child: getSubHeading((model.status.toString() == '1') ? 'Recieved' : 'In Progress', (model.status.toString() == '1') ? CColors.green : Colors.redAccent, fontSize)),
+                                  child: Align(alignment: Alignment.center, child: getSubHeading((model.status.toString() == '1') ? 'Received' : 'In Progress', (model.status.toString() == '1') ? CColors.green : Colors.redAccent, fontSize)),
+                                )),
+                            Expanded(
+                                flex: 2,
+                                child: InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => ViewAlertDeposit(depositModel: model,));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: CColors.buttonOne),
+                                      child: Center(
+                                        child: Text(
+                                          AppStrings.view,
+                                          style: const TextStyle(
+                                              color: Colors.white, fontSize: 10),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 )),
                           ],
                         ),

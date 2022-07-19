@@ -81,14 +81,14 @@ class _TrandesScreenState extends State<TrandesScreen> {
                 padding: const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
                 child: Row(
                   children: [
-                    InkWell(
+                    GestureDetector(
                         onTap: () {
                           _key.currentState!.openDrawer();
                         },
                         child: SizedBox(
                             width: 50,
                             height: 50,
-                            child: Image.asset('assets/icons/drawer.png'))),
+                            child: Image.asset('assets/icons/drawer.png',))),
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Column(

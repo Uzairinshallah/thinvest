@@ -63,13 +63,13 @@ class _TradesTableState extends State<TradesTable> {
                     child: Column(
                       children: [
                         getSubHeading(
-                            model.price.toString(),
+                            '${model.p1_usd.toString()} \$ ',
                             fontSize,
-                            (model.type == "B") ? CColors.green : Colors.red.withOpacity(.6)),
+                            (model.type.toString() == 'B')
+                                ? CColors.green
+                                : Colors.red.withOpacity(.6)),
                         getSubHeading(
-                            model.closing_price.toString(),
-                            fontSize,
-                            Colors.black),
+                            '${model.p1_eur.toString()} €' , fontSize, Colors.black),
                       ],
                     )),
                 Expanded(

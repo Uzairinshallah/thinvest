@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/strings.dart';
+import 'package:thinvest/models/deposit_model.dart';
 import 'package:thinvest/models/trades_model.dart';
 
 
-class ViewAlert extends StatefulWidget {
-  TradesModel ? tradesModel;
-  ViewAlert({Key? key, required this.tradesModel,}) : super(key: key);
+class ViewAlertDeposit extends StatefulWidget {
+  DepositModel ? depositModel;
+  ViewAlertDeposit({Key? key, required this.depositModel,}) : super(key: key);
 
   @override
-  State<ViewAlert> createState() => _ViewAlertState();
+  State<ViewAlertDeposit> createState() => _ViewAlertDepositState();
 }
 
-class _ViewAlertState extends State<ViewAlert> {
+class _ViewAlertDepositState extends State<ViewAlertDeposit> {
   var screenWidth, screenHeight;
 
   @override
   Widget build(BuildContext context) {
-    print(widget.tradesModel!.amount);
+    print(widget.depositModel!.amount);
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       title: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           color: CColors.buttonOne,
         ),
@@ -43,86 +44,58 @@ class _ViewAlertState extends State<ViewAlert> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              leftText('ID'),
+              rightText(widget.depositModel!.id!.toString())
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
               leftText('User ID'),
-              rightText(widget.tradesModel!.userId!.toString())
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText(AppStrings.type),
-              rightText(widget.tradesModel!.type!, color: (widget.tradesModel!.type! == "B") ? CColors.green : Colors.red.withOpacity(.6))
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText(AppStrings.amount),
-              rightText(widget.tradesModel!.amount!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText(AppStrings.pair),
-              rightText(widget.tradesModel!.pair!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText(AppStrings.stopLoss),
-              rightText(widget.tradesModel!.stoploss!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText(AppStrings.price),
-              rightText(widget.tradesModel!.price!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText(AppStrings.cp),
-              rightText(widget.tradesModel!.closing_price!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText(AppStrings.price_loss),
-              rightText(widget.tradesModel!.p1!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText(AppStrings.pip),
-              rightText(widget.tradesModel!.pip!)
+              rightText(widget.depositModel!.userId!.toString())
             ],
           ),
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              leftText('pl_usd'),
-              rightText('${widget.tradesModel!.p1_usd!} \$', color: (widget.tradesModel!.type! == "B") ? CColors.green : Colors.red.withOpacity(.6)),
+              leftText(AppStrings.type),
+              rightText(widget.depositModel!.type!)
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              leftText('pl_eur'),
-              rightText('${widget.tradesModel!.p1_eur!} €')
+              leftText(AppStrings.amount),
+              rightText(widget.depositModel!.amount!)
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              leftText(AppStrings.time),
-              rightText(widget.tradesModel!.trade_time!)
+              leftText('Deposit Date'),
+              rightText(widget.depositModel!.deposit_date!)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              leftText('Bank'),
+              rightText(widget.depositModel!.bank!)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              leftText(AppStrings.description),
+              Expanded(child: Text(widget.depositModel!.description!, textAlign: TextAlign.end,maxLines: 2, style : TextStyle(fontSize: 16, color: CColors.textColor)))
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              leftText(AppStrings.status),
+              rightText((widget.depositModel!.status! == '1') ? 'Received' : 'In Progress', color: (widget.depositModel!.status! == "1") ? CColors.green : Colors.red.withOpacity(.6))
             ],
           ),
         ],

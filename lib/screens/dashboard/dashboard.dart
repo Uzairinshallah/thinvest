@@ -93,7 +93,7 @@ class _DashboardState extends State<Dashboard> {
       body: Padding(
         padding: MediaQuery.of(context).padding,
         child: Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 10,
           ),
           child: Column(
@@ -115,7 +115,7 @@ class _DashboardState extends State<Dashboard> {
                           width: 50,
                         )),
                     Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
@@ -143,7 +143,7 @@ class _DashboardState extends State<Dashboard> {
               Expanded(
                 child: SingleChildScrollView(
                   controller: con,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       Padding(
@@ -220,10 +220,10 @@ class _DashboardState extends State<Dashboard> {
                                                 TextStyle(color: Colors.white),
                                           ),
                                           (statsModel.isEmpty)
-                                              ? SizedBox()
+                                              ? const SizedBox()
                                               : Text(
                                                   '${statsModel.first.thisMonthProfitLoss!}',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.white),
                                                 ),
                                         ],
@@ -491,7 +491,7 @@ class _DashboardState extends State<Dashboard> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  AddDeposit()));
+                                                  const AddDeposit()));
                                     },
                                     child: Container(
                                       width: screenWidth * .5,
@@ -606,7 +606,7 @@ class _DashboardState extends State<Dashboard> {
     List<TradesModel> m = tradesModel.reversed.toList();
 
     return ListView.builder(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
         itemCount: m.length,
         itemBuilder: (BuildContext context, int index) {
@@ -638,13 +638,13 @@ class _DashboardState extends State<Dashboard> {
                     child: Column(
                   children: [
                     getSubHeading(
-                        model.price.toString(),
+                        '${model.p1_usd.toString()} \$ ',
                         fontSize,
                         (model.type.toString() == 'B')
                             ? CColors.green
                             : Colors.red.withOpacity(.6)),
                     getSubHeading(
-                        model.closing_price.toString(), fontSize, Colors.black),
+                        '${model.p1_eur.toString()} €' , fontSize, Colors.black),
                   ],
                 )),
                 Expanded(
@@ -747,7 +747,7 @@ class _DashboardState extends State<Dashboard> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         Row(
@@ -801,7 +801,7 @@ class _DashboardState extends State<Dashboard> {
 
   Widget getHeading(String txt) {
     return Text(txt,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.white,
         ),
         textAlign: TextAlign.center);
@@ -867,10 +867,13 @@ class _DashboardState extends State<Dashboard> {
           DateTime dt = DateTime.parse(model.trade_date!);
           String checkYear = dt.year.toString();
           int checkMonth = dt.month;
-          // if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
+          if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
           tradesModel.add(model);
+
+          }
           tradesList.add(model);
-          // }
+
+
         }
 
         setState(() {});

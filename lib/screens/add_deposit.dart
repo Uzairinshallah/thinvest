@@ -60,7 +60,7 @@ class _AddDepositState extends State<AddDeposit> {
               SizedBox(
                 height: screenHeight * .065,
               ),
-              getAmountField('€ 500', deposit),
+              getAmountField('€ 10.000 ', deposit),
               SizedBox(
                 height: screenHeight * .029,
               ),
@@ -75,7 +75,7 @@ class _AddDepositState extends State<AddDeposit> {
                       activeColor: CColors.buttonOne,
                       value: controller.bankState.value,
                       onChanged: (value) {
-                          controller.bankState.value = value!;
+                          // controller.bankState.value = value!;
                       },
                     ),
                   ),
@@ -105,7 +105,9 @@ class _AddDepositState extends State<AddDeposit> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-
+                      onTap: (){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DepositsScreen()));
+                      },
                       child: Row(
                         children: [
                           Padding(
@@ -129,14 +131,16 @@ class _AddDepositState extends State<AddDeposit> {
                       child: InkWell(
                         onTap: () {
                           if(deposit.text == '' || deposit.text.isEmpty){
-                            Functions.showSnackBar(context, 'Deposit Should not be Null');
+                            Functions.showSnackBar(context, 'Deposit Should be more than €500');
                           }
                           else if(int.parse(deposit.text) < 500){
                             Functions.showSnackBar(context, 'Deposit Should be more than €500 ');
                           }
-                          else
+                          else {
                             Functions.showLoaderDialog(context);
                             postDeposit();
+                          }
+
 
                           // else if(deposit.text < 10)
                         },
@@ -191,8 +195,11 @@ class _AddDepositState extends State<AddDeposit> {
       },
       body: ''
     );
+
+
+
     print(response.statusCode);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode <= 201) {
       Functions.showSnackBar(context, 'Your deposit has been requested successfully. Shortly one of our team members will contact you through email with further instructions');
 
       print('Status code: ${response.statusCode}');

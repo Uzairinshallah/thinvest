@@ -22,7 +22,7 @@ class _SupportState extends State<Support> {
   var screenWidth, screenHeight;
   double res = 0;
 
-  bool boxValue = false;
+  bool boxValue = true;
   bool boxValue2 = false;
   final controller = Get.put(AppController());
   var topicController = TextEditingController();
@@ -63,7 +63,7 @@ class _SupportState extends State<Support> {
             children: [
               Row(
                 children: [
-                  InkWell(
+                  GestureDetector(
                       onTap: () {
                         _key.currentState!.openDrawer();
                       },
@@ -120,6 +120,7 @@ class _SupportState extends State<Support> {
                                 onChanged: (value) {
                                   setState(() {
                                     boxValue = value!;
+                                    boxValue2 = !value;
                                   });
                                 },
                               ),
@@ -141,6 +142,7 @@ class _SupportState extends State<Support> {
                                 onChanged: (value) {
                                   setState(() {
                                     boxValue2 = value!;
+                                    boxValue = !value;
                                   });
                                 },
                               ),
