@@ -259,7 +259,7 @@ class _SupportState extends State<Support> {
                       getTextField('Message', messageController, 8),
                       // Expanded(child: SizedBox()),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,

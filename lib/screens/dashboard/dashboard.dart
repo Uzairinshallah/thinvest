@@ -280,6 +280,7 @@ class _DashboardState extends State<Dashboard> {
                                       setState(() {
                                         selectedMonth = newValue!;
                                         getDataTrades();
+                                        Navigator.pop(context);
                                       });
                                     },
                                     items: dropDownMonths
@@ -318,6 +319,8 @@ class _DashboardState extends State<Dashboard> {
                                         setState(() {
                                           selectedYear = newValue!;
                                           getDataTrades();
+                                          // Navigator.pop(context);
+
                                         });
                                       },
                                       items: dropDownYears
@@ -638,13 +641,13 @@ class _DashboardState extends State<Dashboard> {
                     child: Column(
                   children: [
                     getSubHeading(
-                        '${model.p1_usd.toString()} \$ ',
+                        '${model.p1_eur.toString()} € ',
                         fontSize,
                         (model.type.toString() == 'B')
                             ? CColors.green
                             : Colors.red.withOpacity(.6)),
                     getSubHeading(
-                        '${model.p1_eur.toString()} €' , fontSize, Colors.black),
+                        '${model.p1_usd.toString()} \$' , fontSize, Colors.black),
                   ],
                 )),
                 Expanded(
@@ -710,7 +713,7 @@ class _DashboardState extends State<Dashboard> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
-              statsModel.first.startCap!,
+              '€ ${statsModel.first.startCap!}',
               style: TextStyle(color: CColors.textColor),
             ),
           ],
@@ -742,7 +745,7 @@ class _DashboardState extends State<Dashboard> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
-              statsModel.first.profitLoss!,
+              '€ ${statsModel.first.profitLoss!}',
               style: TextStyle(color: CColors.textColor),
             ),
           ],
@@ -758,7 +761,7 @@ class _DashboardState extends State<Dashboard> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
-              statsModel.first.profitShare!,
+              '€ ${statsModel.first.profitShare!}',
               style: TextStyle(color: CColors.textColor),
             ),
           ],
@@ -774,7 +777,7 @@ class _DashboardState extends State<Dashboard> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
-              statsModel.first.totalDeposit!,
+              '€ ${statsModel.first.totalDeposit!}',
               style: TextStyle(color: CColors.textColor),
             ),
           ],
@@ -790,7 +793,7 @@ class _DashboardState extends State<Dashboard> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
-              statsModel.first.equity!,
+              '€ ${statsModel.first.equity!}',
               style: TextStyle(color: CColors.textColor),
             ),
           ],
@@ -882,6 +885,7 @@ class _DashboardState extends State<Dashboard> {
       print('Something Wrong');
       throw Exception("Failed to Fetch Data");
     }
+    return;
   }
 
   Widget getSubHeading(String txt, double size, Color col) {

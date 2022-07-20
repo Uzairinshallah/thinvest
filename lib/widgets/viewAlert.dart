@@ -47,6 +47,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText(widget.tradesModel!.userId!.toString())
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -54,6 +55,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText(widget.tradesModel!.type!, color: (widget.tradesModel!.type! == "B") ? CColors.green : Colors.red.withOpacity(.6))
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -61,6 +63,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText(widget.tradesModel!.amount!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -68,6 +71,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText(widget.tradesModel!.pair!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -75,6 +79,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText(widget.tradesModel!.stoploss!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -82,6 +87,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText(widget.tradesModel!.price!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -89,6 +95,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText(widget.tradesModel!.closing_price!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -96,6 +103,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText(widget.tradesModel!.p1!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -103,7 +111,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText(widget.tradesModel!.pip!)
             ],
           ),
-
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -111,6 +119,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText('${widget.tradesModel!.p1_usd!} \$', color: (widget.tradesModel!.type! == "B") ? CColors.green : Colors.red.withOpacity(.6)),
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -118,6 +127,7 @@ class _ViewAlertState extends State<ViewAlert> {
               rightText('${widget.tradesModel!.p1_eur!} €')
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

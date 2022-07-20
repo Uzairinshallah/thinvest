@@ -48,6 +48,7 @@ class _ViewAlertDepositState extends State<ViewAlertDeposit> {
               rightText(widget.depositModel!.id!.toString())
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -55,7 +56,7 @@ class _ViewAlertDepositState extends State<ViewAlertDeposit> {
               rightText(widget.depositModel!.userId!.toString())
             ],
           ),
-
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -63,6 +64,7 @@ class _ViewAlertDepositState extends State<ViewAlertDeposit> {
               rightText(widget.depositModel!.type!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -70,6 +72,7 @@ class _ViewAlertDepositState extends State<ViewAlertDeposit> {
               rightText(widget.depositModel!.amount!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -77,6 +80,7 @@ class _ViewAlertDepositState extends State<ViewAlertDeposit> {
               rightText(widget.depositModel!.deposit_date!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -84,6 +88,7 @@ class _ViewAlertDepositState extends State<ViewAlertDeposit> {
               rightText(widget.depositModel!.bank!)
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -91,6 +96,7 @@ class _ViewAlertDepositState extends State<ViewAlertDeposit> {
               Expanded(child: Text(widget.depositModel!.description!, textAlign: TextAlign.end,maxLines: 2, style : TextStyle(fontSize: 16, color: CColors.textColor)))
             ],
           ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

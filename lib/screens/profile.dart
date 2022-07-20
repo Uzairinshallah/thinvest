@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/strings.dart';
-import 'package:thinvest/models/user_model.dart';
 import 'package:thinvest/screens/dashboard/dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
@@ -28,7 +27,7 @@ class Profile extends StatelessWidget {
               width: screenWidth,
               // height: screenHeight * .3,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+                // borderRadius: BorderRadius.only(),
                 gradient: LinearGradient(
                   colors: [
                     CColors.buttonOne,
@@ -39,7 +38,7 @@ class Profile extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(
-                    top: 40.0, left: 25, right: 30, bottom: 20),
+                    top: 24.0, left: 30, right: 30, bottom: 20),
                 child: Column(
                   children: [
                     Row(
@@ -207,14 +206,14 @@ class Profile extends StatelessWidget {
   Text rightText(String txt) {
     return Text(
       txt,
-      style: TextStyle(fontSize: 16, color: CColors.textColor),
+      style: TextStyle(fontSize: 15, color: CColors.textColor),
     );
   }
 
   Text leftText(String txt) {
     return Text(
       txt,
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.values[4]),
+      style: TextStyle(fontSize: 15, fontWeight: FontWeight.values[4]),
     );
   }
 
