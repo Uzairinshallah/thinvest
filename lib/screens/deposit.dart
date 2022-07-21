@@ -21,7 +21,7 @@ class DepositsScreen extends StatelessWidget {
       body: Padding(
         padding: MediaQuery.of(context).padding,
         child: Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 15),
           child: Column(
             children: [
               Padding(
@@ -59,11 +59,9 @@ class DepositsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: screenHeight * .08,
-              ),
+
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
+                padding: const EdgeInsets.only(top: 30,left: 15, right: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

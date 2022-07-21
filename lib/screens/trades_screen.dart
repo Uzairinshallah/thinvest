@@ -74,7 +74,7 @@ class _TrandesScreenState extends State<TrandesScreen> {
       body: Padding(
         padding: MediaQuery.of(context).padding,
         child: Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 15),
           child: Column(
             children: [
               Padding(
@@ -118,12 +118,10 @@ class _TrandesScreenState extends State<TrandesScreen> {
               Expanded(
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 35,
-                    ),
+
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 8.0, bottom: 8, left: 15, right: 15),
+                          top: 30.0, bottom: 8, left: 15, right: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -247,11 +245,14 @@ class _TrandesScreenState extends State<TrandesScreen> {
   }
 
   Widget getHeading(String txt) {
-    return Text(txt,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-        textAlign: TextAlign.center);
+    return Padding(
+      padding: (txt == 'Type') ? EdgeInsets.only(left :  8.0) : EdgeInsets.only(left :  0.0),
+      child: Text(txt,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+          textAlign: TextAlign.left),
+    );
   }
 
   Widget getSubHeading(String txt, double size, Color col) {

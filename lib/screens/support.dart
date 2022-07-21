@@ -72,7 +72,7 @@ class _SupportState extends State<Support> {
                           height: 50,
                           child: Image.asset('assets/icons/drawer.png'))),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
@@ -96,9 +96,11 @@ class _SupportState extends State<Support> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 30,
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: SizedBox(),
               ),
+
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),

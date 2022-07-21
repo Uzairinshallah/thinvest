@@ -4,7 +4,7 @@ class AppStrings {
   static String type = 'Type';
   static String addDeposit = 'Add Deposit';
   static String amount = 'Amount';
-  static String usd = 'P/L EUR/USD';
+  static String usd = 'P/L';
   static String time = 'Time';
   static String minimum = 'Minimum';
   static String buy = 'Buy';

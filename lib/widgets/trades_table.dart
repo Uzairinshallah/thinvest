@@ -10,6 +10,7 @@ import 'package:thinvest/widgets/viewAlert.dart';
 class TradesTable extends StatefulWidget {
   // TradesModel? tradesModel;
   List<TradesModel> tradesModel;
+
   TradesTable({Key? key, required this.tradesModel}) : super(key: key);
 
   @override
@@ -19,10 +20,6 @@ class TradesTable extends StatefulWidget {
 class _TradesTableState extends State<TradesTable> {
   var screenWidth, screenHeight;
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     SDP.init(context);
@@ -30,66 +27,102 @@ class _TradesTableState extends State<TradesTable> {
     print(fontSize);
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    return (widget.tradesModel.length == 0) ? Center(child: Text('No data Found'),) : ListView.builder(
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.zero,
-        itemCount: widget.tradesModel.length,
-        itemBuilder: (BuildContext context, int index) {
-          var model = widget.tradesModel[index];
-          print('widget.tradesModel.length');
-          print(widget.tradesModel.length);
-          if(widget.tradesModel.isEmpty){
-            print('widget Null');
-            return Center(child: Text('No Data Found'),);
-          }
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 4.0),
-            child: Row(
-              children: [
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: getSubHeading(
-                          model.type.toString(),
-                          fontSize,
-                          (model.type == "B") ? CColors.green : Colors.red.withOpacity(.6)),
-                    )),
-                Expanded(
-                    child: getSubHeading(
-                        model.amount.toString(),
-                        .17,
-                        Colors.black)),
-                Expanded(
-                    child: Column(
-                      children: [
-                        getSubHeading(
-                            '${model.p1_usd.toString()} \$ ',
-                            fontSize,
-                            (model.type.toString() == 'B')
-                                ? CColors.green
-                                : Colors.red.withOpacity(.6)),
-                        getSubHeading(
-                            '${model.p1_eur.toString()} €' , fontSize, Colors.black),
-                      ],
-                    )),
-                Expanded(
-                    child: Column(
-                      children: [
-                        getSubHeading(
-                            model.trade_date.toString(),
-                            fontSize,
-                            Colors.black),
-                        getSubHeading(
-                            model.trade_time.toString(),
-                            fontSize,
-                            Colors.black),
-                      ],
-                    )),
-                Expanded(
-                    child: InkWell(
-                      onTap: (){
-                        showDialog(context: context, builder: (context) => ViewAlert(tradesModel :model));
+    return (widget.tradesModel.length == 0)
+        ? Center(
+            child: Text('No data Found'),
+          )
+        : ListView.separated(
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: widget.tradesModel.length,
+            itemBuilder: (BuildContext context, int index) {
+              var model = widget.tradesModel[index];
+              print('widget.tradesModel.length');
+              print(model.type);
+              var amountWithPoint = double.parse(model.amount.toString());
+              if (widget.tradesModel.isEmpty) {
+                print('widget Null');
+                return Center(
+                  child: Text('No Data Found'),
+                );
+              }
 
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 4.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: (model.type.toString() == 'B')
+                                    ? CColors.green
+                                    : Colors.red.withOpacity(.6),
+                              ),
+                              
+                              child: getSubHeading(
+                                  (model.type.toString() == 'B') ? 'Buy' : 'Short',
+                                  fontSize,
+                                  (model.type.toString() == 'B')
+                                      ? Colors.white
+                                      : Colors.white),
+                            ),
+                          ),
+                        )),
+                    Expanded(
+                        child: getSubHeading(
+                            // '${model.amount.toString()}.00',
+                            '€ ${amountWithPoint.toStringAsFixed(2)}',.17, Colors.black)),
+                    Expanded(
+                        child: Column(
+                      children: [
+                        // getSubHeading(
+                        //     '${model.p1.toString()}  ',
+                        //     fontSize,
+                        //     (model.type.toString() == 'B')
+                        //         ? CColors.green
+                        //         : Colors.red.withOpacity(.6)),
+
+                        Container(
+                          padding: const EdgeInsets.only(left: 2),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: (model.type.toString() == 'B')
+                                ? CColors.green
+                                : Colors.red.withOpacity(.6),
+                          ),
+                          
+                          child: getSubHeading(
+                              '+ €${model.p1_eur.toString()}',
+                              fontSize,
+                              (model.type.toString() == 'B')
+                                  ? Colors.white
+                                  : Colors.white),
+                        ),
+                        getSubHeading('+ \$${model.p1_usd.toString()}', fontSize,
+                            Colors.black),
+                      ],
+                    )),
+                    Expanded(
+                        child: Column(
+                      children: [
+                        getSubHeading(model.trade_date.toString(), fontSize,
+                            Colors.black),
+                        getSubHeading(model.trade_time.toString(), fontSize,
+                            Colors.black),
+                      ],
+                    )),
+                    Expanded(
+                        child: InkWell(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) =>
+                                ViewAlert(tradesModel: model));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -109,10 +142,17 @@ class _TradesTableState extends State<TradesTable> {
                         ),
                       ),
                     )),
-              ],
-            ),
+                  ],
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return Container(
+                height: .5,
+                color: CColors.textColor.withOpacity(.5), // Custom style
+              );
+            },
           );
-        });
   }
 
   Widget getSubHeading(String txt, double size, Color col) {
@@ -120,13 +160,9 @@ class _TradesTableState extends State<TradesTable> {
       width: screenWidth * size,
       child: Text(txt,
           style: TextStyle(color: col, fontSize: 12),
-          textAlign: TextAlign.center),
+          textAlign: (txt == 'Buy' || txt == 'Short')
+          ? TextAlign.center
+          : TextAlign.left,),
     );
   }
-
-
-
-
-
 }
-

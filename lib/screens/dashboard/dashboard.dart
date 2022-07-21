@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,7 @@ class _DashboardState extends State<Dashboard> {
         padding: MediaQuery.of(context).padding,
         child: Padding(
           padding: const EdgeInsets.only(
-            top: 10,
+            top: 15,
           ),
           child: Column(
             children: [
@@ -148,7 +149,7 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(
-                            top: 40.0, left: 15, right: 15),
+                            top: 15.0, left: 15, right: 15),
                         child: Container(
                           width: screenWidth,
                           // height: screenHeight * .20,
@@ -251,9 +252,10 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            top: 8.0, left: 15, right: 15),
+                            top: 8.0, left: 15, right: 25),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               'Trading period:',
@@ -280,7 +282,7 @@ class _DashboardState extends State<Dashboard> {
                                       setState(() {
                                         selectedMonth = newValue!;
                                         getDataTrades();
-                                        Navigator.pop(context);
+                                        // Navigator.pop(context);
                                       });
                                     },
                                     items: dropDownMonths
@@ -320,7 +322,6 @@ class _DashboardState extends State<Dashboard> {
                                           selectedYear = newValue!;
                                           getDataTrades();
                                           // Navigator.pop(context);
-
                                         });
                                       },
                                       items: dropDownYears
@@ -353,71 +354,74 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                       ),
-                      Container(
-                          width: screenWidth * .9,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                  color: CColors.textColor, width: .5)),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      height: 15,
-                                      decoration: BoxDecoration(
-                                          color: Colors.green.withOpacity(.5),
-                                          border: Border.all(
-                                              color: Colors.green, width: 1)),
-                                    ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.0, right: 4),
-                                      child: Text(
-                                        'Positive Trades',
-                                        style: TextStyle(fontSize: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Container(
+                            width: screenWidth,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                    color: CColors.textColor, width: .5)),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 40,
+                                        height: 15,
+                                        decoration: BoxDecoration(
+                                            color: CColors.green,
+                                            border: Border.all(
+                                                color: Colors.green, width: 1)),
                                       ),
-                                    ),
-                                    Container(
-                                      width: 40,
-                                      height: 15,
-                                      decoration: BoxDecoration(
-                                          color: Colors.red.withOpacity(.5),
-                                          border: Border.all(
-                                              color: Colors.red, width: 1)),
-                                    ),
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 4.0, right: 4),
-                                      child: Text(
-                                        'Negative Trades',
-                                        style: TextStyle(fontSize: 10),
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 4.0, right: 4),
+                                        child: Text(
+                                          'Positive Trades',
+                                          style: TextStyle(fontSize: 10),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      Container(
+                                        width: 40,
+                                        height: 15,
+                                        decoration: BoxDecoration(
+                                            color: Colors.red.withOpacity(.6),
+                                            border: Border.all(
+                                                color: Colors.red, width: 1)),
+                                      ),
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 4.0, right: 4),
+                                        child: Text(
+                                          'Negative Trades',
+                                          style: TextStyle(fontSize: 10),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              (tradesList.isEmpty)
-                                  ? Center(
-                                      child: Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                CColors.buttonOne),
-                                      ),
-                                    ))
-                                  : SubsChart(
-                                      tradesModel: tradesList
-                                          .where(
-                                              (element) => checkMonth(element))
-                                          .toList()),
-                            ],
-                          )),
+                                (tradesList.isEmpty)
+                                    ? Center(
+                                        child: Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  CColors.buttonOne),
+                                        ),
+                                      ))
+                                    : SubsChart(
+                                        tradesModel: tradesList
+                                            .where((element) =>
+                                                checkMonth(element))
+                                            .toList()),
+                              ],
+                            )),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 15.0, bottom: 15),
                         child: Container(
@@ -481,9 +485,17 @@ class _DashboardState extends State<Dashboard> {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 6.0, bottom: 15),
-                                  child: Text(
-                                    '${AppStrings.currentDeposit} 2000',
-                                    style: TextStyle(color: CColors.textColor),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        '${AppStrings.currentDeposit} ',
+                                        style: TextStyle(color: CColors.textColor),
+                                      ),
+                                      (statsModel.isEmpty) ? SizedBox() : Text(
+                                        '€ ${statsModel.first.totalDeposit!}',
+                                        style: TextStyle(color: CColors.textColor),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Align(
@@ -608,59 +620,92 @@ class _DashboardState extends State<Dashboard> {
     print(tradesModel.length);
     List<TradesModel> m = tradesModel.reversed.toList();
 
-    return ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.zero,
-        itemCount: m.length,
-        itemBuilder: (BuildContext context, int index) {
-          var model = m[index];
-          DateTime dt = DateTime.parse(model.trade_date!);
-          String checkYear = dt.year.toString();
-          int checkMonth = dt.month;
-          print(checkMonth);
-          print(checkYear);
-          // if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 4.0),
-            child: Row(
-              children: [
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: getSubHeading(
-                      model.type.toString(),
-                      fontSize,
-                      (model.type.toString() == 'B')
+    return ListView.separated(
+      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: m.length,
+      itemBuilder: (BuildContext context, int index) {
+        var model = m[index];
+        DateTime dt = DateTime.parse(model.trade_date!);
+        String checkYear = dt.year.toString();
+        int checkMonth = dt.month;
+        var amountWithPoint = double.parse(model.amount.toString());
+
+        print(checkMonth);
+        print(checkYear);
+        // if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 4.0),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 10),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: (model.type.toString() == 'B')
                           ? CColors.green
-                          : Colors.red.withOpacity(.6)),
-                )),
-                Expanded(
+                          : Colors.red.withOpacity(.6),
+                    ),
+
                     child: getSubHeading(
-                        model.amount.toString(), .17, Colors.black)),
-                Expanded(
-                    child: Column(
-                  children: [
-                    getSubHeading(
-                        '${model.p1_eur.toString()} € ',
+                        (model.type.toString() == 'B') ? 'Buy' : 'Short',
                         fontSize,
                         (model.type.toString() == 'B')
-                            ? CColors.green
-                            : Colors.red.withOpacity(.6)),
-                    getSubHeading(
-                        '${model.p1_usd.toString()} \$' , fontSize, Colors.black),
-                  ],
-                )),
-                Expanded(
-                    child: Column(
-                  children: [
-                    getSubHeading(
-                        model.trade_date.toString(), fontSize, Colors.black),
-                    getSubHeading(
-                        model.trade_time.toString(), fontSize, Colors.black),
-                  ],
-                )),
-                Expanded(
-                    child: InkWell(
+                            ? Colors.white
+                            : Colors.white),
+                  ),
+                ),
+              )),
+              Expanded(
+                  child: getSubHeading(
+                      // '${model.amount.toString()}.00'
+                      '€ ${amountWithPoint.toStringAsFixed(2)}', .17, Colors.black)),
+              Expanded(
+                  child: Column(
+                children: [
+                  // getSubHeading(
+                  //     '${model.p1.toString()}  ',
+                  //     fontSize,
+                  //     (model.type.toString() == 'B')
+                  //         ? CColors.green
+                  //         : Colors.red.withOpacity(.6)),
+                  Container(
+                    padding: EdgeInsets.only(left: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: (model.type.toString() == 'B')
+                          ? CColors.green
+                          : Colors.red.withOpacity(.6),
+                    ),
+                    
+                    child: getSubHeading(
+                        '+ €${model.p1_eur.toString()}',
+                        fontSize,
+                        (model.type.toString() == 'B')
+                            ? Colors.white
+                            : Colors.white),
+                  ),
+                  getSubHeading('+ \$${model.p1_usd.toString()} ', fontSize,
+                      Colors.black),
+                ],
+              )),
+              Expanded(
+                  child: Column(
+                children: [
+                  getSubHeading(
+                      model.trade_date.toString(), fontSize, Colors.black),
+                  getSubHeading(
+                      model.trade_time.toString(), fontSize, Colors.black),
+                ],
+              )),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(right: 2.0),
+                child: InkWell(
                   onTap: () {
                     showDialog(
                         context: context,
@@ -683,16 +728,24 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                   ),
-                )),
-              ],
-            ),
-          );
-          // }
-          // else
-          //   {
-          //     return SizedBox();
-          //   }
-        });
+                ),
+              )),
+            ],
+          ),
+        );
+        // }
+        // else
+        //   {
+        //     return SizedBox();
+        //   }
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Container(
+          height: .5,
+          color: CColors.textColor.withOpacity(.5), // Custom style
+        );
+      },
+    );
   }
 
   Widget getStatistics(String memberSince) {
@@ -803,11 +856,14 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget getHeading(String txt) {
-    return Text(txt,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-        textAlign: TextAlign.center);
+    return Padding(
+      padding: (txt == 'Type') ? EdgeInsets.only(left :  8.0) : EdgeInsets.only(left :  0.0),
+      child: Text(txt,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+          textAlign: (txt == 'Type') ?TextAlign.left : TextAlign.left),
+    );
   }
 
   Future<void> getDataStats() async {
@@ -870,13 +926,11 @@ class _DashboardState extends State<Dashboard> {
           DateTime dt = DateTime.parse(model.trade_date!);
           String checkYear = dt.year.toString();
           int checkMonth = dt.month;
-          if(checkYear == selectedYear && checkMonth == dropDownMonths.indexOf(selectedMonth)+1 ){
-          tradesModel.add(model);
-
+          if (checkYear == selectedYear &&
+              checkMonth == dropDownMonths.indexOf(selectedMonth) + 1) {
+            tradesModel.add(model);
           }
           tradesList.add(model);
-
-
         }
 
         setState(() {});
@@ -885,15 +939,19 @@ class _DashboardState extends State<Dashboard> {
       print('Something Wrong');
       throw Exception("Failed to Fetch Data");
     }
-    return;
+    // return;
   }
 
   Widget getSubHeading(String txt, double size, Color col) {
     return SizedBox(
       width: screenWidth * size,
-      child: Text(txt,
-          style: TextStyle(color: col, fontSize: 12),
-          textAlign: TextAlign.center),
+      child: Text(
+        txt,
+        style: TextStyle(color: col, fontSize: 12),
+        textAlign: (txt == 'Buy' || txt == 'Short')
+            ? TextAlign.center
+            : TextAlign.left,
+      ),
     );
   }
 

@@ -3,10 +3,13 @@ import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/models/trades_model.dart';
 
-
 class ViewAlert extends StatefulWidget {
-  TradesModel ? tradesModel;
-  ViewAlert({Key? key, required this.tradesModel,}) : super(key: key);
+  TradesModel? tradesModel;
+
+  ViewAlert({
+    Key? key,
+    required this.tradesModel,
+  }) : super(key: key);
 
   @override
   State<ViewAlert> createState() => _ViewAlertState();
@@ -18,6 +21,7 @@ class _ViewAlertState extends State<ViewAlert> {
   @override
   Widget build(BuildContext context) {
     print(widget.tradesModel!.amount);
+    var amountWithPoint = double.parse(widget.tradesModel!.amount!);
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
     return AlertDialog(
@@ -40,19 +44,32 @@ class _ViewAlertState extends State<ViewAlert> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText('User ID'),
-              rightText(widget.tradesModel!.userId!.toString())
-            ],
-          ),
-          Divider(),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     leftText('User ID'),
+          //     rightText(widget.tradesModel!.userId!.toString())
+          //   ],
+          // ),
+          // Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               leftText(AppStrings.type),
-              rightText(widget.tradesModel!.type!, color: (widget.tradesModel!.type! == "B") ? CColors.green : Colors.red.withOpacity(.6))
+              Container(
+                  padding: EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: (widget.tradesModel!.type! == "B")
+                        ? CColors.green
+                        : Colors.red.withOpacity(.6),
+                  ),
+                  
+                  child: rightText(
+                      (widget.tradesModel!.type! == 'B') ? 'Buy' : 'Short',
+                      color: (widget.tradesModel!.type! == "B")
+                          ? Colors.white
+                          : Colors.white))
             ],
           ),
           Divider(),
@@ -60,7 +77,7 @@ class _ViewAlertState extends State<ViewAlert> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               leftText(AppStrings.amount),
-              rightText(widget.tradesModel!.amount!)
+              rightText('€ ${amountWithPoint.toStringAsFixed(2)}')
             ],
           ),
           Divider(),
@@ -115,24 +132,53 @@ class _ViewAlertState extends State<ViewAlert> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              leftText('pl_usd'),
-              rightText('${widget.tradesModel!.p1_usd!} \$', color: (widget.tradesModel!.type! == "B") ? CColors.green : Colors.red.withOpacity(.6)),
+              leftText('P/L EUR/USD'),
+              Column(
+                children: [
+                  // rightText('${widget.tradesModel!.p1_usd!} \$',
+                  //     color: (widget.tradesModel!.type! == "B")
+                  //         ? CColors.textColor
+                  //         : CColors.textColor),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: (widget.tradesModel!.type.toString() == 'B')
+                          ? CColors.green
+                          : Colors.red.withOpacity(.6),
+                    ),
+
+                    child: rightText(
+                        '+ €${widget.tradesModel!.p1_eur.toString()}', color: Colors.white),
+                  ),
+                  rightText('+ \$${widget.tradesModel!.p1_usd.toString()} ',
+                      ),
+                ],
+              ),
             ],
           ),
-          Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              leftText('pl_eur'),
-              rightText('${widget.tradesModel!.p1_eur!} €')
-            ],
-          ),
+          // Divider(),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     leftText('Profit-Loss(EUR)'),
+          //     rightText('${widget.tradesModel!.p1_eur!} €')
+          //   ],
+          // ),
           Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               leftText(AppStrings.time),
               rightText(widget.tradesModel!.trade_time!)
+            ],
+          ),
+          Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              leftText(AppStrings.date),
+              rightText(widget.tradesModel!.trade_date!)
             ],
           ),
         ],
