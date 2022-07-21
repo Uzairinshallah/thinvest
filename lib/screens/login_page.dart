@@ -139,7 +139,7 @@ class LoginPage extends StatelessWidget {
                                     color: CColors.buttonOne, fontSize: 14),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    launchUrl(Uri.parse('https://thinvest.com/register'));
+                                    launchUrl(Uri.parse('https://thinvest.com/register'),mode: LaunchMode.externalApplication);
                                     // Navigator.push(
                                     //   context,
                                     //   MaterialPageRoute(

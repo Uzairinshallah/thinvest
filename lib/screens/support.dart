@@ -22,7 +22,7 @@ class _SupportState extends State<Support> {
   var screenWidth, screenHeight;
   double res = 0;
 
-  bool boxValue = false;
+  bool boxValue = true;
   bool boxValue2 = false;
   final controller = Get.put(AppController());
   var topicController = TextEditingController();
@@ -63,7 +63,7 @@ class _SupportState extends State<Support> {
             children: [
               Row(
                 children: [
-                  InkWell(
+                  GestureDetector(
                       onTap: () {
                         _key.currentState!.openDrawer();
                       },
@@ -72,7 +72,7 @@ class _SupportState extends State<Support> {
                           height: 50,
                           child: Image.asset('assets/icons/drawer.png'))),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
@@ -96,9 +96,11 @@ class _SupportState extends State<Support> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 30,
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: SizedBox(),
               ),
+
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -120,6 +122,7 @@ class _SupportState extends State<Support> {
                                 onChanged: (value) {
                                   setState(() {
                                     boxValue = value!;
+                                    boxValue2 = !value;
                                   });
                                 },
                               ),
@@ -141,6 +144,7 @@ class _SupportState extends State<Support> {
                                 onChanged: (value) {
                                   setState(() {
                                     boxValue2 = value!;
+                                    boxValue = !value;
                                   });
                                 },
                               ),
@@ -257,7 +261,7 @@ class _SupportState extends State<Support> {
                       getTextField('Message', messageController, 8),
                       // Expanded(child: SizedBox()),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,

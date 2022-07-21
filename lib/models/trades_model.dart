@@ -65,9 +65,9 @@ class TradesModel {
     amount = map["amount"];
     closing_price = map["closing_price"];
     price = map["price"];
-    p1 = map["p1"];
-    p1_eur = map["p1_eur"];
-    p1_usd = map["p1_usd"];
+    p1 = map["pl"];
+    p1_eur = map["pl_eur"];
+    p1_usd = map["pl_usd"];
     pair = map["pair"];
     pip = map["pip"];
     stoploss = map["stoploss"];

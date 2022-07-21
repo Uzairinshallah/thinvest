@@ -29,7 +29,7 @@ class GetDrawer extends StatelessWidget {
           Container(
               height: screenHeight * .27,
               child: Padding(
-                padding: const EdgeInsets.only(top: 25.0, left: 45.0, right: 15),
+                padding: const EdgeInsets.only(top: 25.0, left: 60.0, right: 60),
                 child: Image.asset(
                   'assets/icons/thinvest.png',
                   width: screenWidth * .6,
@@ -72,12 +72,14 @@ class GetDrawer extends StatelessWidget {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => Support()));
                 }),
+                getLine(),
+
               ],
             ),
           ),
           Expanded(child: SizedBox()),
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.only(left: 45.0, right: 45, bottom: 20),
             child: InkWell(
               onTap: () {
                 // HiveBoxes.userBox.delete("profile");
@@ -91,7 +93,7 @@ class GetDrawer extends StatelessWidget {
                 Functions.showSnackBar(context, 'Log Out Successfully');
               },
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                // mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   const Text(
                     'Logout',

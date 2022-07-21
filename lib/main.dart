@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -7,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/constants.dart';
 import 'package:thinvest/models/user_model.dart';
-import 'package:thinvest/screens/login_page.dart';
 import 'package:thinvest/screens/splashScreen.dart';
 
 Future<void> main() async {
@@ -21,12 +21,15 @@ Future<void> main() async {
   Hive.registerAdapter<UserModel>(UserModelAdapter());
   await Hive.openBox<UserModel>(Constants.userBox);
 
-  runApp(const MyApp());
+  runApp(    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => const MyApp(), // Wrap your app
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {

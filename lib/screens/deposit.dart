@@ -21,14 +21,14 @@ class DepositsScreen extends StatelessWidget {
       body: Padding(
         padding: MediaQuery.of(context).padding,
         child: Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 15),
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 child: Row(
                   children: [
-                    InkWell(
+                    GestureDetector(
                         onTap: () {
                           _key.currentState!.openDrawer();
                         },
@@ -39,7 +39,7 @@ class DepositsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
                           Text(
-                            'Deposit',
+                            'Deposits',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 30,
@@ -59,11 +59,9 @@ class DepositsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: screenHeight * .08,
-              ),
+
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
+                padding: const EdgeInsets.only(top: 30,left: 15, right: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -103,10 +101,10 @@ class DepositsScreen extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Expanded(child: getHeading(AppStrings.type)),
-                      Expanded(child: getHeading(AppStrings.description)),
-                      Expanded(child: getHeading(AppStrings.date)),
-                      Expanded(child: getHeading(AppStrings.status)),
+                      Expanded(flex: 3,child: getHeading(AppStrings.amount)),
+                      Expanded(flex: 3,child: getHeading(AppStrings.date)),
+                      Expanded(flex: 3,child: getHeading(AppStrings.status)),
+                      Expanded(flex: 2,child: SizedBox()),
                     ],
                   ),
                 ),

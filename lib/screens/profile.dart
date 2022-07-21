@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/strings.dart';
-import 'package:thinvest/models/user_model.dart';
 import 'package:thinvest/screens/dashboard/dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
-
 
 class Profile extends StatelessWidget {
   Profile({Key? key}) : super(key: key);
@@ -28,7 +26,7 @@ class Profile extends StatelessWidget {
               width: screenWidth,
               // height: screenHeight * .3,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+                // borderRadius: BorderRadius.only(),
                 gradient: LinearGradient(
                   colors: [
                     CColors.buttonOne,
@@ -39,23 +37,27 @@ class Profile extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(
-                    top: 40.0, left: 25, right: 30, bottom: 20),
+                    top: 24.0, left: 30, right: 30, bottom: 20),
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: (){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Dashboard()));
                           },
                           child: Row(
                             children: [
                               Padding(
                                   padding: EdgeInsets.only(left: 4.0, right: 4),
-                                  child:
-                                      InkWell(onTap: (){
-                                      }, child: Image.asset('assets/icons/arrow_back.png', width: 20,))),
+                                  child: Image.asset(
+                                    'assets/icons/arrow_back.png',
+                                    width: 20,
+                                  )),
                               Text(
                                 AppStrings.goBack.toUpperCase(),
                                 style: TextStyle(
@@ -67,20 +69,21 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: (){
-                            launchUrl(Uri.parse('https://thinvest.com/login'));
+                          onTap: () {
+                            launchUrl(Uri.parse('https://thinvest.com/login'),
+                                mode: LaunchMode.externalApplication);
                           },
                           child: Row(
                             children: [
                               Padding(
                                   padding: EdgeInsets.only(left: 4.0, right: 4),
-                                  child: Image.asset('assets/icons/edit.png', width: 20)),
-                               Text(
+                                  child: Image.asset('assets/icons/edit.png',
+                                      width: 20)),
+                              Text(
                                 'EDIT PROFILE',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.values[4],
-
                                 ),
                               )
                             ],
@@ -95,7 +98,7 @@ class Profile extends StatelessWidget {
                         radius: 40, //Text
                       ),
                     ),
-                     Padding(
+                    Padding(
                       padding: const EdgeInsets.only(
                         top: 15.0,
                       ),
@@ -153,7 +156,8 @@ class Profile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       leftText(AppStrings.identificationType),
-                      rightText(HiveBoxes.userBox.values.first.identificationType!),
+                      rightText(
+                          HiveBoxes.userBox.values.first.identificationType!),
                     ],
                   ),
                   Padding(
@@ -162,7 +166,8 @@ class Profile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         leftText(AppStrings.identificationNumber),
-                        rightText(HiveBoxes.userBox.values.first.identificationNumber!),
+                        rightText(HiveBoxes
+                            .userBox.values.first.identificationNumber!),
                       ],
                     ),
                   ),
@@ -184,40 +189,43 @@ class Profile extends StatelessWidget {
 
   Padding getLineText(String txt) {
     return Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 20, top: 30, bottom: 25),
-                child: Row(
-                  children: [
-                    Expanded(child: Container(
-                      height: 1,
-                      color: CColors.textColor,
-                    )),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8),
-                      child: Text(txt, style: TextStyle(color: CColors.textColor, fontSize: 12),),
-                    ),
-                    Expanded(child: Container(
-                      height: 1,
-                      color: CColors.textColor,
-                    ))
-                  ],
-                ),
-              );
+      padding:
+          const EdgeInsets.only(left: 20.0, right: 20, top: 30, bottom: 25),
+      child: Row(
+        children: [
+          Expanded(
+              child: Container(
+            height: 1,
+            color: CColors.textColor,
+          )),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8),
+            child: Text(
+              txt,
+              style: TextStyle(color: CColors.textColor, fontSize: 12),
+            ),
+          ),
+          Expanded(
+              child: Container(
+            height: 1,
+            color: CColors.textColor,
+          ))
+        ],
+      ),
+    );
   }
 
   Text rightText(String txt) {
     return Text(
       txt,
-      style: TextStyle(fontSize: 16, color: CColors.textColor),
+      style: TextStyle(fontSize: 15, color: CColors.textColor),
     );
   }
 
   Text leftText(String txt) {
     return Text(
       txt,
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.values[4]),
+      style: TextStyle(fontSize: 15, fontWeight: FontWeight.values[4]),
     );
   }
-
-
-
 }

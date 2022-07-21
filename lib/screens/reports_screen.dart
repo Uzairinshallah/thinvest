@@ -47,7 +47,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             children: [
               Row(
                 children: [
-                  InkWell(
+                  GestureDetector(
                       onTap: () {
                         _key.currentState!.openDrawer();
                       },
