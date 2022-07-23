@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/sdp.dart';
 import 'package:thinvest/Extras/strings.dart';
@@ -11,6 +12,7 @@ class TradesTable extends StatefulWidget {
   // TradesModel? tradesModel;
   List<TradesModel> tradesModel;
 
+
   TradesTable({Key? key, required this.tradesModel}) : super(key: key);
 
   @override
@@ -19,6 +21,8 @@ class TradesTable extends StatefulWidget {
 
 class _TradesTableState extends State<TradesTable> {
   var screenWidth, screenHeight;
+  final value = NumberFormat("#,###.00", "en_US");
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +43,9 @@ class _TradesTableState extends State<TradesTable> {
               var model = widget.tradesModel[index];
               print('widget.tradesModel.length');
               print(model.type);
-              var amountWithPoint = double.parse(model.amount.toString());
+              var amountPoint = double.parse(model.amount.toString());
+              var amountWithPoint = value.format(amountPoint);
+
               if (widget.tradesModel.isEmpty) {
                 print('widget Null');
                 return Center(
@@ -58,7 +64,7 @@ class _TradesTableState extends State<TradesTable> {
                             alignment: Alignment.topLeft,
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius: BorderRadius.circular(0),
                                 color: (model.type.toString() == 'B')
                                     ? CColors.green
                                     : Colors.red.withOpacity(.6),
@@ -76,37 +82,38 @@ class _TradesTableState extends State<TradesTable> {
                     Expanded(
                         child: getSubHeading(
                             // '${model.amount.toString()}.00',
-                            '€ ${amountWithPoint.toStringAsFixed(2)}',.17, Colors.black)),
+                            '€ $amountWithPoint',.17, Colors.black)),
                     Expanded(
                         child: Column(
-                      children: [
-                        // getSubHeading(
-                        //     '${model.p1.toString()}  ',
-                        //     fontSize,
-                        //     (model.type.toString() == 'B')
-                        //         ? CColors.green
-                        //         : Colors.red.withOpacity(.6)),
-
-                        Container(
-                          padding: const EdgeInsets.only(left: 2),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: (model.type.toString() == 'B')
-                                ? CColors.green
-                                : Colors.red.withOpacity(.6),
-                          ),
-                          
-                          child: getSubHeading(
-                              '+ €${model.p1_eur.toString()}',
-                              fontSize,
-                              (model.type.toString() == 'B')
-                                  ? Colors.white
-                                  : Colors.white),
-                        ),
-                        getSubHeading('+ \$${model.p1_usd.toString()}', fontSize,
-                            Colors.black),
-                      ],
-                    )),
+                          children: [
+                            // getSubHeading(
+                            //     '${model.p1.toString()}  ',
+                            //     fontSize,
+                            //     (model.type.toString() == 'B')
+                            //         ? CColors.green
+                            //         : Colors.red.withOpacity(.6)),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2, bottom: 2, right: 6),
+                              child: Container(
+                                padding: EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 1),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(0),
+                                  color: (model.type.toString() == 'B')
+                                      ? CColors.green
+                                      : Colors.red.withOpacity(.6),
+                                ),
+                                child: getSubHeading(
+                                    '+ €${model.p1_eur.toString()}',
+                                    fontSize,
+                                    (model.type.toString() == 'B')
+                                        ? Colors.white
+                                        : Colors.white),
+                              ),
+                            ),
+                            getSubHeading('+ \$${model.p1_usd.toString()} ', fontSize,
+                                Colors.black),
+                          ],
+                        )),
                     Expanded(
                         child: Column(
                       children: [

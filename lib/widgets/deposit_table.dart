@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/hive_boxes.dart';
@@ -13,6 +14,7 @@ class DepositTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final value = NumberFormat("#,###.00", "en_US");
     SDP.init(context);
     double fontSize = SDP.sdp(10);
     print(fontSize);
@@ -38,7 +40,9 @@ class DepositTable extends StatelessWidget {
                 itemCount: list.length,
                 itemBuilder: (BuildContext context, int index) {
                   var model = list[index];
-                  var amountWithPoint = double.parse(model.amount.toString());
+                  var amountPoint = double.parse(model.amount.toString());
+                  var amountWithPoint = value.format(amountPoint);
+
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 4.0),
                     child: Row(
@@ -55,14 +59,14 @@ class DepositTable extends StatelessWidget {
                                       Container(
                                         padding: EdgeInsets.symmetric(horizontal: 2),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(5),
+                                          borderRadius: BorderRadius.circular(0),
                                           // color: (model.status.toString() == '1')
                                           //     ? CColors.green
                                           //     : Colors.redAccent.withOpacity(.6),
                                           color: CColors.green,
                                         ),
 
-                                        child: Text("+ €${amountWithPoint.toStringAsFixed(2 )}",
+                                        child: Text("+ €$amountWithPoint",
                                             style: TextStyle(color: Colors.white, fontSize: fontSize),
                                             textAlign: TextAlign.left),
                                       ),

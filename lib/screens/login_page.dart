@@ -129,7 +129,7 @@ class LoginPage extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 20.0),
                     child: RichText(
                       text: TextSpan(
-                          text: AppStrings.alreadyHaveAnAccount,
+                          text: ' Don\'t have an account? ',
                           style:
                               TextStyle(color: CColors.textColor, fontSize: 14),
                           children: <TextSpan>[

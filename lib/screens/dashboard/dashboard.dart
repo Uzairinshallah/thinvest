@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/functions.dart';
 import 'package:thinvest/Extras/hive_boxes.dart';
@@ -66,6 +67,7 @@ class _DashboardState extends State<Dashboard> {
   List<TradesModel> tradesModel = [];
   List<StatsModel> statsModel = [];
   List<TradesModel> tradesList = [];
+  final value = NumberFormat("#,###.00", "en_US");
 
   @override
   void initState() {
@@ -78,6 +80,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
+
     if (m == false) {
       selectedMonth = dropDownMonths.elementAt(cMonth - 1);
       m = true;
@@ -489,12 +492,16 @@ class _DashboardState extends State<Dashboard> {
                                     children: [
                                       Text(
                                         '${AppStrings.currentDeposit} ',
-                                        style: TextStyle(color: CColors.textColor),
+                                        style:
+                                            TextStyle(color: CColors.textColor),
                                       ),
-                                      (statsModel.isEmpty) ? SizedBox() : Text(
-                                        '€ ${statsModel.first.totalDeposit!}',
-                                        style: TextStyle(color: CColors.textColor),
-                                      ),
+                                      (statsModel.isEmpty)
+                                          ? SizedBox()
+                                          : Text(
+                                              '€ ${statsModel.first.totalDeposit!}',
+                                              style: TextStyle(
+                                                  color: CColors.textColor),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -629,7 +636,8 @@ class _DashboardState extends State<Dashboard> {
         DateTime dt = DateTime.parse(model.trade_date!);
         String checkYear = dt.year.toString();
         int checkMonth = dt.month;
-        var amountWithPoint = double.parse(model.amount.toString());
+        var amountPoint = double.parse(model.amount.toString());
+        var amountWithPoint = value.format(amountPoint);
 
         print(checkMonth);
         print(checkYear);
@@ -645,12 +653,11 @@ class _DashboardState extends State<Dashboard> {
                   alignment: Alignment.topLeft,
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(0),
                       color: (model.type.toString() == 'B')
                           ? CColors.green
                           : Colors.red.withOpacity(.6),
                     ),
-
                     child: getSubHeading(
                         (model.type.toString() == 'B') ? 'Buy' : 'Short',
                         fontSize,
@@ -663,7 +670,9 @@ class _DashboardState extends State<Dashboard> {
               Expanded(
                   child: getSubHeading(
                       // '${model.amount.toString()}.00'
-                      '€ ${amountWithPoint.toStringAsFixed(2)}', .17, Colors.black)),
+                      '€ $amountWithPoint',
+                      .17,
+                      Colors.black)),
               Expanded(
                   child: Column(
                 children: [
@@ -673,21 +682,23 @@ class _DashboardState extends State<Dashboard> {
                   //     (model.type.toString() == 'B')
                   //         ? CColors.green
                   //         : Colors.red.withOpacity(.6)),
-                  Container(
-                    padding: EdgeInsets.only(left: 2),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: (model.type.toString() == 'B')
-                          ? CColors.green
-                          : Colors.red.withOpacity(.6),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2, bottom: 2, right: 6),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 1),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        color: (model.type.toString() == 'B')
+                            ? CColors.green
+                            : Colors.red.withOpacity(.6),
+                      ),
+                      child: getSubHeading(
+                          '+ €${model.p1_eur.toString()}',
+                          fontSize,
+                          (model.type.toString() == 'B')
+                              ? Colors.white
+                              : Colors.white),
                     ),
-                    
-                    child: getSubHeading(
-                        '+ €${model.p1_eur.toString()}',
-                        fontSize,
-                        (model.type.toString() == 'B')
-                            ? Colors.white
-                            : Colors.white),
                   ),
                   getSubHeading('+ \$${model.p1_usd.toString()} ', fontSize,
                       Colors.black),
@@ -857,12 +868,14 @@ class _DashboardState extends State<Dashboard> {
 
   Widget getHeading(String txt) {
     return Padding(
-      padding: (txt == 'Type') ? EdgeInsets.only(left :  8.0) : EdgeInsets.only(left :  0.0),
+      padding: (txt == 'Type')
+          ? EdgeInsets.only(left: 8.0)
+          : EdgeInsets.only(left: 0.0),
       child: Text(txt,
           style: const TextStyle(
             color: Colors.white,
           ),
-          textAlign: (txt == 'Type') ?TextAlign.left : TextAlign.left),
+          textAlign: (txt == 'Type') ? TextAlign.left : TextAlign.left),
     );
   }
 
