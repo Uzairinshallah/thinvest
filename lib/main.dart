@@ -21,10 +21,8 @@ Future<void> main() async {
   Hive.registerAdapter<UserModel>(UserModelAdapter());
   await Hive.openBox<UserModel>(Constants.userBox);
 
-  runApp(    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => const MyApp(), // Wrap your app
-    ),
+  runApp(const MyApp(), // Wrap your app
+
   );
 }
 
