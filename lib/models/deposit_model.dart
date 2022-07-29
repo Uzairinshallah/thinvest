@@ -49,7 +49,5 @@ class DepositModel {
     deposit_date = map["deposit_date"];
     createdAt = map["createdAt"];
     updatedAt = map["updatedAt"];
-
-
   }
 }

@@ -12,7 +12,6 @@ class TradesTable extends StatefulWidget {
   // TradesModel? tradesModel;
   List<TradesModel> tradesModel;
 
-
   TradesTable({Key? key, required this.tradesModel}) : super(key: key);
 
   @override
@@ -22,7 +21,6 @@ class TradesTable extends StatefulWidget {
 class _TradesTableState extends State<TradesTable> {
   var screenWidth, screenHeight;
   final value = NumberFormat("#,###.00", "en_US");
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,61 +57,64 @@ class _TradesTableState extends State<TradesTable> {
                   children: [
                     Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0, right: 10),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(0),
-                                color: (model.type.toString() == 'B')
-                                    ? CColors.green
-                                    : Colors.red.withOpacity(.6),
-                              ),
-                              
-                              child: getSubHeading(
-                                  (model.type.toString() == 'B') ? 'Buy' : 'Short',
-                                  fontSize,
-                                  (model.type.toString() == 'B')
-                                      ? Colors.white
-                                      : Colors.white),
-                            ),
+                      padding: const EdgeInsets.only(left: 10.0, right: 10),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(0),
+                            color: (model.type.toString() == 'B')
+                                ? CColors.green
+                                : Colors.red.withOpacity(.6),
                           ),
-                        )),
+                          child: getSubHeading(
+                              (model.type.toString() == 'B') ? 'Buy' : 'Short',
+                              fontSize,
+                              (model.type.toString() == 'B')
+                                  ? Colors.white
+                                  : Colors.white),
+                        ),
+                      ),
+                    )),
                     Expanded(
                         child: getSubHeading(
                             // '${model.amount.toString()}.00',
-                            '€ $amountWithPoint',.17, Colors.black)),
+                            '€ $amountWithPoint',
+                            .17,
+                            Colors.black)),
                     Expanded(
                         child: Column(
-                          children: [
-                            // getSubHeading(
-                            //     '${model.p1.toString()}  ',
-                            //     fontSize,
-                            //     (model.type.toString() == 'B')
-                            //         ? CColors.green
-                            //         : Colors.red.withOpacity(.6)),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 2, bottom: 2, right: 6),
-                              child: Container(
-                                padding: EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 1),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(0),
-                                  color: (model.type.toString() == 'B')
-                                      ? CColors.green
-                                      : Colors.red.withOpacity(.6),
-                                ),
-                                child: getSubHeading(
-                                    '+ €${model.p1_eur.toString()}',
-                                    fontSize,
-                                    (model.type.toString() == 'B')
-                                        ? Colors.white
-                                        : Colors.white),
-                              ),
+                      children: [
+                        // getSubHeading(
+                        //     '${model.p1.toString()}  ',
+                        //     fontSize,
+                        //     (model.type.toString() == 'B')
+                        //         ? CColors.green
+                        //         : Colors.red.withOpacity(.6)),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 2, bottom: 2, right: 6),
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                left: 2, top: 2, bottom: 2, right: 1),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(0),
+                              color: (model.type.toString() == 'B')
+                                  ? CColors.green
+                                  : Colors.red.withOpacity(.6),
                             ),
-                            getSubHeading('+ \$${model.p1_usd.toString()} ', fontSize,
-                                Colors.black),
-                          ],
-                        )),
+                            child: getSubHeading(
+                                '+ €${model.p1_eur.toString()}',
+                                fontSize,
+                                (model.type.toString() == 'B')
+                                    ? Colors.white
+                                    : Colors.white),
+                          ),
+                        ),
+                        getSubHeading('+ \$${model.p1_usd.toString()} ',
+                            fontSize, Colors.black),
+                      ],
+                    )),
                     Expanded(
                         child: Column(
                       children: [
@@ -165,11 +166,13 @@ class _TradesTableState extends State<TradesTable> {
   Widget getSubHeading(String txt, double size, Color col) {
     return SizedBox(
       width: screenWidth * size,
-      child: Text(txt,
-          style: TextStyle(color: col, fontSize: 12),
-          textAlign: (txt == 'Buy' || txt == 'Short')
-          ? TextAlign.center
-          : TextAlign.left,),
+      child: Text(
+        txt,
+        style: TextStyle(color: col, fontSize: 12),
+        textAlign: (txt == 'Buy' || txt == 'Short')
+            ? TextAlign.center
+            : TextAlign.left,
+      ),
     );
   }
 }

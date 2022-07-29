@@ -91,7 +91,8 @@ class _SignupPageState extends State<SignupPage> {
                                   TextSpan(
                                       text: AppStrings.loginHere,
                                       style: TextStyle(
-                                          color: CColors.buttonOne, fontSize: 13),
+                                          color: CColors.buttonOne,
+                                          fontSize: 13),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
                                           Navigator.push(
@@ -155,7 +156,8 @@ class _SignupPageState extends State<SignupPage> {
                                     child: Text(
                                       AppStrings.next,
                                       style: TextStyle(
-                                          color: CColors.buttonOne, fontSize: 16),
+                                          color: CColors.buttonOne,
+                                          fontSize: 16),
                                     ),
                                   ),
                                   Icon(
@@ -180,7 +182,8 @@ class _SignupPageState extends State<SignupPage> {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0, right: 8),
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, right: 8),
                               child: Container(
                                 color: (controller.state.value == 0 ||
                                         controller.state.value == 1 ||
@@ -193,7 +196,8 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0, right: 8),
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, right: 8),
                               child: Container(
                                 color: (controller.state.value == 1 ||
                                         controller.state.value == 2)
@@ -205,7 +209,8 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0, right: 8),
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, right: 8),
                               child: Container(
                                 color: (controller.state.value == 2)
                                     ? CColors.buttonOne
@@ -297,8 +302,8 @@ class _SignupPageState extends State<SignupPage> {
             ),
             SizedBox(
                 width: screenWidth * .42,
-                child: getTextField(
-                    AppStrings.identificationNumber, identificationNoController)),
+                child: getTextField(AppStrings.identificationNumber,
+                    identificationNoController)),
           ],
         ),
         Padding(
@@ -311,7 +316,8 @@ class _SignupPageState extends State<SignupPage> {
           child: Align(
               alignment: Alignment.bottomLeft,
               child: Text(
-                AppStrings.thisIsTheAmountYouWantToStartWithThisAnswerIsNotFinalAndIsAlwaysSubjectToChange,
+                AppStrings
+                    .thisIsTheAmountYouWantToStartWithThisAnswerIsNotFinalAndIsAlwaysSubjectToChange,
                 style: TextStyle(color: CColors.textColor, fontSize: 10),
                 textAlign: TextAlign.center,
               )),
@@ -432,7 +438,8 @@ class _SignupPageState extends State<SignupPage> {
             children: [
               SizedBox(
                 width: screenWidth * .43,
-                child: getTextField(AppStrings.postalCode, postalCodeController),
+                child:
+                    getTextField(AppStrings.postalCode, postalCodeController),
               ),
               Container(
                 width: screenWidth * .43,

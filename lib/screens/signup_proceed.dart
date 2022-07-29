@@ -30,8 +30,13 @@ class SignupProceed extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(height: 100, child: Image.asset('assets/icons/bgt.png')),
-                      Image.asset('assets/icons/thinvest.png', width: screenWidth * .7,),
+                      SizedBox(
+                          height: 100,
+                          child: Image.asset('assets/icons/bgt.png')),
+                      Image.asset(
+                        'assets/icons/thinvest.png',
+                        width: screenWidth * .7,
+                      ),
                     ],
                   ),
                 ),
@@ -65,30 +70,36 @@ class SignupProceed extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(),
-                    SizedBox(),
-                    SizedBox(),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(onPressed: () { Get.to(Dashboard()); },
-                        child: Text('PROCEED', style: TextStyle(color:  CColors.buttonOne, fontSize: 16),),
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(),
+                  SizedBox(),
+                  SizedBox(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Get.to(Dashboard());
+                        },
+                        child: Text(
+                          'PROCEED',
+                          style:
+                              TextStyle(color: CColors.buttonOne, fontSize: 16),
                         ),
-                        Container(
-                          height: 3,
-                          width: screenWidth * .22,
-                          color: CColors.buttonOne,
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 200, child: Image.asset('assets/icons/bgb.png')),
-
-                  ],
-                )
-              ),
+                      ),
+                      Container(
+                        height: 3,
+                        width: screenWidth * .22,
+                        color: CColors.buttonOne,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                      height: 200, child: Image.asset('assets/icons/bgb.png')),
+                ],
+              )),
             ],
           ),
         ),

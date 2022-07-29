@@ -1,8 +1,7 @@
-
 import 'package:hive/hive.dart';
 
-
 part 'user_model.g.dart';
+
 @HiveType(typeId: 1)
 class UserModel {
   @HiveField(0)
@@ -58,30 +57,30 @@ class UserModel {
 
   UserModel(
       {this.id,
-        this.firstName,
-        this.middleName,
-        this.lastName,
-        this.dateOfBirth,
-        this.address,
-        this.zipcode,
-        this.city,
-        this.phone,
-        this.phoneMobile,
-        this.country,
-        this.email,
-        this.identificationType,
-        this.identificationNumber,
-        this.password,
-        this.demo,
-        this.activationToken,
-        this.emailVerifiedAt,
-        this.lastLogin,
-        this.status,
-        this.lang,
-        this.rememberToken,
-        this.createdAt,
-        this.updatedAt,
-        this.apiToken});
+      this.firstName,
+      this.middleName,
+      this.lastName,
+      this.dateOfBirth,
+      this.address,
+      this.zipcode,
+      this.city,
+      this.phone,
+      this.phoneMobile,
+      this.country,
+      this.email,
+      this.identificationType,
+      this.identificationNumber,
+      this.password,
+      this.demo,
+      this.activationToken,
+      this.emailVerifiedAt,
+      this.lastLogin,
+      this.status,
+      this.lang,
+      this.rememberToken,
+      this.createdAt,
+      this.updatedAt,
+      this.apiToken});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

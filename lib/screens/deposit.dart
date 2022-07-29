@@ -32,7 +32,10 @@ class DepositsScreen extends StatelessWidget {
                         onTap: () {
                           _key.currentState!.openDrawer();
                         },
-                        child: SizedBox(width: 50, height: 50, child: Image.asset('assets/icons/drawer.png'))),
+                        child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: Image.asset('assets/icons/drawer.png'))),
                     Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Column(
@@ -59,9 +62,8 @@ class DepositsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-
               Padding(
-                padding: const EdgeInsets.only(top: 30,left: 15, right: 15),
+                padding: const EdgeInsets.only(top: 30, left: 15, right: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -101,10 +103,10 @@ class DepositsScreen extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Expanded(flex: 3,child: getHeading(AppStrings.amount)),
-                      Expanded(flex: 3,child: getHeading(AppStrings.date)),
-                      Expanded(flex: 3,child: getHeading(AppStrings.status)),
-                      Expanded(flex: 2,child: SizedBox()),
+                      Expanded(flex: 3, child: getHeading(AppStrings.amount)),
+                      Expanded(flex: 3, child: getHeading(AppStrings.date)),
+                      Expanded(flex: 3, child: getHeading(AppStrings.status)),
+                      Expanded(flex: 2, child: SizedBox()),
                     ],
                   ),
                 ),
@@ -132,5 +134,4 @@ class DepositsScreen extends StatelessWidget {
           textAlign: TextAlign.center),
     );
   }
-
 }

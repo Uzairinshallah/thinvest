@@ -6,6 +6,7 @@ import 'package:uc_pdfview/uc_pdfview.dart';
 
 class PdfView extends StatefulWidget {
   final File file;
+
   const PdfView(this.file, {Key? key}) : super(key: key);
 
   @override
@@ -13,7 +14,6 @@ class PdfView extends StatefulWidget {
 }
 
 class _PdfViewState extends State<PdfView> {
-
   PDFDocument? doc;
 
   @override
@@ -24,6 +24,7 @@ class _PdfViewState extends State<PdfView> {
     // });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,14 +42,15 @@ class _PdfViewState extends State<PdfView> {
         },
         onError: (error) {
           print(error.toString());
-          if(error.toString().contains("Password required or incorrect password.")) {
+          if (error
+              .toString()
+              .contains("Password required or incorrect password.")) {
             // Show your Password Dialog supported both Android and IOS
           }
         },
         onPageError: (page, error) {
           print('$page: ${error.toString()}');
         },
-
       ),
     );
   }

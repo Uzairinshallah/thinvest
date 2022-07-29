@@ -111,14 +111,15 @@ class _ViewAlertDepositState extends State<ViewAlertDeposit> {
             children: [
               leftText(AppStrings.status),
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: (widget.depositModel!.status! == "1")
-                      ? CColors.green
-                      : Colors.red.withOpacity(.6),
-                ),
-                  padding: EdgeInsets.symmetric(horizontal: 3,),
-
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: (widget.depositModel!.status! == "1")
+                        ? CColors.green
+                        : Colors.red.withOpacity(.6),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 3,
+                  ),
                   child: rightText(
                       (widget.depositModel!.status! == '1')
                           ? 'Received'

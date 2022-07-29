@@ -103,8 +103,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                 width: screenWidth * .2,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: Colors.black26, width: 1),
+                                    border: Border.all(
+                                        color: Colors.black26, width: 1),
                                     borderRadius: BorderRadius.circular(10)),
                                 child: DropdownButton<String>(
                                   value: selectedYear,
@@ -118,11 +118,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                       selectedYear = newValue!;
                                     });
                                   },
-                                  items: dropDownYears.map<DropdownMenuItem<String>>((String value) {
+                                  items: dropDownYears
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
                                         child: Text(value),
                                       ),
                                     );
@@ -261,21 +264,22 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                                     children: [
                                                       const Text(
                                                         'MONTHLY RETURN',
-                                                        style:
-                                                            TextStyle(fontSize: 8),
+                                                        style: TextStyle(
+                                                            fontSize: 8),
                                                       ),
                                                       Text(
                                                         '+47.232 EUR',
                                                         style: TextStyle(
                                                             fontSize: 10,
-                                                            color: CColors.green),
+                                                            color:
+                                                                CColors.green),
                                                       ),
                                                       Text(
                                                         '+47.232 USD',
                                                         style: TextStyle(
                                                             fontSize: 10,
-                                                            color:
-                                                                CColors.textColor),
+                                                            color: CColors
+                                                                .textColor),
                                                       )
                                                     ],
                                                   ),
@@ -285,21 +289,22 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                                     children: [
                                                       const Text(
                                                         'MONTHLY RETURN',
-                                                        style:
-                                                            TextStyle(fontSize: 8),
+                                                        style: TextStyle(
+                                                            fontSize: 8),
                                                       ),
                                                       Text(
                                                         '+47.232 EUR',
                                                         style: TextStyle(
                                                             fontSize: 10,
-                                                            color: CColors.green),
+                                                            color:
+                                                                CColors.green),
                                                       ),
                                                       Text(
                                                         '+47.232 USD',
                                                         style: TextStyle(
                                                             fontSize: 10,
-                                                            color:
-                                                                CColors.textColor),
+                                                            color: CColors
+                                                                .textColor),
                                                       )
                                                     ],
                                                   ),
@@ -318,7 +323,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                                           style: TextStyle(
                                                               fontSize: 10,
                                                               fontWeight:
-                                                                  FontWeight.bold,
+                                                                  FontWeight
+                                                                      .bold,
                                                               color: CColors
                                                                   .buttonOne),
                                                         ),

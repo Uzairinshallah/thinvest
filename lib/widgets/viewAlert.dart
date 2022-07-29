@@ -64,7 +64,6 @@ class _ViewAlertState extends State<ViewAlert> {
                         ? CColors.green
                         : Colors.red.withOpacity(.6),
                   ),
-                  
                   child: rightText(
                       (widget.tradesModel!.type! == 'B') ? 'Buy' : 'Short',
                       color: (widget.tradesModel!.type! == "B")
@@ -147,12 +146,13 @@ class _ViewAlertState extends State<ViewAlert> {
                           ? CColors.green
                           : Colors.red.withOpacity(.6),
                     ),
-
                     child: rightText(
-                        '+ €${widget.tradesModel!.p1_eur.toString()}', color: Colors.white),
+                        '+ €${widget.tradesModel!.p1_eur.toString()}',
+                        color: Colors.white),
                   ),
-                  rightText('+ \$${widget.tradesModel!.p1_usd.toString()} ',
-                      ),
+                  rightText(
+                    '+ \$${widget.tradesModel!.p1_usd.toString()} ',
+                  ),
                 ],
               ),
             ],

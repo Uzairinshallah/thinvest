@@ -19,7 +19,6 @@ class StatsModel {
     required this.profitShareNet,
     required this.startCap,
     required this.totalDeposit,
-
   });
 
   Map<String, dynamic> toMap() {
@@ -46,7 +45,5 @@ class StatsModel {
     totalDeposit = map["total_deposit"];
     equity = map["equity"];
     startCap = map["startcap"];
-
-
   }
 }

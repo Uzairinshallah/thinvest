@@ -76,7 +76,6 @@ class InvoicePDF {
                       ],
                     ),
                   ),
-
                   pw.Expanded(
                     child: pw.Row(
                       children: [
@@ -128,7 +127,7 @@ class InvoicePDF {
                                 ),
                               ),
                               pw.Text(
-                               'time',
+                                'time',
                                 style: const pw.TextStyle(
                                   fontSize: 8,
                                 ),
@@ -150,27 +149,12 @@ class InvoicePDF {
               ),
               pw.SizedBox(height: 20),
               pw.Container(
-               color: PdfColor.fromHex('#000000'),
-               child: pw.Row(
-                 children: [
-                   pw.Expanded(
-                       child: pw.Text(
-                           'aaaaa'
-                       )
-                   ),
-                   pw.Expanded(
-                       child: pw.Text(
-                           'aaaaa'
-                       )
-                   ),
-                   pw.Expanded(
-                       child: pw.Text(
-                           'aaaaa'
-                       )
-                   ),
-                 ]
-               )
-              ),
+                  color: PdfColor.fromHex('#000000'),
+                  child: pw.Row(children: [
+                    pw.Expanded(child: pw.Text('aaaaa')),
+                    pw.Expanded(child: pw.Text('aaaaa')),
+                    pw.Expanded(child: pw.Text('aaaaa')),
+                  ])),
               pw.SizedBox(
                 height: 15,
               ),

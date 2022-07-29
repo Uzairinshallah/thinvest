@@ -685,7 +685,8 @@ class _DashboardState extends State<Dashboard> {
                   Padding(
                     padding: const EdgeInsets.only(top: 2, bottom: 2, right: 6),
                     child: Container(
-                      padding: EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 1),
+                      padding:
+                          EdgeInsets.only(left: 2, top: 2, bottom: 2, right: 1),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(0),
                         color: (model.type.toString() == 'B')

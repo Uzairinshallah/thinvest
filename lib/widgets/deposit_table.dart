@@ -57,25 +57,26 @@ class DepositTable extends StatelessWidget {
                                   Column(
                                     children: [
                                       Container(
-                                        padding: EdgeInsets.symmetric(horizontal: 2),
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 2),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(0),
+                                          borderRadius:
+                                              BorderRadius.circular(0),
                                           // color: (model.status.toString() == '1')
                                           //     ? CColors.green
                                           //     : Colors.redAccent.withOpacity(.6),
                                           color: CColors.green,
                                         ),
-
                                         child: Text("+ €$amountWithPoint",
-                                            style: TextStyle(color: Colors.white, fontSize: fontSize),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: fontSize),
                                             textAlign: TextAlign.left),
                                       ),
                                       getSubHeading(model.type,
                                           CColors.textColor, fontSize),
-
                                     ],
                                   )
-
                                 ])),
                         Expanded(
                             flex: 3,
@@ -91,7 +92,8 @@ class DepositTable extends StatelessWidget {
                               child: Align(
                                   alignment: Alignment.center,
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 3, vertical: 2),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: (model.status.toString() == '1')

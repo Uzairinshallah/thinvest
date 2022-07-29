@@ -100,7 +100,6 @@ class _SupportState extends State<Support> {
                 padding: const EdgeInsets.only(top: 30.0),
                 child: SizedBox(),
               ),
-
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),

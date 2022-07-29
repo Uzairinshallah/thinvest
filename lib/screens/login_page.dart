@@ -1,27 +1,100 @@
 import 'dart:convert';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/functions.dart';
 import 'package:thinvest/Extras/hive_boxes.dart';
 import 'package:thinvest/Extras/strings.dart';
-import 'package:thinvest/main.dart';
 import 'package:thinvest/models/user_model.dart';
 import 'package:thinvest/screens/dashboard/dashboard.dart';
-import 'package:thinvest/screens/reports_screen.dart';
 import 'package:thinvest/screens/signup_page.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-class LoginPage extends StatelessWidget {
+class MyChromeSafariBrowser extends ChromeSafariBrowser {
+  @override
+  void onOpened() {
+    print("ChromeSafari browser opened");
+  }
+
+  @override
+  void onCompletedInitialLoad() {
+    print("ChromeSafari browser initial load completed");
+  }
+
+  @override
+  void onClosed() {
+    print("ChromeSafari browser closed");
+  }
+}
+
+class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
+  final ChromeSafariBrowser browser = MyChromeSafariBrowser();
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   var screenHeight, screenWidth;
+
   var emailController = TextEditingController();
+
   var passController = TextEditingController();
 
+  final GlobalKey webViewKey = GlobalKey();
 
+  InAppWebViewController? webViewController;
+  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
+      crossPlatform: InAppWebViewOptions(
+        useShouldOverrideUrlLoading: true,
+        mediaPlaybackRequiresUserGesture: false,
+      ),
+      android: AndroidInAppWebViewOptions(
+        useHybridComposition: true,
+      ),
+      ios: IOSInAppWebViewOptions(
+        allowsInlineMediaPlayback: true,
+      ));
+
+  late PullToRefreshController pullToRefreshController;
+  String url = "";
+  double progress = 0;
+  final urlController = TextEditingController();
+
+  void initState() {
+    rootBundle.load('assets/images/flutter-logo.png').then((actionButtonIcon) {
+      widget.browser.setActionButton(ChromeSafariBrowserActionButton(
+          id: 1,
+          description: 'Action Button description',
+          icon: actionButtonIcon.buffer.asUint8List(),
+          action: (url, title) {
+            print('Action Button 1 clicked!');
+            print(url);
+            print(title);
+          }));
+    });
+
+    widget.browser.addMenuItem(ChromeSafariBrowserMenuItem(
+        id: 2,
+        label: 'Custom item menu 1',
+        action: (url, title) {
+          print('Custom item menu 1 clicked!');
+          print(url);
+          print(title);
+        }));
+    widget.browser.addMenuItem(ChromeSafariBrowserMenuItem(
+        id: 3,
+        label: 'Custom item menu 2',
+        action: (url, title) {
+          print('Custom item menu 2 clicked!');
+          print(url);
+          print(title);
+        }));
+    super.initState();
+  }
 
   login(String email, String pass, BuildContext context) async {
     try {
@@ -43,22 +116,19 @@ class LoginPage extends StatelessWidget {
         // HiveBoxes.userBox.get("profile") != null;
         // HiveBoxes.userBox.delete("profile");
         // print(HiveBoxes.userBox.values.first.firstName);
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-            Dashboard()), (Route<dynamic> route) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => Dashboard()),
+            (Route<dynamic> route) => false);
         return;
-      }
-      else if(response.statusCode == 500){
+      } else if (response.statusCode == 500) {
         Functions.showSnackBar(
           context,
           'API is not working correctly (Error ${response.statusCode.toString()})',
         );
         print('Failed');
-      }
-      else {
+      } else {
         Functions.showSnackBar(
-          context,
-          'Incorrect password or User doesn\'t exist'
-        );
+            context, 'Incorrect password or User doesn\'t exist');
         print('Failed');
       }
     } catch (e) {
@@ -99,8 +169,10 @@ class LoginPage extends StatelessWidget {
                     style: TextStyle(fontSize: 18, color: CColors.textColor),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 19, left: 10, right: 10),
-                    child: getTextField(AppStrings.email, emailController, false),
+                    padding:
+                        const EdgeInsets.only(top: 19, left: 10, right: 10),
+                    child:
+                        getTextField(AppStrings.email, emailController, false),
                   ),
                   Padding(
                     padding:
@@ -117,7 +189,6 @@ class LoginPage extends StatelessWidget {
                         Functions.showSnackBar(context,
                             AppStrings.pleaseEnterEmailAndPasswordCorrectly);
                       }
-
 
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => ReportsScreen(  )));
 
@@ -138,13 +209,28 @@ class LoginPage extends StatelessWidget {
                                 style: TextStyle(
                                     color: CColors.buttonOne, fontSize: 14),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    launchUrl(Uri.parse('https://thinvest.com/register'),mode: LaunchMode.externalApplication);
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) => SignupPage()),
-                                    // );
+                                  ..onTap = () async {
+                                    await widget.browser.open(
+                                        url: Uri.parse(
+                                            "https://thinvest.com/register"),
+                                        options: ChromeSafariBrowserClassOptions(
+                                            android:
+                                                AndroidChromeCustomTabsOptions(
+                                                    shareState:
+                                                        CustomTabsShareState
+                                                            .SHARE_STATE_OFF,
+
+                                                    isSingleInstance: false,
+                                                    isTrustedWebActivity: false,
+                                                    keepAliveEnabled: true),
+                                            ios: IOSSafariOptions(
+                                                dismissButtonStyle:
+                                                    IOSSafariDismissButtonStyle
+                                                        .CLOSE,
+                                              presentationStyle: IOSUIModalPresentationStyle.POPOVER,
+                                            )));
+
+
                                   })
                           ]),
                     ),
@@ -247,7 +333,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-
   Widget getNotice() {
     return Padding(
       padding: EdgeInsets.only(top: 46, left: 30, right: 30, bottom: 30),
@@ -275,5 +360,4 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-
 }

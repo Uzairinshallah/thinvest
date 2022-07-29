@@ -62,8 +62,8 @@ class _TrandesScreenState extends State<TrandesScreen> {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    if(m == false){
-      selectedMonth = dropDownMonths.elementAt(cMonth-1);
+    if (m == false) {
+      selectedMonth = dropDownMonths.elementAt(cMonth - 1);
       m = true;
     }
     final GlobalKey<ScaffoldState> _key = GlobalKey();
@@ -78,7 +78,8 @@ class _TrandesScreenState extends State<TrandesScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
+                padding:
+                    const EdgeInsets.only(bottom: 8.0, left: 15, right: 15),
                 child: Row(
                   children: [
                     GestureDetector(
@@ -88,7 +89,9 @@ class _TrandesScreenState extends State<TrandesScreen> {
                         child: SizedBox(
                             width: 50,
                             height: 50,
-                            child: Image.asset('assets/icons/drawer.png',))),
+                            child: Image.asset(
+                              'assets/icons/drawer.png',
+                            ))),
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Column(
@@ -118,7 +121,6 @@ class _TrandesScreenState extends State<TrandesScreen> {
               Expanded(
                 child: Column(
                   children: [
-
                     Padding(
                       padding: const EdgeInsets.only(
                           top: 30.0, bottom: 8, left: 15, right: 15),
@@ -156,7 +158,8 @@ class _TrandesScreenState extends State<TrandesScreen> {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
                                         child: Text(value),
                                       ),
                                     );
@@ -232,8 +235,15 @@ class _TrandesScreenState extends State<TrandesScreen> {
                     ),
                     Expanded(
                         child: (tradesList.isEmpty)
-                            ? Center(child:  CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(CColors.buttonOne),))
-                            : TradesTable(tradesModel: tradesList.where((element) => checkMonth(element)).toList())),
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    CColors.buttonOne),
+                              ))
+                            : TradesTable(
+                                tradesModel: tradesList
+                                    .where((element) => checkMonth(element))
+                                    .toList())),
                   ],
                 ),
               ),
@@ -246,7 +256,9 @@ class _TrandesScreenState extends State<TrandesScreen> {
 
   Widget getHeading(String txt) {
     return Padding(
-      padding: (txt == 'Type') ? EdgeInsets.only(left :  8.0) : EdgeInsets.only(left :  0.0),
+      padding: (txt == 'Type')
+          ? EdgeInsets.only(left: 8.0)
+          : EdgeInsets.only(left: 0.0),
       child: Text(txt,
           style: const TextStyle(
             color: Colors.white,

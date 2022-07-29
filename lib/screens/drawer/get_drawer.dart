@@ -29,7 +29,8 @@ class GetDrawer extends StatelessWidget {
           Container(
               height: screenHeight * .27,
               child: Padding(
-                padding: const EdgeInsets.only(top: 25.0, left: 60.0, right: 60),
+                padding:
+                    const EdgeInsets.only(top: 25.0, left: 60.0, right: 60),
                 child: Image.asset(
                   'assets/icons/thinvest.png',
                   width: screenWidth * .6,
@@ -73,7 +74,6 @@ class GetDrawer extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Support()));
                 }),
                 getLine(),
-
               ],
             ),
           ),
@@ -87,9 +87,8 @@ class GetDrawer extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            LoginPage()),
-                        (Route<dynamic> route) => false);
+                        builder: (BuildContext context) => LoginPage()),
+                    (Route<dynamic> route) => false);
                 Functions.showSnackBar(context, 'Log Out Successfully');
               },
               child: Row(

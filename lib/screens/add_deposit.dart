@@ -13,7 +13,6 @@ import 'package:thinvest/Extras/functions.dart';
 import 'package:thinvest/screens/trades_screen.dart';
 import 'package:http/http.dart' as http;
 
-
 class AddDeposit extends StatefulWidget {
   const AddDeposit({Key? key}) : super(key: key);
 
@@ -23,10 +22,10 @@ class AddDeposit extends StatefulWidget {
 
 class _AddDepositState extends State<AddDeposit> {
   var screenWidth, screenHeight;
+
   // bool boxValue = false;
   var deposit = TextEditingController();
   final controller = Get.put(AppController());
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +48,8 @@ class _AddDepositState extends State<AddDeposit> {
                 },
                 child: Text(
                   AppStrings.addNewDeposit,
-                  style:
-                      const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
               Text(
@@ -67,15 +66,14 @@ class _AddDepositState extends State<AddDeposit> {
               Row(
                 children: [
                   Obx(
-                  () =>
-                     Checkbox(
+                    () => Checkbox(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                       activeColor: CColors.buttonOne,
                       value: controller.bankState.value,
                       onChanged: (value) {
-                          // controller.bankState.value = value!;
+                        // controller.bankState.value = value!;
                       },
                     ),
                   ),
@@ -105,8 +103,11 @@ class _AddDepositState extends State<AddDeposit> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DepositsScreen()));
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DepositsScreen()));
                       },
                       child: Row(
                         children: [
@@ -130,17 +131,16 @@ class _AddDepositState extends State<AddDeposit> {
                       alignment: Alignment.topRight,
                       child: InkWell(
                         onTap: () {
-                          if(deposit.text == '' || deposit.text.isEmpty){
-                            Functions.showSnackBar(context, 'Deposit Should be more than €500');
-                          }
-                          else if(int.parse(deposit.text) < 500){
-                            Functions.showSnackBar(context, 'Deposit Should be more than €500 ');
-                          }
-                          else {
+                          if (deposit.text == '' || deposit.text.isEmpty) {
+                            Functions.showSnackBar(
+                                context, 'Deposit Should be more than €500');
+                          } else if (int.parse(deposit.text) < 500) {
+                            Functions.showSnackBar(
+                                context, 'Deposit Should be more than €500 ');
+                          } else {
                             Functions.showLoaderDialog(context);
                             postDeposit();
                           }
-
 
                           // else if(deposit.text < 10)
                         },
@@ -183,38 +183,35 @@ class _AddDepositState extends State<AddDeposit> {
     var token = HiveBoxes.userBox.values.first.apiToken!;
     print('${token}idddd');
 
-    var url = "https://thinvest.com/api/deposit?user_id=$userId&amount=${deposit.text}";
+    var url =
+        "https://thinvest.com/api/deposit?user_id=$userId&amount=${deposit.text}";
     // Map<String, dynamic> body = {'user_id': 2, 'amount': "22"};
     // String jsonBody = json.encode(body);
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {
-        "Content-Type": "application/json",
-        'Accept': 'application/json',
-        "Authorization": "Bearer $token"
-      },
-      body: ''
-    );
-
-
+    final response = await http.post(Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+        body: '');
 
     print(response.statusCode);
     if (response.statusCode == 200 || response.statusCode <= 201) {
-      Functions.showSnackBar(context, 'Your deposit has been requested successfully. Shortly one of our team members will contact you through email with further instructions');
+      Functions.showSnackBar(context,
+          'Your deposit has been requested successfully. Shortly one of our team members will contact you through email with further instructions');
 
       print('Status code: ${response.statusCode}');
       print('Body: ${response.body}');
       Navigator.pop(context);
 
-
       setState(() {});
 
       // return model;
-    } else if (response.statusCode ==400){
-      Functions.showSnackBar(context, "Deposit limit reached. First finish the open deposits before making another deposit");
+    } else if (response.statusCode == 400) {
+      Functions.showSnackBar(context,
+          "Deposit limit reached. First finish the open deposits before making another deposit");
       Navigator.pop(context);
-    }
-    else {
+    } else {
       Functions.showSnackBar(
           context, 'Your request can\'t be record at that moment ');
       print('repose');
@@ -235,7 +232,6 @@ class _AddDepositState extends State<AddDeposit> {
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.digitsOnly
       ],
-
       style: TextStyle(
         color: CColors.textColor,
         fontSize: 12,
@@ -266,28 +262,6 @@ class _AddDepositState extends State<AddDeposit> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //
 // Future<void> postDeposit() async {
@@ -323,4 +297,3 @@ class _AddDepositState extends State<AddDeposit> {
 //     throw Exception(response.body.toString());
 //   }
 // }
-

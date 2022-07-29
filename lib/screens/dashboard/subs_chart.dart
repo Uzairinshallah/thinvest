@@ -55,7 +55,7 @@ class _SubsChartState extends State<SubsChart> {
       barRods: [
         BarChartRodData(
           fromY: 0,
-          color: (type=='B')?CColors.green : Colors.red.withOpacity(.6),
+          color: (type == 'B') ? CColors.green : Colors.red.withOpacity(.6),
           width: 10,
           borderRadius: BorderRadius.zero,
           toY: y1,

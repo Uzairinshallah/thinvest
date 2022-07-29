@@ -63,8 +63,6 @@ class AppStrings {
   static String allOurForexMarket =
       'All our forex market clients receive their own credentials with which they are able to login. If you haven\'t received this information, or if you have lost your credentials please ';
 
-
-
   static String personalInformation = 'Personal Information';
   static String firstName = 'First Name';
   static String middleName = 'Middle Name';
@@ -78,15 +76,16 @@ class AppStrings {
   static String next = 'Next';
   static String termsAndAgreements = 'Terms and agreements';
   static String termsAgreements = 'Terms & agreements';
-  static String acceptPolicy = 'I accept the privacy policy and declare that I am over 18 years old.';
-  static String thisIsTheAmountYouWantToStartWithThisAnswerIsNotFinalAndIsAlwaysSubjectToChange = 'This is the amount you want to start with. This answer is not final and is always subject to change.';
-  // static String identificationPrimaryInvestment = 'Identification & primary investment';
+  static String acceptPolicy =
+      'I accept the privacy policy and declare that I am over 18 years old.';
+  static String
+      thisIsTheAmountYouWantToStartWithThisAnswerIsNotFinalAndIsAlwaysSubjectToChange =
+      'This is the amount you want to start with. This answer is not final and is always subject to change.';
+// static String identificationPrimaryInvestment = 'Identification & primary investment';
 
-
-  // static String address = 'Address';
-  // static String phone = 'Phone';
-  // static String contactDetails = 'Contact Details';
-  // static String dateOfBirth = 'Date of Birth';
-
+// static String address = 'Address';
+// static String phone = 'Phone';
+// static String contactDetails = 'Contact Details';
+// static String dateOfBirth = 'Date of Birth';
 
 }

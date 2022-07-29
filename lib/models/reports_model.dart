@@ -7,14 +7,12 @@ class ReportsModel {
   String? monthlyReturn = '123';
   String? yearlyReturn = '123';
 
-
   ReportsModel({
     required this.long,
     required this.short,
     required this.returnn,
     required this.monthlyReturn,
     required this.yearlyReturn,
-
   });
 
   Map<String, dynamic> toMap() {
