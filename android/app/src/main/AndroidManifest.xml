@@ -2,7 +2,7 @@
     package="com.winx.thinvest">
 
     <application
-        android:label="thinvest"
+        android:label="Thinvest"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
