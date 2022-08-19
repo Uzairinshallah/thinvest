@@ -48,7 +48,7 @@ dependencies:
   hive_generator: ^1.1.2
   build_runner: ^2.1.8
   path_provider: ^2.0.9
-  uuid: ^3.0.6
+#  uuid: ^3.0.6
   snack: ^2.0.0
   shared_preferences: ^2.0.15
   url_launcher: ^6.1.4

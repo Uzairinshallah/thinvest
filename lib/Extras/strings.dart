@@ -61,7 +61,7 @@ class AppStrings {
   static String pleaseEnterEmailAndPasswordCorrectly =
       'Please enter Email and Password correctly';
   static String allOurForexMarket =
-      'All our forex market clients receive their own credentials with which they are able to login. If you haven\'t received this information, or if you have lost your credentials please ';
+      'All our forex market clients receive their own credentials with which they are able to login. ';
 
   static String personalInformation = 'Personal Information';
   static String firstName = 'First Name';

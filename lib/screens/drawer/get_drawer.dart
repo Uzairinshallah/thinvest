@@ -115,7 +115,7 @@ class GetDrawer extends StatelessWidget {
 
   Padding getLine() {
     return Padding(
-      padding: const EdgeInsets.only(top: 18.0, bottom: 20),
+      padding: const EdgeInsets.only(top: 5.0, bottom: 8),
       child: Container(
         color: CColors.textColor,
         height: 1,
@@ -129,12 +129,17 @@ class GetDrawer extends StatelessWidget {
         onTap();
       },
       child: SizedBox(
+        height: screenHeight * .05,
         width: screenWidth,
-        child: Text(
-          txt,
-          style: TextStyle(
-            color: CColors.textColor,
-            fontSize: 18,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            txt,
+            style: TextStyle(
+              color: CColors.textColor,
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.start,
           ),
         ),
       ),

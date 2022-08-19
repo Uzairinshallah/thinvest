@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:thinvest/Extras/colors.dart';
 import 'package:thinvest/Extras/strings.dart';
 import 'package:thinvest/models/deposit_model.dart';
@@ -18,13 +19,16 @@ class ViewAlertDeposit extends StatefulWidget {
 
 class _ViewAlertDepositState extends State<ViewAlertDeposit> {
   var screenWidth, screenHeight;
+  final value = NumberFormat("#,###.00", "en_US");
+
 
   @override
   Widget build(BuildContext context) {
     print(widget.depositModel!.amount);
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    var amountWithPoint = double.parse(widget.depositModel!.amount!);
+    var amountPoint = double.parse(widget.depositModel!.amount!);
+    var amountWithPoint = value.format(amountPoint);
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
@@ -74,7 +78,7 @@ class _ViewAlertDepositState extends State<ViewAlertDeposit> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               leftText(AppStrings.amount),
-              rightText('€ ${amountWithPoint.toStringAsFixed(2)}')
+              rightText('€ $amountWithPoint')
             ],
           ),
           Divider(),

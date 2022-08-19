@@ -219,7 +219,7 @@ class _DashboardState extends State<Dashboard> {
                                       child: Row(
                                         children: [
                                           const Text(
-                                            'This month profit: \$ ',
+                                            'This month profit: €  ',
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),

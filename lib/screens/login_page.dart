@@ -140,8 +140,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-    emailController.text = '';
-    passController.text = '';
+
     return Scaffold(
       body: Padding(
         padding: MediaQuery.of(context).padding,
@@ -244,19 +243,19 @@ class _LoginPageState extends State<LoginPage> {
                           text: AppStrings.allOurForexMarket,
                           style:
                               TextStyle(color: CColors.textColor, fontSize: 14),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: AppStrings.contactUs,
-                                style: TextStyle(
-                                    color: CColors.buttonOne, fontSize: 14),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignupPage()),
-                                    );
-                                  })
+                          children: const <TextSpan>[
+                            // TextSpan(
+                            //     text: AppStrings.contactUs,
+                            //     style: TextStyle(
+                            //         color: CColors.buttonOne, fontSize: 14),
+                            //     recognizer: TapGestureRecognizer()
+                            //       ..onTap = () {
+                            //         Navigator.push(
+                            //           context,
+                            //           MaterialPageRoute(
+                            //               builder: (context) => SignupPage()),
+                            //         );
+                            //       })
                           ]),
                     ),
                   ),
